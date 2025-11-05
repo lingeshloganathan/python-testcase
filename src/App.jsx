@@ -80,6 +80,19 @@ function App() {
     }
   }
 
+  const deleteTask = async (taskId) => {
+    if (!window.confirm('Are you sure you want to delete this task?')) {
+      return
+    }
+    
+    try {
+      await axios.delete(`${API_URL}/tasks/${taskId}`)
+      setTasks(tasks.filter(task => task.id !== taskId))
+    } catch (error) {
+      console.error('Error deleting task:', error)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -162,6 +175,12 @@ function App() {
                         className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded transition-colors text-sm font-medium"
                       >
                         Edit
+                      </button>
+                      <button
+                        onClick={() => deleteTask(task.id)}
+                        className="px-3 py-1 text-red-600 hover:bg-red-50 rounded transition-colors text-sm font-medium"
+                      >
+                        Delete
                       </button>
                     </div>
                   )}

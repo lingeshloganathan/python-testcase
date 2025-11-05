@@ -36,6 +36,18 @@ def add_task():
     tasks.append(task)
     return jsonify({'task': task}), 201
 
+@app.route('/api/tasks/<task_id>/complete', methods=['PATCH'])
+def complete_task(task_id):
+    task = next((t for t in tasks if t['id'] == task_id), None)
+    
+    if not task:
+        return jsonify({'error': 'Task not found'}), 404
+    
+    # Toggle completion status
+    task['status'] = 'completed' if task['status'] == 'pending' else 'pending'
+    
+    return jsonify({'task': task})
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 

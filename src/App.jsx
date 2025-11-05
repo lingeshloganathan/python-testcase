@@ -40,6 +40,17 @@ function App() {
     }
   }
 
+  const toggleComplete = async (taskId) => {
+    try {
+      const response = await axios.patch(`${API_URL}/tasks/${taskId}/complete`)
+      setTasks(tasks.map(task => 
+        task.id === taskId ? response.data.task : task
+      ))
+    } catch (error) {
+      console.error('Error toggling task:', error)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -78,8 +89,16 @@ function App() {
             <ul className="divide-y divide-gray-200">
               {tasks.map((task) => (
                 <li key={task.id} className="p-4 hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-800">{task.name}</span>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={task.status === 'completed'}
+                      onChange={() => toggleComplete(task.id)}
+                      className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                    />
+                    <span className={`flex-1 ${task.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+                      {task.name}
+                    </span>
                   </div>
                 </li>
               ))}

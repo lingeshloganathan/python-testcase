@@ -10,9 +10,8 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [editingName, setEditingName] = useState('')
-  const [filter, setFilter] = useState('all') // 'all', 'pending', 'completed'
+  const [filter, setFilter] = useState('all')
 
-  // Load tasks from localStorage on mount
   useEffect(() => {
     const savedTasks = localStorage.getItem(STORAGE_KEY)
     if (savedTasks) {
@@ -27,7 +26,6 @@ function App() {
     }
   }, [])
 
-  // Save tasks to localStorage whenever they change
   useEffect(() => {
     if (tasks.length > 0 || localStorage.getItem(STORAGE_KEY)) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
@@ -133,7 +131,6 @@ function App() {
     }
   }
 
-  // Filter tasks based on selected filter
   const filteredTasks = tasks.filter(task => {
     if (filter === 'all') return true
     if (filter === 'pending') return task.status === 'pending'
@@ -141,7 +138,6 @@ function App() {
     return true
   })
 
-  // Calculate task counts
   const pendingCount = tasks.filter(task => task.status === 'pending').length
   const completedCount = tasks.filter(task => task.status === 'completed').length
   const totalCount = tasks.length
@@ -149,141 +145,167 @@ function App() {
   const hasCompletedTasks = tasks.some(task => task.status === 'completed')
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">
-          Task Manager
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 max-w-4xl">
+        {/* Header */}
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-2">
+            Task Manager
+          </h1>
+          <p className="text-gray-600 text-sm sm:text-base">
+            Organize your tasks efficiently
+          </p>
+        </div>
 
         {/* Task Counter */}
         {totalCount > 0 && (
-          <div className="mb-8 text-center">
-            <div className="inline-flex items-center gap-6 bg-white px-6 py-3 rounded-lg shadow-sm">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">{pendingCount}</div>
-                <div className="text-xs text-gray-600 uppercase tracking-wide">Pending</div>
-              </div>
-              <div className="h-8 w-px bg-gray-300"></div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">{completedCount}</div>
-                <div className="text-xs text-gray-600 uppercase tracking-wide">Completed</div>
-              </div>
-              <div className="h-8 w-px bg-gray-300"></div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-gray-700">{totalCount}</div>
-                <div className="text-xs text-gray-600 uppercase tracking-wide">Total</div>
+          <div className="mb-6 sm:mb-8">
+            <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+              <div className="grid grid-cols-3 gap-4 sm:gap-6">
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600 mb-1">
+                    {pendingCount}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600 uppercase tracking-wide font-medium">
+                    Pending
+                  </div>
+                </div>
+                <div className="text-center border-x border-gray-200">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600 mb-1">
+                    {completedCount}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600 uppercase tracking-wide font-medium">
+                    Completed
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-700 mb-1">
+                    {totalCount}
+                  </div>
+                  <div className="text-xs sm:text-sm text-gray-600 uppercase tracking-wide font-medium">
+                    Total
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         )}
 
         {/* Add Task Form */}
-        <form onSubmit={addTask} className="mb-8">
-          <div className="flex gap-2">
+        <form onSubmit={addTask} className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
             <input
               type="text"
               value={taskName}
               onChange={(e) => setTaskName(e.target.value)}
               placeholder="Enter a new task..."
-              className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="flex-1 px-4 py-3 sm:py-4 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-sm sm:text-base"
               disabled={loading}
             />
             <button
               type="submit"
               disabled={loading || !taskName.trim()}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-medium"
+              className="px-6 py-3 sm:py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all font-semibold shadow-md hover:shadow-lg text-sm sm:text-base whitespace-nowrap"
             >
-              Add
+              {loading ? 'Adding...' : 'Add Task'}
             </button>
           </div>
         </form>
 
-        {/* Filter Buttons */}
+        {/* Filter Buttons and Clear Completed */}
         {tasks.length > 0 && (
-          <div className="mb-4 flex gap-2 justify-center">
-            <button
-              onClick={() => setFilter('all')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                filter === 'all'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              All
-            </button>
-            <button
-              onClick={() => setFilter('pending')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                filter === 'pending'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              Pending
-            </button>
-            <button
-              onClick={() => setFilter('completed')}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                filter === 'completed'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              Completed
-            </button>
-          </div>
-        )}
-
-        {/* Clear Completed Button */}
-        {hasCompletedTasks && (
-          <div className="mb-4 flex justify-end">
-            <button
-              onClick={clearCompleted}
-              className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium text-sm"
-            >
-              Clear Completed
-            </button>
+          <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div className="flex gap-2 w-full sm:w-auto">
+              <button
+                onClick={() => setFilter('all')}
+                className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg font-semibold transition-all text-sm sm:text-base ${
+                  filter === 'all'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow'
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => setFilter('pending')}
+                className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg font-semibold transition-all text-sm sm:text-base ${
+                  filter === 'pending'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow'
+                }`}
+              >
+                Pending
+              </button>
+              <button
+                onClick={() => setFilter('completed')}
+                className={`flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg font-semibold transition-all text-sm sm:text-base ${
+                  filter === 'completed'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'bg-white text-gray-700 hover:bg-gray-50 shadow'
+                }`}
+              >
+                Completed
+              </button>
+            </div>
+            
+            {hasCompletedTasks && (
+              <button
+                onClick={clearCompleted}
+                className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 text-red-600 hover:bg-red-50 bg-white rounded-lg transition-all font-semibold shadow text-sm sm:text-base"
+              >
+                Clear Completed
+              </button>
+            )}
           </div>
         )}
 
         {/* Task List */}
-        <div className="bg-white rounded-lg shadow-md">
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           {filteredTasks.length === 0 ? (
-            <div className="p-8 text-center text-gray-500">
-              {tasks.length === 0
-                ? 'No tasks yet. Add your first task above!'
-                : `No ${filter} tasks`}
+            <div className="p-8 sm:p-12 text-center">
+              <div className="text-gray-400 mb-4">
+                <svg className="w-16 h-16 sm:w-20 sm:h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              </div>
+              <p className="text-gray-500 text-base sm:text-lg">
+                {tasks.length === 0
+                  ? 'No tasks yet. Add your first task above!'
+                  : `No ${filter} tasks`}
+              </p>
             </div>
           ) : (
             <ul className="divide-y divide-gray-200">
               {filteredTasks.map((task) => (
-                <li key={task.id} className="p-4 hover:bg-gray-50 transition-colors">
+                <li key={task.id} className="p-3 sm:p-4 hover:bg-gray-50 transition-colors">
                   {editingId === task.id ? (
                     // Edit Mode
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                       <input
                         type="text"
                         value={editingName}
                         onChange={(e) => setEditingName(e.target.value)}
-                        className="flex-1 px-3 py-2 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="flex-1 px-3 py-2 border-2 border-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                         autoFocus
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') saveEdit(task.id)
                           if (e.key === 'Escape') cancelEditing()
                         }}
                       />
-                      <button
-                        onClick={() => saveEdit(task.id)}
-                        className="px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-sm font-medium"
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={cancelEditing}
-                        className="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors text-sm font-medium"
-                      >
-                        Cancel
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => saveEdit(task.id)}
+                          className="flex-1 sm:flex-none px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-semibold"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={cancelEditing}
+                          className="flex-1 sm:flex-none px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm font-semibold"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     // View Mode
@@ -292,33 +314,42 @@ function App() {
                         type="checkbox"
                         checked={task.status === 'completed'}
                         onChange={() => toggleComplete(task.id)}
-                        className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                        className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 rounded-md focus:ring-2 focus:ring-blue-500 cursor-pointer flex-shrink-0"
                       />
-                      <span className={`flex-1 ${task.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+                      <span className={`flex-1 text-sm sm:text-base ${
+                        task.status === 'completed' 
+                          ? 'line-through text-gray-400' 
+                          : 'text-gray-800'
+                      }`}>
                         {task.name}
                       </span>
-                      <button
-                        onClick={() => startEditing(task)}
-                        className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded transition-colors text-sm font-medium"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => deleteTask(task.id)}
-                        className="px-3 py-1 text-red-600 hover:bg-red-50 rounded transition-colors text-sm font-medium"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
+                      <div className="flex gap-2 flex-shrink-0">
+<button
+onClick={() => startEditing(task)}
+className="px-3 py-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors text-sm font-semibold"
+>
+Edit
+</button>
+<button
+onClick={() => deleteTask(task.id)}
+className="px-3 py-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm font-semibold"
+>
+Delete
+</button>
+</div>
+</div>
+)}
+</li>
+))}
+</ul>
+)}
+</div>
+ {/* Footer */}
+    <div className="mt-8 text-center text-gray-500 text-sm">
+      <p>Thank You</p>
     </div>
-  )
-}
-
+  </div>
+</div>
+)
+} 
 export default App

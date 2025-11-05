@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const API_URL = 'http://localhost:5000/api'
+const STORAGE_KEY = 'taskManager_tasks'
 
 function App() {
   const [tasks, setTasks] = useState([])
@@ -10,9 +11,27 @@ function App() {
   const [editingId, setEditingId] = useState(null)
   const [editingName, setEditingName] = useState('')
 
+  // Load tasks from localStorage on mount
   useEffect(() => {
-    fetchTasks()
+    const savedTasks = localStorage.getItem(STORAGE_KEY)
+    if (savedTasks) {
+      try {
+        setTasks(JSON.parse(savedTasks))
+      } catch (error) {
+        console.error('Error loading tasks from localStorage:', error)
+        fetchTasks()
+      }
+    } else {
+      fetchTasks()
+    }
   }, [])
+
+  // Save tasks to localStorage whenever they change
+  useEffect(() => {
+    if (tasks.length > 0 || localStorage.getItem(STORAGE_KEY)) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
+    }
+  }, [tasks])
 
   const fetchTasks = async () => {
     try {
@@ -148,7 +167,7 @@ function App() {
           <div className="mb-4 flex justify-end">
             <button
               onClick={clearCompleted}
-              className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm cursor-pointer font-medium"
+              className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium text-sm"
             >
               Clear Completed
             </button>
@@ -227,4 +246,5 @@ function App() {
     </div>
   )
 }
+
 export default App

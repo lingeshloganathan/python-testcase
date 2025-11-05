@@ -15,7 +15,9 @@ def health():
 
 @app.route('/api/tasks', methods=['GET'])
 def get_tasks():
-    return jsonify({'tasks': tasks})
+    # Sort by created_at to ensure order of creation
+    sorted_tasks = sorted(tasks, key=lambda x: x['created_at'])
+    return jsonify({'tasks': sorted_tasks})
 
 @app.route('/api/tasks', methods=['POST'])
 def add_task():
@@ -36,3 +38,4 @@ def add_task():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+

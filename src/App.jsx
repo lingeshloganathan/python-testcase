@@ -7,6 +7,8 @@ function App() {
   const [tasks, setTasks] = useState([])
   const [taskName, setTaskName] = useState('')
   const [loading, setLoading] = useState(false)
+  const [editingId, setEditingId] = useState(null)
+  const [editingName, setEditingName] = useState('')
 
   useEffect(() => {
     fetchTasks()
@@ -51,6 +53,33 @@ function App() {
     }
   }
 
+  const startEditing = (task) => {
+    setEditingId(task.id)
+    setEditingName(task.name)
+  }
+
+  const cancelEditing = () => {
+    setEditingId(null)
+    setEditingName('')
+  }
+
+  const saveEdit = async (taskId) => {
+    if (!editingName.trim()) return
+    
+    try {
+      const response = await axios.put(`${API_URL}/tasks/${taskId}`, {
+        name: editingName
+      })
+      setTasks(tasks.map(task => 
+        task.id === taskId ? response.data.task : task
+      ))
+      setEditingId(null)
+      setEditingName('')
+    } catch (error) {
+      console.error('Error updating task:', error)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -89,17 +118,53 @@ function App() {
             <ul className="divide-y divide-gray-200">
               {tasks.map((task) => (
                 <li key={task.id} className="p-4 hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center gap-3">
-                    <input
-                      type="checkbox"
-                      checked={task.status === 'completed'}
-                      onChange={() => toggleComplete(task.id)}
-                      className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                    />
-                    <span className={`flex-1 ${task.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-800'}`}>
-                      {task.name}
-                    </span>
-                  </div>
+                  {editingId === task.id ? (
+                    // Edit Mode
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={editingName}
+                        onChange={(e) => setEditingName(e.target.value)}
+                        className="flex-1 px-3 py-2 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        autoFocus
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') saveEdit(task.id)
+                          if (e.key === 'Escape') cancelEditing()
+                        }}
+                      />
+                      <button
+                        onClick={() => saveEdit(task.id)}
+                        className="px-3 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-sm font-medium"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={cancelEditing}
+                        className="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors text-sm font-medium"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    // View Mode
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={task.status === 'completed'}
+                        onChange={() => toggleComplete(task.id)}
+                        className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                      />
+                      <span className={`flex-1 ${task.status === 'completed' ? 'line-through text-gray-400' : 'text-gray-800'}`}>
+                        {task.name}
+                      </span>
+                      <button
+                        onClick={() => startEditing(task)}
+                        className="px-3 py-1 text-blue-600 hover:bg-blue-50 rounded transition-colors text-sm font-medium"
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>

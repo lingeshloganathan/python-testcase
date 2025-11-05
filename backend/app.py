@@ -48,6 +48,22 @@ def complete_task(task_id):
     
     return jsonify({'task': task})
 
+@app.route('/api/tasks/<task_id>', methods=['PUT'])
+def update_task(task_id):
+    task = next((t for t in tasks if t['id'] == task_id), None)
+    
+    if not task:
+        return jsonify({'error': 'Task not found'}), 404
+    
+    data = request.get_json()
+    
+    if not data or 'name' not in data:
+        return jsonify({'error': 'Task name is required'}), 400
+    
+    task['name'] = data['name']
+    
+    return jsonify({'task': task})
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 

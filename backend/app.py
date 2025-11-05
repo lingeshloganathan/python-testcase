@@ -6,7 +6,7 @@ import uuid
 app = Flask(__name__)
 CORS(app)
 
-# In-memory storage (will be replaced with database later)
+# In-memory storage
 tasks = []
 
 @app.route('/api/health', methods=['GET'])
@@ -15,8 +15,17 @@ def health():
 
 @app.route('/api/tasks', methods=['GET'])
 def get_tasks():
-    # Sort by created_at to ensure order of creation
-    sorted_tasks = sorted(tasks, key=lambda x: x['created_at'])
+    status_filter = request.args.get('status')
+    
+    filtered_tasks = tasks
+    
+    if status_filter == 'completed':
+        filtered_tasks = [t for t in tasks if t['status'] == 'completed']
+    elif status_filter == 'pending':
+        filtered_tasks = [t for t in tasks if t['status'] == 'pending']
+    
+    # Sort by created_at
+    sorted_tasks = sorted(filtered_tasks, key=lambda x: x['created_at'])
     return jsonify({'tasks': sorted_tasks})
 
 @app.route('/api/tasks', methods=['POST'])
@@ -43,7 +52,6 @@ def complete_task(task_id):
     if not task:
         return jsonify({'error': 'Task not found'}), 404
     
-    # Toggle completion status
     task['status'] = 'completed' if task['status'] == 'pending' else 'pending'
     
     return jsonify({'task': task})
@@ -84,4 +92,3 @@ def clear_completed():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
-

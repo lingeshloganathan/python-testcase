@@ -93,6 +93,28 @@ function App() {
     }
   }
 
+  const clearCompleted = async () => {
+    const completedCount = tasks.filter(t => t.status === 'completed').length
+    
+    if (completedCount === 0) {
+      alert('No completed tasks to clear')
+      return
+    }
+    
+    if (!window.confirm(`Clear ${completedCount} completed task(s)?`)) {
+      return
+    }
+    
+    try {
+      await axios.delete(`${API_URL}/tasks/completed`)
+      setTasks(tasks.filter(task => task.status !== 'completed'))
+    } catch (error) {
+      console.error('Error clearing completed tasks:', error)
+    }
+  }
+
+  const hasCompletedTasks = tasks.some(task => task.status === 'completed')
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
@@ -120,6 +142,18 @@ function App() {
             </button>
           </div>
         </form>
+
+        {/* Clear Completed Button */}
+        {hasCompletedTasks && (
+          <div className="mb-4 flex justify-end">
+            <button
+              onClick={clearCompleted}
+              className="px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors text-sm cursor-pointer font-medium"
+            >
+              Clear Completed
+            </button>
+          </div>
+        )}
 
         {/* Task List */}
         <div className="bg-white rounded-lg shadow-md">
@@ -193,5 +227,4 @@ function App() {
     </div>
   )
 }
-
 export default App

@@ -10,6 +10,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [editingName, setEditingName] = useState('')
+  const [filter, setFilter] = useState('all') // 'all', 'pending', 'completed'
 
   // Load tasks from localStorage on mount
   useEffect(() => {
@@ -132,6 +133,14 @@ function App() {
     }
   }
 
+  // Filter tasks based on selected filter
+  const filteredTasks = tasks.filter(task => {
+    if (filter === 'all') return true
+    if (filter === 'pending') return task.status === 'pending'
+    if (filter === 'completed') return task.status === 'completed'
+    return true
+  })
+
   const hasCompletedTasks = tasks.some(task => task.status === 'completed')
 
   return (
@@ -162,6 +171,42 @@ function App() {
           </div>
         </form>
 
+        {/* Filter Buttons */}
+        {tasks.length > 0 && (
+          <div className="mb-4 flex gap-2 justify-center">
+            <button
+              onClick={() => setFilter('all')}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                filter === 'all'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              All
+            </button>
+            <button
+              onClick={() => setFilter('pending')}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                filter === 'pending'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              Pending
+            </button>
+            <button
+              onClick={() => setFilter('completed')}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                filter === 'completed'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              Completed
+            </button>
+          </div>
+        )}
+
         {/* Clear Completed Button */}
         {hasCompletedTasks && (
           <div className="mb-4 flex justify-end">
@@ -176,13 +221,15 @@ function App() {
 
         {/* Task List */}
         <div className="bg-white rounded-lg shadow-md">
-          {tasks.length === 0 ? (
+          {filteredTasks.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
-              No tasks yet. Add your first task above!
+              {tasks.length === 0
+                ? 'No tasks yet. Add your first task above!'
+                : `No ${filter} tasks`}
             </div>
           ) : (
             <ul className="divide-y divide-gray-200">
-              {tasks.map((task) => (
+              {filteredTasks.map((task) => (
                 <li key={task.id} className="p-4 hover:bg-gray-50 transition-colors">
                   {editingId === task.id ? (
                     // Edit Mode

@@ -28,6 +28,18 @@ def get_tasks():
     sorted_tasks = sorted(filtered_tasks, key=lambda x: x['created_at'])
     return jsonify({'tasks': sorted_tasks})
 
+@app.route('/api/tasks/count', methods=['GET'])
+def get_task_count():
+    pending_count = len([t for t in tasks if t['status'] == 'pending'])
+    completed_count = len([t for t in tasks if t['status'] == 'completed'])
+    total_count = len(tasks)
+    
+    return jsonify({
+        'pending': pending_count,
+        'completed': completed_count,
+        'total': total_count
+    })
+
 @app.route('/api/tasks', methods=['POST'])
 def add_task():
     data = request.get_json()

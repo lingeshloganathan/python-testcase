@@ -141,14 +141,41 @@ function App() {
     return true
   })
 
+  // Calculate task counts
+  const pendingCount = tasks.filter(task => task.status === 'pending').length
+  const completedCount = tasks.filter(task => task.status === 'completed').length
+  const totalCount = tasks.length
+
   const hasCompletedTasks = tasks.some(task => task.status === 'completed')
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">
           Task Manager
         </h1>
+
+        {/* Task Counter */}
+        {totalCount > 0 && (
+          <div className="mb-8 text-center">
+            <div className="inline-flex items-center gap-6 bg-white px-6 py-3 rounded-lg shadow-sm">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">{pendingCount}</div>
+                <div className="text-xs text-gray-600 uppercase tracking-wide">Pending</div>
+              </div>
+              <div className="h-8 w-px bg-gray-300"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">{completedCount}</div>
+                <div className="text-xs text-gray-600 uppercase tracking-wide">Completed</div>
+              </div>
+              <div className="h-8 w-px bg-gray-300"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-gray-700">{totalCount}</div>
+                <div className="text-xs text-gray-600 uppercase tracking-wide">Total</div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Add Task Form */}
         <form onSubmit={addTask} className="mb-8">

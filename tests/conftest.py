@@ -30,5 +30,4 @@ def results_dir():
 
 @pytest.fixture(scope="session")
 def csv_file(results_dir):
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    return os.path.join(results_dir, f"test_results_{timestamp}.csv")
+    return os.path.join(results_dir, "test_results.csv")

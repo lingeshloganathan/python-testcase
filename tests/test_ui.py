@@ -62,14 +62,9 @@ def write_to_csv(csv_file, test_name, status, message="", test_case_id=""):
         "Message": [message],
         "Timestamp": [datetime.now().isoformat()]
     })
-    
-    try:
-        existing_df = pd.read_csv(csv_file)
-        df = pd.concat([existing_df, df], ignore_index=True)
-    except FileNotFoundError:
-        pass
-    
-    df.to_csv(csv_file, index=False)
+
+    file_exists = os.path.exists(csv_file)
+    df.to_csv(csv_file, mode='a', header=not file_exists, index=False)
 
 def test_ui_load(driver, csv_file):
     try:
@@ -99,7 +94,7 @@ def test_ui_load(driver, csv_file):
         
         write_to_csv(csv_file, "UI Load", "PASSED", test_case_id="TC-17")
     except Exception as e:
-        write_to_csv(csv_file, "UI Load", "FAILED", str(e), test_case_id="TC-17")
+        write_to_csv(csv_file, "UI Load", "FAILED", traceback.format_exc(), test_case_id="TC-17")
         raise
 
 def test_add_task(driver, csv_file):
@@ -145,7 +140,7 @@ def test_add_task(driver, csv_file):
         
         write_to_csv(csv_file, "Add Task UI", "PASSED", test_case_id="TC-01")
     except Exception as e:
-        write_to_csv(csv_file, "Add Task UI", "FAILED", str(e), test_case_id="TC-01")
+        write_to_csv(csv_file, "Add Task UI", "FAILED", traceback.format_exc(), test_case_id="TC-01")
         raise
 
 def test_complete_task(driver, csv_file):
@@ -207,7 +202,7 @@ def test_complete_task(driver, csv_file):
         
         write_to_csv(csv_file, "Complete Task UI", "PASSED", test_case_id="TC-04")
     except Exception as e:
-        write_to_csv(csv_file, "Complete Task UI", "FAILED", str(e), test_case_id="TC-04")
+        write_to_csv(csv_file, "Complete Task UI", "FAILED", traceback.format_exc(), test_case_id="TC-04")
         raise
 
 def test_filter_tasks(driver, csv_file):
@@ -251,5 +246,5 @@ def test_filter_tasks(driver, csv_file):
         
         write_to_csv(csv_file, "Filter Tasks UI", "PASSED", test_case_id="TC-11")
     except Exception as e:
-        write_to_csv(csv_file, "Filter Tasks UI", "FAILED", str(e), test_case_id="TC-11")
+        write_to_csv(csv_file, "Filter Tasks UI", "FAILED", traceback.format_exc(), test_case_id="TC-11")
         raise

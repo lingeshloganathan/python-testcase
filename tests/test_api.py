@@ -2,6 +2,8 @@ import pytest
 import requests
 import pandas as pd
 from datetime import datetime
+import os
+import traceback
 
 def write_to_csv(csv_file, test_name, status, message="", test_case_id=""):
     df = pd.DataFrame({
@@ -11,14 +13,9 @@ def write_to_csv(csv_file, test_name, status, message="", test_case_id=""):
         "Message": [message],
         "Timestamp": [datetime.now().isoformat()]
     })
-    
-    try:
-        existing_df = pd.read_csv(csv_file)
-        df = pd.concat([existing_df, df], ignore_index=True)
-    except FileNotFoundError:
-        pass
-    
-    df.to_csv(csv_file, index=False)
+
+    file_exists = os.path.exists(csv_file)
+    df.to_csv(csv_file, mode='a', header=not file_exists, index=False)
 
 def test_health_check(api_url, csv_file):
     try:
@@ -27,7 +24,7 @@ def test_health_check(api_url, csv_file):
         assert response.json()["status"] == "ok"
         write_to_csv(csv_file, "Health Check", "PASSED")
     except Exception as e:
-        write_to_csv(csv_file, "Health Check", "FAILED", str(e))
+        write_to_csv(csv_file, "Health Check", "FAILED", traceback.format_exc())
         raise
 
 def test_get_tasks(api_url, csv_file):
@@ -38,7 +35,7 @@ def test_get_tasks(api_url, csv_file):
         assert isinstance(tasks, list)
         write_to_csv(csv_file, "Get Tasks List", "PASSED", test_case_id="TC-03")
     except Exception as e:
-        write_to_csv(csv_file, "Get Tasks List", "FAILED", str(e), test_case_id="TC-03")
+        write_to_csv(csv_file, "Get Tasks List", "FAILED", traceback.format_exc(), test_case_id="TC-03")
         raise
 
 def test_task_workflow(api_url, csv_file):
@@ -68,7 +65,7 @@ def test_task_workflow(api_url, csv_file):
         write_to_csv(csv_file, "Delete Task", "PASSED", test_case_id="TC-07")
 
     except Exception as e:
-        write_to_csv(csv_file, "Task Workflow", "FAILED", str(e), test_case_id="TC-01,TC-06,TC-04,TC-07")
+        write_to_csv(csv_file, "Task Workflow", "FAILED", traceback.format_exc(), test_case_id="TC-01,TC-06,TC-04,TC-07")
         raise
 
 def test_task_counts(api_url, csv_file):
@@ -79,5 +76,5 @@ def test_task_counts(api_url, csv_file):
         assert all(k in counts for k in ["pending", "completed", "total"])
         write_to_csv(csv_file, "Task Counts", "PASSED", test_case_id="TC-14")
     except Exception as e:
-        write_to_csv(csv_file, "Task Counts", "FAILED", str(e), test_case_id="TC-14")
+        write_to_csv(csv_file, "Task Counts", "FAILED", traceback.format_exc(), test_case_id="TC-14")
         raise

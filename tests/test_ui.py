@@ -54,8 +54,9 @@ def driver():
     yield driver
     driver.quit()
 
-def write_to_csv(csv_file, test_name, status, message=""):
+def write_to_csv(csv_file, test_name, status, message="", test_case_id=""):
     df = pd.DataFrame({
+        "Test Case ID": [test_case_id],
         "Test Name": [test_name],
         "Status": [status],
         "Message": [message],
@@ -96,9 +97,9 @@ def test_ui_load(driver, csv_file):
         driver.save_screenshot(screenshot_path)
         print(f"Screenshot saved to: {screenshot_path}")
         
-        write_to_csv(csv_file, "UI Load", "PASSED")
+        write_to_csv(csv_file, "UI Load", "PASSED", test_case_id="TC-17")
     except Exception as e:
-        write_to_csv(csv_file, "UI Load", "FAILED", str(e))
+        write_to_csv(csv_file, "UI Load", "FAILED", str(e), test_case_id="TC-17")
         raise
 
 def test_add_task(driver, csv_file):
@@ -142,9 +143,9 @@ def test_add_task(driver, csv_file):
         driver.save_screenshot(screenshot_path)
         print(f"Screenshot saved to: {screenshot_path}")
         
-        write_to_csv(csv_file, "Add Task UI", "PASSED")
+        write_to_csv(csv_file, "Add Task UI", "PASSED", test_case_id="TC-01")
     except Exception as e:
-        write_to_csv(csv_file, "Add Task UI", "FAILED", str(e))
+        write_to_csv(csv_file, "Add Task UI", "FAILED", str(e), test_case_id="TC-01")
         raise
 
 def test_complete_task(driver, csv_file):
@@ -204,9 +205,9 @@ def test_complete_task(driver, csv_file):
         driver.save_screenshot(screenshot_path)
         print(f"Screenshot saved to: {screenshot_path}")
         
-        write_to_csv(csv_file, "Complete Task UI", "PASSED")
+        write_to_csv(csv_file, "Complete Task UI", "PASSED", test_case_id="TC-04")
     except Exception as e:
-        write_to_csv(csv_file, "Complete Task UI", "FAILED", str(e))
+        write_to_csv(csv_file, "Complete Task UI", "FAILED", str(e), test_case_id="TC-04")
         raise
 
 def test_filter_tasks(driver, csv_file):
@@ -248,7 +249,7 @@ def test_filter_tasks(driver, csv_file):
         driver.save_screenshot(screenshot_path)
         print(f"Screenshot saved to: {screenshot_path}")
         
-        write_to_csv(csv_file, "Filter Tasks UI", "PASSED")
+        write_to_csv(csv_file, "Filter Tasks UI", "PASSED", test_case_id="TC-11")
     except Exception as e:
-        write_to_csv(csv_file, "Filter Tasks UI", "FAILED", str(e))
+        write_to_csv(csv_file, "Filter Tasks UI", "FAILED", str(e), test_case_id="TC-11")
         raise

@@ -8,3 +8,15 @@ TC-17,UI Load,PASSED,,2025-11-06T18:48:41.432160
 TC-01,Add Task UI,PASSED,,2025-11-06T18:48:44.286089
 TC-04,Complete Task UI,PASSED,,2025-11-06T18:48:49.861790
 TC-11,Filter Tasks UI,PASSED,,2025-11-06T18:49:01.192011
+TC-17,UI Load,PASSED,,2025-11-06T19:00:34.937482
+TC-01,Add Task UI,PASSED,,2025-11-06T19:00:37.362623
+TC-04,Complete Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\data-learn\python-testcase\tests\test_ui.py"", line 187, in test_complete_task
+    WebDriverWait(driver, 10).until(check_task_completed)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File ""D:\data-learn\python-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+",2025-11-06T19:00:51.895850
+TC-11,Filter Tasks UI,PASSED,,2025-11-06T19:01:02.366417

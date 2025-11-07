@@ -105,6 +105,7 @@ def clear_completed():
 @app.route('/api/tasks/all', methods=['DELETE'])
 def clear_all_tasks():
     #going to clear all the tasks
+    #test -2
     global tasks
     tasks.clear()  # Clear all tasks
     return jsonify({'message': 'All tasks cleared successfully'})

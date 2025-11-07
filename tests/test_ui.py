@@ -143,6 +143,7 @@ def test_add_task(driver, csv_file):
         write_to_csv(csv_file, "Add Task UI", "FAILED", traceback.format_exc(), test_case_id="TC-01")
         raise
 
+
 def test_complete_task(driver, csv_file):
     try:
         print("\nStarting Complete Task Test...")

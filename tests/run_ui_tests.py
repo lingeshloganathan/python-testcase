@@ -17,6 +17,7 @@ def main():
     chrome_options.add_argument('--log-level=0')
     chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
     
+    
     # Initialize Chrome WebDriver
     print("Setting up Chrome WebDriver...")
     service = Service(ChromeDriverManager().install())

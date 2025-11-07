@@ -6,6 +6,8 @@ import os
 import pandas as pd
 from datetime import datetime
 
+
+
 @pytest.fixture(scope="session")
 def driver():
     chrome_options = webdriver.ChromeOptions()

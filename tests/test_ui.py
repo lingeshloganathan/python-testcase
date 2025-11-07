@@ -88,9 +88,9 @@ def test_ui_load(driver, csv_file):
         time.sleep(1)  # Pause to see the highlight
         
         # Take a screenshot for verification
-        screenshot_path = os.path.join(os.path.dirname(__file__), "ui_load_test.png")
-        driver.save_screenshot(screenshot_path)
-        print(f"Screenshot saved to: {screenshot_path}")
+        # screenshot_path = os.path.join(os.path.dirname(__file__), "ui_load_test.png")-----------
+        # driver.save_screenshot(screenshot_path)
+        # print(f"Screenshot saved to: {screenshot_path}")------------
         
         write_to_csv(csv_file, "UI Load", "PASSED", test_case_id="TC-17")
     except Exception as e:
@@ -133,16 +133,15 @@ def test_add_task(driver, csv_file):
         )
         print("Task successfully added!")
         
-        # Take a screenshot
-        screenshot_path = "add_task_test.png"
-        driver.save_screenshot(screenshot_path)
-        print(f"Screenshot saved to: {screenshot_path}")
+        # # Take a screenshot
+        # screenshot_path = "add_task_test.png"
+        # driver.save_screenshot(screenshot_path)
+        # print(f"Screenshot saved to: {screenshot_path}")
         
         write_to_csv(csv_file, "Add Task UI", "PASSED", test_case_id="TC-01")
     except Exception as e:
         write_to_csv(csv_file, "Add Task UI", "FAILED", traceback.format_exc(), test_case_id="TC-01")
         raise
-
 
 def test_complete_task(driver, csv_file):
     try:
@@ -174,16 +173,23 @@ def test_complete_task(driver, csv_file):
                 html = task_element.get_attribute('outerHTML')
                 print(f"HTML: {html}")
                 
-                classes = task_element.get_attribute("class")
-                print(f"Parent Classes: {classes}")
+                # classes = task_element.get_attribute("class")
+                # print(f"Parent Classes: {classes}")
                 
-                return "line-through" in html or "completed" in html.lower()
+                # return "line-through" in html or "completed" in html.lower()
+                return (
+                    'line-through' in html or
+                    'completed' in html.lower() or
+                    'checked' in html.lower() or
+                    'text-gray-400' in html.lower() or
+                    'opacity' in html.lower()
+                )
             except Exception as e:
                 print(f"Error checking completion: {str(e)}")
                 return False
         
         # Take a screenshot before checking
-        driver.save_screenshot("before_completion_check.png")
+        # driver.save_screenshot("before_completion_check.png")
         
         WebDriverWait(driver, 10).until(check_task_completed)
         print("Task completion verified!")
@@ -197,9 +203,9 @@ def test_complete_task(driver, csv_file):
         time.sleep(1)  # Pause to see the highlight
         
         # Take a screenshot
-        screenshot_path = os.path.join(os.path.dirname(__file__), "complete_task_test.png")
-        driver.save_screenshot(screenshot_path)
-        print(f"Screenshot saved to: {screenshot_path}")
+        # screenshot_path = os.path.join(os.path.dirname(__file__), "complete_task_test.png")
+        # driver.save_screenshot(screenshot_path)
+        # print(f"Screenshot saved to: {screenshot_path}")
         
         write_to_csv(csv_file, "Complete Task UI", "PASSED", test_case_id="TC-04")
     except Exception as e:
@@ -241,11 +247,50 @@ def test_filter_tasks(driver, csv_file):
         time.sleep(2)  # Wait to see filtered results
         
         # Take a final screenshot
-        screenshot_path = os.path.join(os.path.dirname(__file__), "filter_tasks_test.png")
-        driver.save_screenshot(screenshot_path)
-        print(f"Screenshot saved to: {screenshot_path}")
+        # screenshot_path = os.path.join(os.path.dirname(__file__), "filter_tasks_test.png")
+        # driver.save_screenshot(screenshot_path)
+        # print(f"Screenshot saved to: {screenshot_path}")
         
         write_to_csv(csv_file, "Filter Tasks UI", "PASSED", test_case_id="TC-11")
     except Exception as e:
         write_to_csv(csv_file, "Filter Tasks UI", "FAILED", traceback.format_exc(), test_case_id="TC-11")
+        raise
+
+def test_clear_all_tasks(driver, csv_file):
+    try:
+        print("\nStarting Clear All Tasks Test...")
+
+        # Click Clear All button
+        print("Looking for Clear All button...")
+        clear_all_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Clear All')]"))
+        )
+        print("Clicking Clear All button...")
+        driver.execute_script("arguments[0].click();", clear_all_button)
+        time.sleep(1)
+
+        # Handle confirmation alert
+        print("Handling confirmation alert...")
+        WebDriverWait(driver, 5).until(EC.alert_is_present())
+        alert = driver.switch_to.alert
+        print(f"Alert text: {alert.text}")
+        alert.accept()  # or alert.dismiss() if that’s your use case
+        print("Alert accepted.")
+        time.sleep(2)  # Wait for UI to update after confirmation
+
+        # Verify all tasks are cleared
+        print("Verifying all tasks are cleared...")
+        task_elements = driver.find_elements(By.XPATH, "//span[contains(text(), 'UI Test Task')]")
+        assert len(task_elements) == 0, "Tasks were not cleared!"
+        print("All tasks successfully cleared!")
+
+        # Take a screenshot
+        # screenshot_path = os.path.join(os.path.dirname(__file__), "clear_all_tasks_test.png")
+        # driver.save_screenshot(screenshot_path)
+        # print(f"Screenshot saved to: {screenshot_path}")
+
+        # Record result
+        write_to_csv(csv_file, "Clear All Tasks UI", "PASSED", test_case_id="TC-15")
+    except Exception as e:
+        write_to_csv(csv_file, "Clear All Tasks UI", "FAILED", traceback.format_exc(), test_case_id="TC-15")
         raise

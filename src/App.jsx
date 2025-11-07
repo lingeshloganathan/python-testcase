@@ -131,6 +131,24 @@ function App() {
     }
   }
 
+  const clearAllTasks = async () => {
+    if (tasks.length === 0) {
+      alert('No tasks to clear')
+      return
+    }
+    
+    if (!window.confirm(`Are you sure you want to clear all ${tasks.length} tasks? This action cannot be undone.`)) {
+      return
+    }
+    
+    try {
+      await axios.delete(`${API_URL}/tasks/all`)
+      setTasks([])
+    } catch (error) {
+      console.error('Error clearing all tasks:', error)
+    }
+  }
+
   const filteredTasks = tasks.filter(task => {
     if (filter === 'all') return true
     if (filter === 'pending') return task.status === 'pending'
@@ -248,14 +266,24 @@ function App() {
               </button>
             </div>
             
-            {hasCompletedTasks && (
-              <button
-                onClick={clearCompleted}
-                className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 text-red-600 hover:bg-red-50 bg-white rounded-lg transition-all font-semibold shadow text-sm sm:text-base"
-              >
-                Clear Completed
-              </button>
-            )}
+            <div className="flex gap-2 flex-col sm:flex-row">
+              {hasCompletedTasks && (
+                <button
+                  onClick={clearCompleted}
+                  className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 text-red-600 hover:bg-red-50 bg-white rounded-lg transition-all font-semibold shadow text-sm sm:text-base"
+                >
+                  Clear Completed
+                </button>
+              )}
+              {tasks.length > 0 && (
+                <button
+                  onClick={clearAllTasks}
+                  className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-2.5 text-red-700 hover:bg-red-100 bg-white rounded-lg transition-all font-semibold shadow text-sm sm:text-base border border-red-200"
+                >
+                  Clear All Tasks
+                </button>
+              )}
+            </div>
           </div>
         )}
 

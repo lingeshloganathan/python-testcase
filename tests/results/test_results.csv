@@ -20,3 +20,970 @@ selenium.common.exceptions.TimeoutException: Message:
 
 ",2025-11-06T19:00:51.895850
 TC-11,Filter Tasks UI,PASSED,,2025-11-06T19:01:02.366417
+TC-17,UI Load,PASSED,,2025-11-07T11:33:06.534659
+TC-01,Add Task UI,PASSED,,2025-11-07T11:33:09.838910
+TC-04,Complete Task UI,PASSED,,2025-11-07T11:33:15.700050
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T11:33:25.848010
+TC-17,UI Load,PASSED,,2025-11-07T11:39:18.158728
+TC-01,Add Task UI,PASSED,,2025-11-07T11:39:21.293213
+TC-04,Complete Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 188, in test_complete_task
+    WebDriverWait(driver, 10).until(check_task_completed)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+
+",2025-11-07T11:39:35.996190
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T11:39:46.636139
+TC-17,UI Load,PASSED,,2025-11-07T11:53:33.765397
+TC-01,Add Task UI,PASSED,,2025-11-07T11:53:36.355558
+TC-04,Complete Task UI,PASSED,,2025-11-07T11:53:41.778946
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T11:53:51.774445
+TC-17,UI Load,PASSED,,2025-11-07T11:54:15.196172
+TC-01,Add Task UI,PASSED,,2025-11-07T11:54:17.793304
+TC-04,Complete Task UI,PASSED,,2025-11-07T11:54:23.250059
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T11:54:33.171788
+TC-01,Add Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 105, in test_add_task
+    task_input = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@placeholder='Enter a new task...']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T11:56:07.596969
+TC-04,Complete Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 152, in test_complete_task
+    checkbox = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@type='checkbox']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T11:56:18.159149
+TC-11,Filter Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 222, in test_filter_tasks
+    completed_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[text()='Completed']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T11:56:28.361074
+TC-17,UI Load,PASSED,,2025-11-07T11:58:23.012264
+TC-04,Complete Task UI,PASSED,,2025-11-07T11:58:28.405459
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T11:58:38.128586
+TC-17,UI Load,PASSED,,2025-11-07T11:59:04.632297
+TC-04,Complete Task UI,PASSED,,2025-11-07T11:59:09.977118
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T11:59:19.873537
+TC-17,UI Load,PASSED,,2025-11-07T12:00:42.714406
+TC-01,Add Task UI,PASSED,,2025-11-07T12:00:45.314809
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T12:00:55.142665
+TC-17,UI Load,PASSED,,2025-11-07T12:01:33.752413
+TC-01,Add Task UI,PASSED,,2025-11-07T12:01:36.396723
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T12:01:46.250218
+TC-17,UI Load,PASSED,,2025-11-07T12:02:46.892710
+TC-01,Add Task UI,PASSED,,2025-11-07T12:02:49.532356
+TC-04,Complete Task UI,PASSED,,2025-11-07T12:02:54.899207
+TC-17,UI Load,PASSED,,2025-11-07T12:05:07.925293
+TC-01,Add Task UI,PASSED,,2025-11-07T12:05:10.599002
+TC-04,Complete Task UI,PASSED,,2025-11-07T12:05:15.948484
+,Health Check,PASSED,,2025-11-07T12:21:40.923125
+TC-03,Get Tasks List,PASSED,,2025-11-07T12:21:42.960342
+TC-01,Create Task,PASSED,,2025-11-07T12:21:45.011259
+TC-06,Update Task,PASSED,,2025-11-07T12:21:47.064064
+TC-04,Complete Task,PASSED,,2025-11-07T12:21:49.108719
+TC-07,Delete Task,PASSED,,2025-11-07T12:21:51.155191
+TC-14,Task Counts,PASSED,,2025-11-07T12:21:53.215414
+TC-15,Clear All Tasks,PASSED,,2025-11-07T12:22:01.373380
+TC-17,UI Load,PASSED,,2025-11-07T12:24:14.086861
+TC-01,Add Task UI,PASSED,,2025-11-07T12:24:17.188280
+TC-04,Complete Task UI,PASSED,,2025-11-07T12:24:22.488414
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T12:24:32.244984
+TC-15,Clear All Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 275, in test_clear_all_tasks
+    task_elements = driver.find_elements(By.XPATH, ""//span[contains(text(), 'UI Test Task')]"")
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py"", line 967, in find_elements
+    return self.execute(Command.FIND_ELEMENTS, {""using"": by, ""value"": value})[""value""] or []
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py"", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py"", line 232, in check_response
+    raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: Are you sure you want to clear all 1 tasks? This action cannot be undone.
+Message: unexpected alert open: {Alert text : Are you sure you want to clear all 1 tasks? This action cannot be undone.}
+  (Session info: chrome=141.0.7390.123)
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xc1d49e]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T12:24:34.353887
+TC-17,UI Load,PASSED,,2025-11-07T12:25:05.782938
+TC-01,Add Task UI,PASSED,,2025-11-07T12:25:08.269341
+TC-04,Complete Task UI,PASSED,,2025-11-07T12:25:13.612733
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T12:25:23.385177
+TC-15,Clear All Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 275, in test_clear_all_tasks
+    task_elements = driver.find_elements(By.XPATH, ""//span[contains(text(), 'UI Test Task')]"")
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py"", line 967, in find_elements
+    return self.execute(Command.FIND_ELEMENTS, {""using"": by, ""value"": value})[""value""] or []
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py"", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py"", line 232, in check_response
+    raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: Are you sure you want to clear all 2 tasks? This action cannot be undone.
+Message: unexpected alert open: {Alert text : Are you sure you want to clear all 2 tasks? This action cannot be undone.}
+  (Session info: chrome=141.0.7390.123)
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xc1d49e]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T12:25:25.496729
+TC-17,UI Load,PASSED,,2025-11-07T12:27:09.900205
+TC-01,Add Task UI,PASSED,,2025-11-07T12:27:12.429099
+TC-04,Complete Task UI,PASSED,,2025-11-07T12:27:17.752085
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T12:27:27.579138
+TC-15,Clear All Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 275, in test_clear_all_tasks
+    task_elements = driver.find_elements(By.XPATH, ""//span[contains(text(), 'UI Test Task')]"")
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py"", line 967, in find_elements
+    return self.execute(Command.FIND_ELEMENTS, {""using"": by, ""value"": value})[""value""] or []
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py"", line 458, in execute
+    self.error_handler.check_response(response)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py"", line 232, in check_response
+    raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+selenium.common.exceptions.UnexpectedAlertPresentException: Alert Text: Are you sure you want to clear all 3 tasks? This action cannot be undone.
+Message: unexpected alert open: {Alert text : Are you sure you want to clear all 3 tasks? This action cannot be undone.}
+  (Session info: chrome=141.0.7390.123)
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xc1d49e]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T12:27:29.682677
+TC-17,UI Load,PASSED,,2025-11-07T12:33:17.897278
+TC-01,Add Task UI,PASSED,,2025-11-07T12:33:20.423598
+TC-04,Complete Task UI,PASSED,,2025-11-07T12:33:25.700663
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T12:33:35.588594
+TC-15,Clear All Tasks UI,PASSED,,2025-11-07T12:33:39.007774
+TC-17,UI Load,PASSED,,2025-11-07T12:41:49.908440
+TC-01,Add Task UI,PASSED,,2025-11-07T12:41:52.865018
+TC-04,Complete Task UI,PASSED,,2025-11-07T12:41:58.164148
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T12:42:07.909129
+TC-15,Clear All Tasks UI,PASSED,,2025-11-07T12:42:11.048926
+TC-17,UI Load,PASSED,,2025-11-07T12:43:58.715487
+TC-01,Add Task UI,PASSED,,2025-11-07T12:44:01.781925
+TC-04,Complete Task UI,PASSED,,2025-11-07T12:44:07.053300
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T12:44:16.710165
+TC-17,UI Load,PASSED,,2025-11-07T12:44:40.365557
+TC-01,Add Task UI,PASSED,,2025-11-07T12:44:42.929550
+TC-04,Complete Task UI,PASSED,,2025-11-07T12:44:48.226673
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T12:44:58.003125
+TC-17,UI Load,PASSED,,2025-11-07T13:05:02.766425
+TC-01,Add Task UI,PASSED,,2025-11-07T13:05:05.326624
+TC-04,Complete Task UI,PASSED,,2025-11-07T13:05:10.675336
+TC-15,Clear All Tasks UI,PASSED,,2025-11-07T13:05:13.824572
+TC-17,UI Load,PASSED,,2025-11-07T13:06:01.721823
+TC-01,Add Task UI,PASSED,,2025-11-07T13:06:04.731037
+TC-04,Complete Task UI,PASSED,,2025-11-07T13:06:10.033298
+TC-15,Clear All Tasks UI,PASSED,,2025-11-07T13:06:13.188577
+TC-17,UI Load,PASSED,,2025-11-07T13:54:05.239801
+TC-01,Add Task UI,PASSED,,2025-11-07T13:54:08.224348
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T13:54:17.985074
+TC-15,Clear All Tasks UI,PASSED,,2025-11-07T13:54:21.116940
+TC-17,UI Load,PASSED,,2025-11-07T14:03:30.761943
+TC-01,Add Task UI,PASSED,,2025-11-07T14:03:33.719606
+TC-11,Filter Tasks UI,PASSED,,2025-11-07T14:03:43.493228
+TC-15,Clear All Tasks UI,PASSED,,2025-11-07T14:03:46.640928
+TC-17,UI Load,PASSED,,2025-11-07T14:06:20.966999
+TC-04,Complete Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 151, in test_complete_task
+    checkbox = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@type='checkbox']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:06:31.042864
+TC-11,Filter Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 221, in test_filter_tasks
+    completed_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[text()='Completed']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:06:41.568755
+TC-15,Clear All Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 265, in test_clear_all_tasks
+    clear_all_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[contains(text(), 'Clear All')]""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:06:51.638655
+TC-17,UI Load,PASSED,,2025-11-07T14:07:32.786322
+TC-04,Complete Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 151, in test_complete_task
+    checkbox = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@type='checkbox']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:07:43.273558
+TC-11,Filter Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 221, in test_filter_tasks
+    completed_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[text()='Completed']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:07:54.309123
+TC-15,Clear All Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 265, in test_clear_all_tasks
+    clear_all_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[contains(text(), 'Clear All')]""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:08:04.370161
+TC-17,UI Load,PASSED,,2025-11-07T14:08:57.318817
+TC-04,Complete Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 151, in test_complete_task
+    checkbox = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@type='checkbox']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:09:07.821277
+TC-11,Filter Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 221, in test_filter_tasks
+    completed_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[text()='Completed']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:09:18.814813
+TC-15,Clear All Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 265, in test_clear_all_tasks
+    clear_all_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[contains(text(), 'Clear All')]""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:09:28.932119
+TC-17,UI Load,PASSED,,2025-11-07T14:10:34.754983
+TC-04,Complete Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 151, in test_complete_task
+    checkbox = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@type='checkbox']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:10:45.288556
+TC-11,Filter Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 221, in test_filter_tasks
+    completed_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[text()='Completed']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:10:55.868205
+TC-15,Clear All Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 265, in test_clear_all_tasks
+    clear_all_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[contains(text(), 'Clear All')]""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:11:05.942769
+TC-01,Add Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 105, in test_add_task
+    task_input = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@placeholder='Enter a new task...']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:12:09.325246
+TC-04,Complete Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 151, in test_complete_task
+    checkbox = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@type='checkbox']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:12:20.633026
+TC-11,Filter Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 221, in test_filter_tasks
+    completed_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[text()='Completed']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:12:30.786090
+TC-15,Clear All Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 265, in test_clear_all_tasks
+    clear_all_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[contains(text(), 'Clear All')]""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:12:40.875937
+TC-01,Add Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 105, in test_add_task
+    task_input = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@placeholder='Enter a new task...']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:14:43.939440
+TC-04,Complete Task UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 151, in test_complete_task
+    checkbox = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, ""//input[@type='checkbox']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:14:54.452441
+TC-11,Filter Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 221, in test_filter_tasks
+    completed_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[text()='Completed']""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:15:04.522315
+TC-15,Clear All Tasks UI,FAILED,"Traceback (most recent call last):
+  File ""D:\project-testcase\tests\test_ui.py"", line 265, in test_clear_all_tasks
+    clear_all_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, ""//button[contains(text(), 'Clear All')]""))
+    )
+  File ""D:\project-testcase\backend\venv\Lib\site-packages\selenium\webdriver\support\wait.py"", line 138, in until
+    raise TimeoutException(message, screen, stacktrace)
+selenium.common.exceptions.TimeoutException: Message: 
+Stacktrace:
+	GetHandleVerifier [0x0xd9fe43+66515]
+	GetHandleVerifier [0x0xd9fe84+66580]
+	(No symbol) [0x0xb8dc48]
+	(No symbol) [0x0xbd8704]
+	(No symbol) [0x0xbd8aab]
+	(No symbol) [0x0xc1f482]
+	(No symbol) [0x0xbfb214]
+	(No symbol) [0x0xc1cba7]
+	(No symbol) [0x0xbfafc6]
+	(No symbol) [0x0xbcc2ca]
+	(No symbol) [0x0xbcd154]
+	GetHandleVerifier [0x0xff7353+2521315]
+	GetHandleVerifier [0x0xff22d3+2500707]
+	GetHandleVerifier [0x0xdc7c94+229924]
+	GetHandleVerifier [0x0xdb81f8+165768]
+	GetHandleVerifier [0x0xdbecad+193085]
+	GetHandleVerifier [0x0xda8158+100072]
+	GetHandleVerifier [0x0xda82f0+100480]
+	GetHandleVerifier [0x0xd925aa+11066]
+	BaseThreadInitThunk [0x0x76aa5d49+25]
+	RtlInitializeExceptionChain [0x0x771cd6db+107]
+	RtlGetAppContainerNamedObjectPath [0x0x771cd661+561]
+
+",2025-11-07T14:15:14.580054

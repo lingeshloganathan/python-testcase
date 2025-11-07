@@ -16,6 +16,7 @@ def write_to_csv(csv_file, test_name, status, message="", test_case_id=""):
 
     file_exists = os.path.exists(csv_file)
     df.to_csv(csv_file, mode='a', header=not file_exists, index=False)
+    
 
 def test_health_check(api_url, csv_file):
     try:

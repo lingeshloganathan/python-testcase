@@ -102,5 +102,11 @@ def clear_completed():
     tasks = [t for t in tasks if t['status'] != 'completed']
     return jsonify({'message': 'Completed tasks cleared successfully'})
 
+@app.route('/api/tasks/all', methods=['DELETE'])
+def clear_all_tasks():
+    global tasks
+    tasks.clear()  # Clear all tasks
+    return jsonify({'message': 'All tasks cleared successfully'})
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

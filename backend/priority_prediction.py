@@ -21,11 +21,11 @@ from sklearn.preprocessing import MinMaxScaler
 # ====================================================
 # Configuration
 # ====================================================
-USER_STORY_ID = "US-01"  # <-- change this to your story ID
-REPO_PATH = r"D:\project-testcase"
-MODEL_PATH = r"D:\project-testcase\backend\ppo_priority_gymnasium_model.zip"
-TEST_RESULTS_PATH = r"D:\project-testcase\tests\results\test_results.csv"
-OUTPUT_PATH = r"D:\project-testcase\backend\priority_userstory.csv"
+USER_STORY_ID = "US-12"  # <-- change this to your story ID
+REPO_PATH = r"D:\data-learn\python-testcase"
+MODEL_PATH = r"D:\data-learn\ppo_priority_gymnasium_model.zip"
+TEST_RESULTS_PATH = r"D:\data-learn\python-testcase\tests\results\test_results.csv"
+OUTPUT_PATH = r"D:\data-learn\python-testcase\backend\priority_userstory.csv"
 
 # ====================================================
 # 1️⃣ Get Commits for the given UserStoryID
@@ -68,7 +68,10 @@ print(f"⚙️  Changed Functions: {', '.join(changed_functions_total)}\n")
 # ====================================================
 # 2️⃣ Load Test Results
 # ====================================================
-tests = pd.read_csv(TEST_RESULTS_PATH, parse_dates=["Timestamp"])
+tests = pd.read_csv( TEST_RESULTS_PATH,
+    usecols=["Test Case ID", "Test Name", "Status", "Timestamp"],  # no Message
+    parse_dates=["Timestamp"],
+    engine="python")
 tests["Status"] = tests["Status"].str.upper().fillna("PASSED")
 
 # ====================================================
@@ -76,11 +79,11 @@ tests["Status"] = tests["Status"].str.upper().fillna("PASSED")
 # ====================================================
 def compute_impact(row):
     test_name = str(row.get("Test Name", "")).lower()
-    message = str(row.get("Message", "")).lower()
+    # message = str(row.get("Message", "")).lower()
     score = 0
 
-    if any(fn.lower() in test_name or fn.lower() in message for fn in changed_functions_total):
-        score += 5
+    # if any(fn.lower() in test_name or fn.lower() in message for fn in changed_functions_total):
+    #     score += 5
     if any(f.lower().split("/")[-1].replace(".py", "") in test_name for f in changed_files_total):
         score += 3
     if row["Status"] == "FAILED":

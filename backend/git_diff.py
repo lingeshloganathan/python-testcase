@@ -6,11 +6,11 @@ import os
 repo_owner = "lingeshloganathan"
 repo_name = "python-testcase"
 
-storyid=["US-01","US-02","US-03","US-04","US-05","US-06","US-07","US-08","US-09","US-10"]
+# storyid=["US-01","US-02","US-03","US-04","US-05","US-06","US-07","US-08","US-09","US-10"]
 
 # for id in storyid:
 #     print(id)
-user_story_id = storyid[0]
+user_story_id = "US-14"
 
 # Optional: authentication for private repos
 # GITHUB_TOKEN = "ghp_your_generated_token_here"

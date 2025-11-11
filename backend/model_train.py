@@ -14,8 +14,8 @@ from sklearn.preprocessing import MinMaxScaler
 # ===============================
 # Load your data
 # ===============================
-userstory = pd.read_csv(r"D:\project-testcase\backend\userstory_commit_report.csv")
-tests = pd.read_csv(r"D:\project-testcase\tests\results\test_results.csv", parse_dates=["Timestamp"])
+userstory = pd.read_csv(r"D:\data-learn\python-testcase\backend\userstory_commit_report.csv")
+tests = pd.read_csv(r"D:\data-learn\python-testcase\tests\results\test_results.csv", parse_dates=["Timestamp"])
 tests["Status"] = tests["Status"].str.upper().fillna("PASSED")
 
 # ===============================

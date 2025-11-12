@@ -6,7 +6,7 @@ import uuid
 app = Flask(__name__)
 CORS(app)
 
-# In-memory storage
+
 tasks = []
 
 @app.route('/api/health', methods=['GET'])

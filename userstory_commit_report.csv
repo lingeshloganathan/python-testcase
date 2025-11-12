@@ -1,2 +1,0 @@
-UserStoryID,CommitSHA,Author,Message,FileChanged,ChangedFunctions
-US-14,eb0515b1e74a1187f7f7e00473ac311a85780a33,NithishKumar,US-14\n\nChange response message for clearing completed tasks.,backend/app.py,

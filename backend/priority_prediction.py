@@ -21,7 +21,7 @@ from sklearn.preprocessing import MinMaxScaler
 # ====================================================
 # Configuration
 # ====================================================
-USER_STORY_ID = "US-12"  # <-- change this to your story ID
+USER_STORY_ID = "US-08"  # <-- change this to your story ID
 REPO_PATH = r"D:\data-learn\python-testcase"
 MODEL_PATH = r"D:\data-learn\ppo_priority_gymnasium_model.zip"
 TEST_RESULTS_PATH = r"D:\data-learn\python-testcase\tests\results\test_results.csv"
@@ -88,6 +88,23 @@ def compute_impact(row):
         score += 3
     if row["Status"] == "FAILED":
         score += 4
+    # Additional factors to consider
+    if row["Status"] == "FAILED" and "critical" in test_name:
+        score += 2
+    elif row["Status"] == "FAILED" and "major" in test_name:
+        score += 1
+    return score
+def compute_impact(row):
+    test_name = str(row.get("Test Name", "")).lower()
+    # message = str(row.get("Message", "")).lower()
+    score = 0
+
+    # if any(fn.lower() in test_name or fn.lower() in message for fn in changed_functions_total):
+    #     score += 5
+    if any(f.lower().split("/")[-1].replace(".py", "") in test_name for f in changed_files_total):
+        score += 3
+    if row["Status"] == "FAILED":
+        score += 4
     return score
 
 tests["ImpactScore"] = tests.apply(compute_impact, axis=1)
@@ -126,8 +143,10 @@ class PriorityEnv(gym.Env):
 # ====================================================
 # 5️⃣ Predict Priority Using PPO Model
 # ====================================================
-print("🚀 Loading PPO model...")
+print(" Loading PPO model...")
 model = PPO.load(MODEL_PATH)
+# print("🚀 Loading PPO model...")
+# model = PPO.load(MODEL_PATH)
 
 predictions = []
 for _, row in tests.iterrows():
@@ -155,8 +174,27 @@ final_df = tests_unique.sort_values("FinalScore", ascending=False)
 # ====================================================
 # 7️⃣ Output Results
 # ====================================================
-print("\n===== 🧠 Final Priority Table for", USER_STORY_ID, "=====")
-print(final_df[["Test Case ID", "Test Name", "Status", "Predicted Priority", "ImpactScore", "FinalScore"]])
+# Add the UserStoryID column
+final_df["UserStoryID"] = USER_STORY_ID
 
-final_df.to_csv(OUTPUT_PATH, index=False)
+# Define the exact columns to output (no Message)
+out_cols = [
+    "UserStoryID",
+    "Test Case ID", "Test Name", "Status",
+    "Predicted Priority", "ImpactScore", "ImpactScoreScaled",
+    "PriorityValue", "FinalScore", "Timestamp"
+]
+
+print(f"\n===== 🧠 Final Priority Table for {USER_STORY_ID} =====")
+print(final_df[out_cols])
+# Save clean CSV
+final_df[out_cols].to_csv(OUTPUT_PATH, index=False)
+print(f"\n Final priorities saved to {OUTPUT_PATH}")
+# Create a new table for the regression matrix values
+regression_matrix_df = pd.read_csv(TEST_RESULTS_PATH)
+print("\n===== Regression Matrix Table =====")
+print(regression_matrix_df)
+
+# Save clean CSV
+final_df[out_cols].to_csv(OUTPUT_PATH, index=False)
 print(f"\n✅ Final priorities saved to {OUTPUT_PATH}")

@@ -1,0 +1,45 @@
+{
+  "D:\\data-learn\\python-testcase\\backend\\app.py": {
+    "health": [
+      "jsonify"
+    ],
+    "get_tasks": [
+      "request.args.get",
+      "sorted",
+      "jsonify"
+    ],
+    "get_task_count": [
+      "len",
+      "jsonify"
+    ],
+    "add_task": [
+      "request.get_json",
+      "jsonify",
+      "str",
+      "uuid.uuid4",
+      "datetime.now().isoformat",
+      "datetime.now",
+      "tasks.append"
+    ],
+    "complete_task": [
+      "next",
+      "jsonify"
+    ],
+    "update_task": [
+      "next",
+      "jsonify",
+      "request.get_json"
+    ],
+    "delete_task": [
+      "next",
+      "jsonify"
+    ],
+    "clear_completed": [
+      "jsonify"
+    ],
+    "clear_all_tasks": [
+      "tasks.clear",
+      "jsonify"
+    ]
+  }
+}

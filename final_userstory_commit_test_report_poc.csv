@@ -1,0 +1,14 @@
+user_story_id,commit_sha,author,file_changed,changed_function,dependent_function,test_case_id,test_name,total_no_of_Passed,total_no_of_Failed,last_status,last_execution_date
+US-01,6826c789d5bcf1ce4564b3bf5996f24250b2129a,Nithishrish23,backend/app.py,get_tasks,,TC-01,Add Task UI,23.0,3.0,fail,07-11-2025T14:14:43
+US-01,6826c789d5bcf1ce4564b3bf5996f24250b2129a,Nithishrish23,backend/app.py,add_task,,TC-01,Add Task UI,23.0,3.0,fail,07-11-2025T14:14:43
+US-03,3545227f64947622fa22912dbd1563346809556f,lingesh-Codedtx,backend/app.py,complete_task,,TC-04,Complete Task UI,18.0,10.0,fail,07-11-2025T14:14:54
+US-04,6bf6a1bc48080be9269fd73c19b5b1659092e910,Nithishrish23,backend/app.py,update_task,,TC-06,Update Task,1.0,0.0,pass,07-11-2025T12:21:47
+US-04,6bf6a1bc48080be9269fd73c19b5b1659092e910,Nithishrish23,backend/app.py,update_task,,TC-06,Update Task,1.0,0.0,pass,07-11-2025T12:21:47
+US-05,f285551b93807f49c60a53b289998cded4bf1556,lingesh-Codedtx,backend/app.py,delete_task,,TC-07,Delete Task,1.0,0.0,pass,07-11-2025T12:21:51
+US-09,9bcf5e456a7fd4d923b8094c53a76bce4bc29049,lingesh-Codedtx,backend/app.py,get_task_count,,TC-14,Task Counts,1.0,0.0,pass,07-11-2025T12:21:53
+US-09,9bcf5e456a7fd4d923b8094c53a76bce4bc29049,lingesh-Codedtx,backend/app.py,get_task_count,,TC-15,Clear All Tasks UI,7.0,9.0,fail,07-11-2025T14:15:14
+US-11,6d61196ece06d3c87631d7ec030cdaa11a889357,lingesh-Codedtx,analysis/test_priority_model.py,main,,,Health Check,1.0,0.0,pass,07-11-2025T12:21:40
+US-11,6d61196ece06d3c87631d7ec030cdaa11a889357,lingesh-Codedtx,backend/model_train,build_timeline,,,Health Check,1.0,0.0,pass,07-11-2025T12:21:40
+US-11,6d61196ece06d3c87631d7ec030cdaa11a889357,lingesh-Codedtx,backend/priority_prediction,get_commits_for_story,,,Health Check,1.0,0.0,pass,07-11-2025T12:21:40
+US-11,6d61196ece06d3c87631d7ec030cdaa11a889357,lingesh-Codedtx,backend/priority_prediction,extract_changes,,,Health Check,1.0,0.0,pass,07-11-2025T12:21:40
+US-11,6d61196ece06d3c87631d7ec030cdaa11a889357,lingesh-Codedtx,backend/priority_prediction,compute_impact,,,Health Check,1.0,0.0,pass,07-11-2025T12:21:40

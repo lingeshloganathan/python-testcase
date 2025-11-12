@@ -10,7 +10,7 @@ repo_name = "python-testcase"
 
 # for id in storyid:
 #     print(id)
-user_story_id = "US-14"
+user_story_id = "US-12"
 
 # Optional: authentication for private repos
 # GITHUB_TOKEN = "ghp_your_generated_token_here"
@@ -40,7 +40,7 @@ while True:
 print(f"📦 Total commits fetched: {len(all_commits)}")
 
 # === CSV setup ===
-output_file = "userstory_commit_report.csv"
+output_file = r"D:\data-learn\python-testcase\backend\userstory_commit_report.csv"
 fieldnames = ["UserStoryID", "CommitSHA", "Author", "Message", "FileChanged", "ChangedFunctions"]
 
 file_exists = os.path.exists(output_file)

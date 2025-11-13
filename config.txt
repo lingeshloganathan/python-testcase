@@ -1,0 +1,12 @@
+venv = D:\data-learn\python-testcase\backend\venv\Scripts\python.exe
+commits_path =D:\data-learn\python-testcase\backend\userstory_commit_report.csv
+tests_path   =D:\data-learn\python-testcase\tests\results\test_results.csv
+app_deps_path =D:\data-learn\python-testcase\backend\app_dependencies.json
+todo_path    = D:\data-learn\python-testcase\Todo_UserStories_TestCases.xlsx
+output_path  = D:\data-learn\python-testcase\final_userstory_commit_test_report_poc.csv
+output_file = D:\data-learn\python-testcase\backend\userstory_commit_report.csv
+host=localhost
+database=postgres
+user=postgres
+port= 5432
+password= 1976

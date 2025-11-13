@@ -1,0 +1,268 @@
+# report.py  — Full version with DB insert fixed
+import os, json, math, csv
+import pandas as pd
+from model.db_connection import get_connection
+
+import logging
+from pathlib import Path
+
+# load centralized config and logging
+try:
+    import config_loader as cfg
+    cfg.setup_logging()
+    _conf = cfg.load_config()
+except Exception:
+    _conf = {}
+
+# ---------- CONFIG ----------
+commits_path = _conf.get('commits_path') or r"D:\data-learn\python-testcase\backend\userstory_commit_report.csv"
+tests_path = _conf.get('tests_path') or r"D:\data-learn\python-testcase\tests\results\test_results.csv"
+app_deps_path = _conf.get('app_deps_path') or r"D:\data-learn\python-testcase\backend\app_dependencies.json"
+todo_path = _conf.get('todo_path') or r"D:\data-learn\python-testcase\Todo_UserStories_TestCases.xlsx"
+output_path = _conf.get('output_path') or r"D:\data-learn\python-testcase\final_userstory_commit_test_report_poc.csv"
+output_full = output_path.replace(".csv", "_full.csv")
+
+logger = logging.getLogger(__name__)
+
+
+
+# ---------- HELPERS ----------
+def read_any(path):
+    _, ext = os.path.splitext(path.lower())
+    if ext == ".csv":
+        return pd.read_csv(path, dtype=str)
+    elif ext in (".xls", ".xlsx"):
+        return pd.read_excel(path, dtype=str)
+    elif ext == ".json":
+        with open(path, "r", encoding="utf8") as f:
+            return json.load(f)
+    else:
+        raise ValueError("Unsupported file type: " + ext)
+
+def split_funcs_cell(cell):
+    if pd.isna(cell): return []
+    s = str(cell).strip()
+    if s.lower() in ("nan", ""): return []
+    for sep in [";", "|", "/", "\\"]: s = s.replace(sep, ",")
+    return [p.strip() for p in s.split(",") if p.strip() and p.lower() != "nan"]
+
+def map_columns_lower_strip(df):
+    df = df.copy()
+    df.columns = df.columns.str.strip()
+    return df
+
+def map_commits(df):
+    df = df.copy()
+    cols = {c.lower().replace(" ", ""): c for c in df.columns}
+    colmap = {}
+    for key, orig in cols.items():
+        if key in ('commitsha','commit_sha','commit'): colmap[orig] = 'commit_sha'
+        if key in ('userstoryid','user_story_id','userstory','user_story'): colmap[orig] = 'user_story_id'
+        if 'file' in key and 'changed' in key: colmap[orig] = 'file_changed'
+        if 'changedfunction' in key or 'changedfunctions' in key or 'changed_function' in key: colmap[orig] = 'changed_function'
+        if key == 'author': colmap[orig] = 'author'
+    return df.rename(columns=colmap)
+
+def map_tests(df):
+    df = df.copy()
+    cols = {c.lower().replace(" ", ""): c for c in df.columns}
+    colmap = {}
+    for key, orig in cols.items():
+        if key in ('testcaseid','test_case_id','testcase','testcase_id'): colmap[orig] = 'test_case_id'
+        if key in ('testname','test_name','test'): colmap[orig] = 'test_name'
+        if key in ('status','result','outcome'): colmap[orig] = 'status'
+        if key in ('timestamp','time','execution_date','date','run_time','executed_at'): colmap[orig] = orig
+    return df.rename(columns=colmap)
+
+def map_todo(df):
+    df = df.copy()
+    cols_lower = {c.lower().replace(" ", ""): c for c in df.columns}
+    colmap = {}
+    for key, orig in cols_lower.items():
+        if key in ('userstoryid','user_story_id','userstory'): colmap[orig] = 'user_story_id'
+        if key in ('testcaseid','test_case_id','testcase'): colmap[orig] = 'test_case_id'
+    return df.rename(columns=colmap)
+
+# ---------- 1) LOAD ----------
+commits_df = read_any(commits_path)
+tests_df   = read_any(tests_path)
+app_deps   = read_any(app_deps_path) if os.path.exists(app_deps_path) else {}
+todo_df    = read_any(todo_path)
+
+# ---------- 2) NORMALIZE HEADERS ----------
+commits_df = map_commits(map_columns_lower_strip(commits_df))
+tests_df   = map_tests(map_columns_lower_strip(tests_df))
+todo_df    = map_todo(map_columns_lower_strip(todo_df))
+
+logger.info("Commit cols: %s", list(commits_df.columns))
+logger.info("Test cols: %s", list(tests_df.columns))
+logger.info("Todo cols: %s", list(todo_df.columns))
+
+# ---------- 3) EXPLODE CHANGED FUNCTIONS ----------
+if 'changed_function' not in commits_df.columns:
+    raise KeyError("Missing 'changed_function' column in commits CSV")
+commits_df['changed_function_list'] = commits_df['changed_function'].apply(split_funcs_cell)
+commits_exploded = commits_df.explode('changed_function_list').copy()
+commits_exploded = commits_exploded[
+    commits_exploded['changed_function_list'].notna() &
+    (commits_exploded['changed_function_list'] != '')
+].reset_index(drop=True)
+
+# ---------- 4) PREPARE TEST RESULTS ----------
+tests_df['status_norm'] = tests_df['status'].astype(str).str.lower().str.strip()
+tests_df['status_norm'] = tests_df['status_norm'].replace(
+    {'passed':'pass','failed':'fail','ok':'pass','error':'fail'}
+)
+
+timestamp_col = next((c for c in tests_df.columns if any(k in c.lower() for k in ['time','date'])), None)
+if timestamp_col:
+    tests_df[timestamp_col] = pd.to_datetime(tests_df[timestamp_col], errors='coerce')
+
+agg_counts = (tests_df.groupby('test_case_id', dropna=False)
+              .agg(total_no_of_Passed=('status_norm', lambda s: (s=='pass').sum()),
+                   total_no_of_Failed=('status_norm', lambda s: (s=='fail').sum()))
+              .reset_index())
+
+def choose_test_name(group):
+    vals = group['test_name'].dropna()
+    if vals.empty: return pd.NA
+    mode = vals.mode()
+    return mode.iloc[0] if not mode.empty else vals.iloc[-1]
+
+names = tests_df.groupby('test_case_id', dropna=False).apply(choose_test_name).reset_index()
+names.columns = ['test_case_id','test_name']
+agg_tests = agg_counts.merge(names, on='test_case_id', how='left')
+
+if timestamp_col:
+    last = (tests_df.sort_values(timestamp_col)
+            .groupby('test_case_id', dropna=False)
+            .last()
+            .reset_index())
+    last_small = last[['test_case_id','status_norm',timestamp_col]].rename(
+        columns={'status_norm':'last_status', timestamp_col:'last_execution_date'})
+    agg_tests = agg_tests.merge(last_small, on='test_case_id', how='left')
+
+# ---------- 5) JOIN COMMITS + TODO + TESTS ----------
+mapped_todo = todo_df[['user_story_id','test_case_id']].dropna().drop_duplicates()
+joined = commits_exploded.merge(mapped_todo, on='user_story_id', how='left')
+final = joined.merge(agg_tests, on='test_case_id', how='left')
+
+# ---------- 6) DEPENDENCY LOOKUP ----------
+def lookup_deps_by_file(file_changed, func_name, app_deps_obj):
+    if not func_name: return []
+    if file_changed in app_deps_obj and isinstance(app_deps_obj[file_changed], dict):
+        fm = app_deps_obj[file_changed]
+        if func_name in fm: return fm[func_name]
+        if func_name.lower() in fm: return fm[func_name.lower()]
+    basename = os.path.basename(str(file_changed))
+    for fk, fm in app_deps_obj.items():
+        if os.path.basename(fk) == basename and isinstance(fm, dict):
+            if func_name in fm: return fm[func_name]
+            if func_name.lower() in fm: return fm[func_name.lower()]
+    if func_name in app_deps_obj and isinstance(app_deps_obj[func_name], list):
+        return app_deps_obj[func_name]
+    if func_name.lower() in app_deps_obj and isinstance(app_deps_obj[func_name.lower()], list):
+        return app_deps_obj[func_name.lower()]
+    return []
+
+final['dependent_functions_list'] = final.apply(
+    lambda r: lookup_deps_by_file(r.get('file_changed',''), r.get('changed_function_list',''), app_deps),
+    axis=1
+)
+final['dependent_function'] = final['dependent_functions_list'].apply(lambda L: ", ".join(L) if L else pd.NA)
+
+# ---------- 7) FINALIZE ----------
+desired_cols = [
+ 'user_story_id','commit_sha','author','file_changed','changed_function',
+ 'dependent_function','test_case_id','test_name','total_no_of_Passed',
+ 'total_no_of_Failed','last_status','last_execution_date'
+]
+for c in desired_cols:
+    if c not in final.columns: final[c] = pd.NA
+final['changed_function'] = final['changed_function_list']
+
+final_df = final[desired_cols].copy()
+final_df['last_execution_date'] = pd.to_datetime(final_df['last_execution_date'], errors='coerce')
+final_df['last_execution_date'] = final_df['last_execution_date'].dt.strftime("%Y-%m-%d %H:%M:%S")
+final_df['last_status'] = final_df['last_status'].astype(str).str.lower().replace(
+    {'nan': pd.NA, 'none': pd.NA, '': pd.NA, 'passed':'pass','failed':'fail','ok':'pass','error':'fail'}
+)
+
+# ---------- 8) SAVE ----------
+df_with_status = final_df[final_df['last_status'].notna()].copy()
+df_full = final_df.copy()
+
+df_with_status.to_csv(output_path, index=False, encoding='utf-8', quoting=csv.QUOTE_MINIMAL)
+df_full.to_csv(output_full, index=False, encoding='utf-8', quoting=csv.QUOTE_MINIMAL)
+
+logger.info("✅ Saved main report: %s  (%d rows)", output_path, len(df_with_status))
+logger.info("✅ Saved full report: %s  (%d rows)\n", output_full, len(df_full))
+
+def _to_native_int(v):
+    if v is None: return None
+    if isinstance(v, int): return v
+    if isinstance(v, float):
+        if math.isnan(v): return None
+        return int(v)
+    try:
+        if isinstance(v, str) and v.strip() != "":
+            return int(float(v)) if '.' in v else int(v)
+    except Exception:
+        return None
+    return None
+
+def insert_regression_matrix(df):
+    conn = get_connection()
+    if conn is None:
+        logger.error("❌ Cannot insert — DB connection failed.")
+        return
+        return
+    df2 = df.copy().where(pd.notnull(df), None)
+
+    query = """
+        INSERT INTO regression_matrix (
+            user_story_id, commit_sha, author, file_changed, changed_function,
+            dependent_function, test_case_id, test_name, total_no_of_Passed,
+            total_no_of_Failed, last_status, last_execution_date
+        ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        ON CONFLICT (changed_function) DO UPDATE SET
+            dependent_function = EXCLUDED.dependent_function,
+            test_case_id = EXCLUDED.test_case_id,
+            test_name = EXCLUDED.test_name,
+            total_no_of_Passed = EXCLUDED.total_no_of_Passed,
+            total_no_of_Failed = EXCLUDED.total_no_of_Failed,
+            last_status = EXCLUDED.last_status,
+            last_execution_date = EXCLUDED.last_execution_date;
+    """
+    cur = None
+    try:
+        cur = conn.cursor()
+        inserted, failed = 0, 0
+        for _, row in df2.iterrows():
+            try:
+                data = [
+                    row.get('user_story_id'),
+                    row.get('commit_sha'),
+                    row.get('author'),
+                    row.get('file_changed'),
+                    row.get('changed_function'),
+                    row.get('dependent_function'),
+                    row.get('test_case_id'),
+                    row.get('test_name'),
+                    _to_native_int(row.get('total_no_of_Passed')),
+                    _to_native_int(row.get('total_no_of_Failed')),
+                    None if pd.isna(row.get('last_status')) else str(row.get('last_status')),
+                    None if pd.isna(row.get('last_execution_date')) else str(row.get('last_execution_date'))
+                ]
+                cur.execute(query, data)
+                inserted += 1
+            except Exception as row_e:
+                failed += 1
+    except Exception as e:
+        conn.rollback()
+        logger.exception("❌ Insert aborted: %s", e)
+    finally:
+        if cur: cur.close()
+        conn.close()
+
+insert_regression_matrix(df_with_status)

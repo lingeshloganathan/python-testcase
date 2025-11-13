@@ -213,6 +213,7 @@
 # ============================================
 
 # priority_prediction_ranked_safe.py
+import logging
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
@@ -220,8 +221,18 @@ from stable_baselines3 import PPO
 import torch
 import warnings
 
-CSV_PATH = "final_userstory_commit_test_report_poc.csv"
-MODEL_PATH = "ppo_test_selection_model"
+# load central config and logging
+try:
+    import config_loader as cfg
+    cfg.setup_logging()
+    _conf = cfg.load_config()
+except Exception:
+    _conf = {}
+
+logger = logging.getLogger(__name__)
+
+CSV_PATH = _conf.get('output_path') or "final_userstory_commit_test_report_poc.csv"
+MODEL_PATH = _conf.get('ppo_model_path') or "ppo_test_selection_model"
 
 # -------------------------
 # Load CSV and clean safely
@@ -234,13 +245,9 @@ for c in cols_to_force_str:
     if c in data.columns:
         data[c] = data[c].astype(object).astype(str)  # force string dtype
 
-# replace missing values
 data.replace({None: "missing", "nan": "missing", "NaN": "missing"}, inplace=True)
 data.fillna("missing", inplace=True)
 
-# -------------------------
-# Rebuild encoders (best-effort)
-# -------------------------
 encoders = {}
 for col in cols_to_force_str:
     if col in data.columns:
@@ -248,30 +255,23 @@ for col in cols_to_force_str:
         data[col] = le.fit_transform(data[col].astype(str))
         encoders[col] = le
 
-# -------------------------
-# Load model
-# -------------------------
-print("📂 Loading trained PPO model...")
+logger.info("📂 Loading trained PPO model...")
 model = PPO.load(MODEL_PATH)
 policy = model.policy
-print("✅ Model loaded successfully!")
+logger.info("✅ Model loaded successfully!")
 
-# number of actions that the model expects
 try:
     n_actions = model.action_space.n
 except Exception:
-    # fallback: try env (if available)
     n_actions = getattr(model, "env", None)
     if hasattr(n_actions, "action_space"):
         n_actions = model.env.action_space.n
     else:
-        # fallback to length of policy output if accessible
         n_actions = policy.action_net.out_features if hasattr(policy, "action_net") else None
 
 if n_actions is None:
     raise RuntimeError("Could not determine number of actions in the trained model.")
 
-# get classes known to the encoder used here (may differ from training)
 encoder_classes = encoders['test_case_id'].classes_ if 'test_case_id' in encoders else np.array([])
 
 if len(encoder_classes) != n_actions:
@@ -282,9 +282,6 @@ if len(encoder_classes) != n_actions:
         "Recommended: save the label encoders at training time and load them here."
     )
 
-# -------------------------
-# Prepare latest commit state
-# -------------------------
 latest = data.iloc[-1]
 decoded_file_changed = encoders['file_changed'].inverse_transform([latest['file_changed']])[0] \
     if 'file_changed' in encoders else str(latest['file_changed'])
@@ -293,57 +290,44 @@ decoded_changed_function = encoders['changed_function'].inverse_transform([lates
 decoded_dependent_function = encoders['dependent_function'].inverse_transform([latest['dependent_function']])[0] \
     if 'dependent_function' in encoders else str(latest['dependent_function'])
 
-print(f"\n📊 Prioritizing tests for latest commit:")
-print(f"   File Changed       : {decoded_file_changed}")
-print(f"   Changed Function   : {decoded_changed_function}")
-print(f"   Dependent Function : {decoded_dependent_function}")
+logger.info("\n📊 Prioritizing tests for latest commit:")
+logger.info("   File Changed       : %s", decoded_file_changed)
+logger.info("   Changed Function   : %s", decoded_changed_function)
+logger.info("   Dependent Function : %s", decoded_dependent_function)
 
-# build state exactly as training (numeric encoded values normalized by len(data))
 state = np.array([
     latest['file_changed'],
     latest['changed_function'],
     latest['dependent_function']
 ]) / len(data)
 
-# torch tensor for policy
 state_tensor = torch.tensor(state, dtype=torch.float32).unsqueeze(0)
 
-# -------------------------
-# Get action probabilities
-# -------------------------
 with torch.no_grad():
     dist = policy.get_distribution(state_tensor).distribution
-    # try to obtain logits or probs depending on distribution type
     if hasattr(dist, "logits"):
         logits = dist.logits
         probs = torch.softmax(logits, dim=1).cpu().numpy().flatten()
     elif hasattr(dist, "probs"):
         probs = dist.probs.cpu().numpy().flatten()
     else:
-        # fallback to using model.predict_proba-like behavior via policy
         action, _ = model.predict(state, deterministic=False)
-        # construct a one-hot fallback (not ideal)
         probs = np.zeros(n_actions, dtype=float)
         probs[int(action)] = 1.0
 
-# sanity: ensure probs length == n_actions
 if len(probs) != n_actions:
-    # try to pad/truncate
     if len(probs) < n_actions:
         pad = np.zeros(n_actions - len(probs), dtype=float)
         probs = np.concatenate([probs, pad])
     else:
         probs = probs[:n_actions]
 
-# normalize to sum=1 if not already
 if probs.sum() <= 0:
     probs = np.ones_like(probs) / len(probs)
 else:
     probs = probs / probs.sum()
 
-# -------------------------
-# Map indices -> test case labels (safe)
-# -------------------------
+
 mapped_labels = []
 for idx in range(n_actions):
     if idx < len(encoder_classes):
@@ -351,12 +335,9 @@ for idx in range(n_actions):
     else:
         mapped_labels.append(f"UNKNOWN_{idx}")
 
-# Rank test cases
 ranking = sorted(zip(mapped_labels, probs), key=lambda x: x[1], reverse=True)
 
-# -------------------------
-# Simple reason function (customize as needed)
-# -------------------------
+
 def get_reason(tc_label, file_name, func_name):
     t = str(tc_label).lower()
     if file_name.lower() in t:
@@ -367,16 +348,12 @@ def get_reason(tc_label, file_name, func_name):
         return "Missing metadata — fallback prediction"
     return "Model-based priority (probability score)"
 
-# -------------------------
-# Print top-ranked results
-# -------------------------
-print("\n🧩 Ranked Test Case Priorities (top 15):")
+logger.info("\n🧩 Ranked Test Case Priorities (top 15):")
 for rank, (tc, prob) in enumerate(ranking[:15], start=1):
     reason = get_reason(tc, decoded_file_changed, decoded_changed_function)
-    print(f"{rank:02d}. {tc:<15} | Score: {prob:.4f} | Reason: {reason}")
+    logger.info("%02d. %s | Score: %.4f | Reason: %s", rank, tc, prob, reason)
 
-# optional: save CSV
 out_df = pd.DataFrame(ranking, columns=["Test_Case", "Priority_Score"])
 out_df["Reason"] = out_df["Test_Case"].apply(lambda x: get_reason(x, decoded_file_changed, decoded_changed_function))
-out_df.to_csv("test_case_priorities_safe.csv", index=False)
-print("\n💾 Saved 'test_case_priorities_safe.csv'")
+out_df.to_csv(_conf.get('priority_output_path') or "test_case_priorities_safe.csv", index=False)
+logger.info("\n💾 Saved '%s'", _conf.get('priority_output_path') or "test_case_priorities_safe.csv")

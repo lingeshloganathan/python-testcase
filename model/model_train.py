@@ -164,6 +164,7 @@
 # 🚀 RL Test Case Prioritization using PPO (Gymnasium version)
 # ============================================
 
+import logging
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
@@ -171,28 +172,33 @@ import gymnasium as gym
 from gymnasium import spaces
 from stable_baselines3 import PPO
 
-# ------------------------------------------------------
-# STEP 1: Load and preprocess your dataset
-# ------------------------------------------------------
-data = pd.read_csv("final_userstory_commit_test_report_poc.csv")
+# load config and logging
+try:
+    import config_loader as cfg
+    cfg.setup_logging()
+    _conf = cfg.load_config()
+except Exception:
+    _conf = {}
 
-# Encode categorical columns
+logger = logging.getLogger(__name__)
+
+CSV_PATH = _conf.get('output_path') or "final_userstory_commit_test_report_poc.csv"
+MODEL_PATH = _conf.get('ppo_model_path') or "ppo_test_selection_model"
+
+data = pd.read_csv(CSV_PATH)
+
 encoders = {}
 for col in ['file_changed', 'changed_function', 'dependent_function', 'test_case_id', 'last_status']:
     le = LabelEncoder()
     data[col] = le.fit_transform(data[col].astype(str))
     encoders[col] = le
 
-# Define state, action, and reward components
 state_cols = ['file_changed', 'changed_function', 'dependent_function']
 action_col = 'test_case_id'
 reward_col = data['last_status'].apply(
-    lambda x: 1 if x == encoders['last_status'].transform(['fail'])[0] else -0.1
+    lambda x: 1 if len(encoders.get('last_status', []).classes_) and x == encoders['last_status'].transform(['fail'])[0] else -0.1
 )
 
-# ------------------------------------------------------
-# STEP 2: Define Custom Gymnasium Environment
-# ------------------------------------------------------
 class TestSelectionEnv(gym.Env):
     metadata = {"render_modes": []}
 
@@ -227,33 +233,22 @@ class TestSelectionEnv(gym.Env):
         row = self.data.loc[self.current_index]
         reward = self.reward_col[self.current_index]
 
-        # PPO uses two flags in Gymnasium:
         terminated = True   # Episode ends naturally
         truncated = False   # Not truncated by time limit
         info = {}
 
-        # Move to a random next commit
         self.current_index = np.random.randint(0, len(self.data))
         next_state = self.data.loc[self.current_index, self.state_cols].values / len(self.data)
 
         return next_state.astype(np.float32), float(reward), terminated, truncated, info
 
-# ------------------------------------------------------
-# STEP 3: Create environment and train PPO agent
-# ------------------------------------------------------
 env = TestSelectionEnv(data, state_cols, action_col, reward_col)
 
-# Initialize PPO model
 model = PPO("MlpPolicy", env, verbose=1, tensorboard_log="./ppo_logs")
+logger.info("\n🚀 Training PPO model... please wait...")
+model.learn(total_timesteps=int(_conf.get('ppo_train_steps', 10000)))
+logger.info("✅ Training complete!")
 
-# Train for a few thousand timesteps (adjust as needed)
-print("\n🚀 Training PPO model... please wait...")
-model.learn(total_timesteps=10000)
-print("✅ Training complete!")
-
-# ------------------------------------------------------
-# STEP 4: Define helper function for test suggestions
-# ------------------------------------------------------
 def suggest_test(model, file_changed, changed_function, dependent_function):
     """Predict best test case for a given commit"""
     state = np.array([file_changed, changed_function, dependent_function]) / len(data)
@@ -261,10 +256,7 @@ def suggest_test(model, file_changed, changed_function, dependent_function):
     test_case = encoders['test_case_id'].inverse_transform([action])[0]
     return test_case
 
-# ------------------------------------------------------
-# STEP 5: Example usage
-# ------------------------------------------------------
-print("\n🎯 Example prediction:")
+logger.info("\n🎯 Example prediction:")
 example = data.iloc[0]
 suggested = suggest_test(
     model,
@@ -272,10 +264,7 @@ suggested = suggest_test(
     example['changed_function'],
     example['dependent_function']
 )
-print(f"Suggested Test Case: {suggested}")
+logger.info("Suggested Test Case: %s", suggested)
 
-# ------------------------------------------------------
-# STEP 6: Save model for reuse
-# ------------------------------------------------------
 model.save("ppo_test_selection_model")
-print("\n💾 PPO model saved as 'ppo_test_selection_model.zip'")
+logger.info("\n💾 PPO model saved as '%s'", MODEL_PATH)

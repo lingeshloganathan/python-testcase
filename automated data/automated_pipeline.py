@@ -1,11 +1,21 @@
 import os
 import json
 import csv
+import logging
 from tree_sitter import Language, Parser
 import tree_sitter_python as tspython
 
+# load centralized config and logging
+try:
+    import config_loader as cfg
+    cfg.setup_logging()
+    _conf = cfg.load_config()
+except Exception:
+    _conf = {}
+
 # === CONFIGURATION ===
-PROJECT_PATH = r"D:\data-learn\python-testcase\backend\app.py" 
+PROJECT_PATH = _conf.get('project_path') or r"D:\data-learn\python-testcase\backend\app.py"
+logger = logging.getLogger(__name__)
 
 # === OUTPUT PATHS ===
 if os.path.isfile(PROJECT_PATH):
@@ -95,23 +105,23 @@ def scan_python_files(base_path, exclude_dirs=None):
 
 # === MAIN ===
 if __name__ == "__main__":
-    print(f"🔍 Scanning path: {PROJECT_PATH}\n")
+    logger.info("🔍 Scanning path: %s", PROJECT_PATH)
 
     all_dependencies = {}
 
     # Case 1: Single file
     if os.path.isfile(PROJECT_PATH):
-        print("📄 Detected single file mode.\n")
+        logger.info("📄 Detected single file mode.")
         py_files = [PROJECT_PATH]
 
     # Case 2: Folder
     elif os.path.isdir(PROJECT_PATH):
-        print("📁 Detected folder mode — scanning recursively...\n")
+        logger.info("📁 Detected folder mode — scanning recursively...")
         py_files = scan_python_files(PROJECT_PATH)
-        print(f"✅ Found {len(py_files)} Python files.\n")
+        logger.info("✅ Found %d Python files.", len(py_files))
 
     else:
-        print("❌ Invalid path. Please provide a valid file or folder.")
+        logger.error("❌ Invalid path. Please provide a valid file or folder.")
         exit(1)
 
     processed = 0
@@ -123,22 +133,22 @@ if __name__ == "__main__":
             all_dependencies[file_path] = deps or {}
             processed += 1
             if processed % 10 == 0:
-                print(f"⏳ Processed {processed}/{len(py_files)} files...")
+                logger.info("⏳ Processed %d/%d files...", processed, len(py_files))
         except Exception as e:
-            print(f"⚠️ Skipping {file_path}: {e}")
+            logger.exception("⚠️ Skipping %s: %s", file_path, e)
 
     # === SAVE RESULTS ===
-    print(f"\n✅ Finished scanning {processed} file(s).")
-    print(f"✅ Files with dependencies found: {sum(bool(v) for v in all_dependencies.values())}\n")
+    logger.info("\n✅ Finished scanning %d file(s).", processed)
+    logger.info("✅ Files with dependencies found: %d", sum(bool(v) for v in all_dependencies.values()))
 
     if not all_dependencies:
-        print("⚠️ No dependencies detected.")
+        logger.warning("⚠️ No dependencies detected.")
         exit(0)
 
     # Save JSON
     with open(OUTPUT_JSON, "w", encoding="utf8") as jf:
         json.dump(all_dependencies, jf, indent=2, ensure_ascii=False)
-    print(f"📦 Saved JSON → {OUTPUT_JSON}")
+    logger.info("📦 Saved JSON → %s", OUTPUT_JSON)
 
     # Save CSV
     with open(OUTPUT_CSV, "w", newline="", encoding="utf8") as cf:
@@ -150,16 +160,16 @@ if __name__ == "__main__":
                     writer.writerow([file, func_name, ", ".join(deps)])
             else:
                 writer.writerow([file, "(no functions)", ""])
-    print(f"📊 Saved CSV → {OUTPUT_CSV}")
+    logger.info("📊 Saved CSV → %s", OUTPUT_CSV)
 
     # === PRINT SAMPLE OUTPUT ===
-    print("\n📘 Sample Output:")
+    logger.info("\n📘 Sample Output:")
     for i, (fname, funcs) in enumerate(all_dependencies.items()):
-        print(f"\n📄 {fname}")
+        logger.info("\n📄 %s", fname)
         if funcs:
             for func, calls in funcs.items():
-                print(f"  └─ {func}: {calls}")
+                logger.info("  └─ %s: %s", func, calls)
         else:
-            print("  ⚠️ No functions or dependencies found.")
+            logger.info("  ⚠️ No functions or dependencies found.")
         if i >= 2:  # limit display
             break

@@ -1,160 +1,281 @@
-"""
-Modern Gymnasium version of the PPO agent for predicting user story priority
-based on test result timelines.
-"""
+# """
+# Modern Gymnasium version of the PPO agent for predicting user story priority
+# based on test result timelines.
+# """
 
+# import gymnasium as gym
+# from gymnasium import spaces
+# import numpy as np
+# import pandas as pd
+# from stable_baselines3 import PPO
+# from stable_baselines3.common.vec_env import DummyVecEnv
+# from sklearn.preprocessing import MinMaxScaler
+
+# # ===============================
+# # Load your data
+# # ===============================
+# userstory = pd.read_csv(r"D:\data-learn\python-testcase\backend\userstory_commit_report.csv")
+# tests = pd.read_csv(r"D:\data-learn\python-testcase\tests\results\test_results.csv", parse_dates=["Timestamp"])
+# tests["Status"] = tests["Status"].str.upper().fillna("PASSED")
+
+# # ===============================
+# # Build timeline per UserStory
+# # ===============================
+# def build_timeline(userstory_df, tests_df):
+#     # Since you have one story now, just sort tests by time
+#     return tests_df.sort_values("Timestamp").reset_index(drop=True)
+
+# timeline = build_timeline(userstory, tests)
+
+
+# # ===============================
+# # Define the Gymnasium environment
+# # ===============================
+# class PriorityEnv(gym.Env):
+#     """
+#     Gymnasium environment to learn to assign priorities (Low, Medium, High)
+#     based on evolving test results.
+#     """
+
+#     metadata = {"render_modes": ["human"], "render_fps": 2}
+
+#     def __init__(self, timeline, meta=None, fix_horizon=2):
+#         super().__init__()
+#         self.timeline = timeline
+#         self.meta = meta or {}
+#         self.ptr = 0
+#         self.alpha = 0.7  # weight for failure_age_days
+#         self.beta = 0.3   # weight for failure_rate
+#         self.penalty = 0.02
+#         self.fix_bonus = 1.0
+#         self.fix_horizon = fix_horizon
+
+#         # Observation space: [failure_rate, failure_age_days, total_tests, failed_tests]
+#         self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(4,), dtype=np.float32)
+#         # Action space: 0=Low, 1=Medium, 2=High
+#         self.action_space = spaces.Discrete(3)
+#         self.scaler = MinMaxScaler()
+
+#     def _get_obs(self):
+#         window = self.timeline.iloc[: self.ptr + 1]
+#         total = len(window)
+#         failed = (window["Status"] == "FAILED").sum()
+#         failure_rate = failed / total
+#         failure_age = 0.0
+#         if failed > 0:
+#             first_fail = window[window["Status"] == "FAILED"]["Timestamp"].min()
+#             failure_age = (self.now - first_fail).total_seconds() / (3600 * 24)
+
+#         vec = np.array([failure_rate, failure_age, total, failed], dtype=np.float32).reshape(1, -1)
+#         # Normalize dynamically
+#         self.scaler.fit(np.vstack([vec, np.array([[1, 1, 50, 50]])]))
+#         obs = self.scaler.transform(vec)[0]
+#         return obs.astype(np.float32)
+
+#     def reset(self, *, seed=None, options=None):
+#         super().reset(seed=seed)
+#         self.ptr = 0
+#         self.now = self.timeline.iloc[0]["Timestamp"]
+#         obs = self._get_obs()
+#         info = {}
+#         return obs, info
+
+#     def step(self, action):
+#         assert self.action_space.contains(action)
+#         window = self.timeline.iloc[: self.ptr + 1]
+#         total = len(window)
+#         failed = (window["Status"] == "FAILED").sum()
+#         failure_rate = failed / total
+#         failure_age = 0.0
+#         if failed > 0:
+#             first_fail = window[window["Status"] == "FAILED"]["Timestamp"].min()
+#             failure_age = (self.now - first_fail).total_seconds() / (3600 * 24)
+
+#         # Reward shaping
+#         priority_value = action / 2.0
+#         reward = priority_value * (self.alpha * failure_age + self.beta * failure_rate) - self.penalty * action
+
+#         # Delayed fix bonus
+#         if action == 2 and failed > 0:
+#             future_end = min(self.ptr + self.fix_horizon, len(self.timeline) - 1)
+#             future = self.timeline.iloc[self.ptr + 1 : future_end + 1]
+#             past_failed = (window["Status"] == "FAILED").any()
+#             future_pass = (future["Status"] == "PASSED").any()
+#             if past_failed and future_pass:
+#                 reward += self.fix_bonus
+
+#         # Advance pointer
+#         self.ptr += 1
+#         terminated = self.ptr >= len(self.timeline) - 1
+#         truncated = False
+#         if not terminated:
+#             self.now = self.timeline.iloc[self.ptr]["Timestamp"]
+
+#         obs = self._get_obs()
+#         info = {"step": self.ptr, "failure_rate": failure_rate, "failure_age": failure_age}
+#         return obs, float(reward), terminated, truncated, info
+
+#     def render(self):
+#         print(f"Step {self.ptr}/{len(self.timeline)}")
+
+#     def close(self):
+#         pass
+
+
+# # ===============================
+# # Train PPO
+# # ===============================
+# meta = {"num_commits": 1, "num_files": 1, "num_functions": 2, "num_authors": 1}
+# env = PriorityEnv(timeline, meta)
+# vec_env = DummyVecEnv([lambda: env])
+
+# model = PPO(
+#     "MlpPolicy",
+#     vec_env,
+#     verbose=1,
+#     learning_rate=3e-4,
+#     gamma=0.99,
+#     tensorboard_log="./ppo_priority_gymnasium_logs",
+# )
+
+# model.learn(total_timesteps=25)
+# model.save("ppo_priority_gymnasium_model")
+
+# # ===============================
+# # Evaluate model
+# # ===============================
+# obs, info = env.reset()
+# done = False
+# total_reward = 0
+# while not done:
+#     action, _ = model.predict(obs, deterministic=True)
+#     obs, reward, terminated, truncated, info = env.step(int(action))
+#     print(
+#         f"Step={info['step']:<3} | Action={['Low','Med','High'][int(action)]} | "
+#         f"FailRate={info['failure_rate']:.2f} | FailAge={info['failure_age']:.2f} | Reward={reward:.3f}"
+#     )
+#     total_reward += reward
+#     done = terminated or truncated
+
+# print("Total Episode Reward:", total_reward)
+
+
+# ============================================
+# 🚀 RL Test Case Prioritization using PPO (Gymnasium version)
+# ============================================
+
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
 import gymnasium as gym
 from gymnasium import spaces
-import numpy as np
-import pandas as pd
 from stable_baselines3 import PPO
-from stable_baselines3.common.vec_env import DummyVecEnv
-from sklearn.preprocessing import MinMaxScaler
 
-# ===============================
-# Load your data
-# ===============================
-userstory = pd.read_csv(r"D:\data-learn\python-testcase\backend\userstory_commit_report.csv")
-tests = pd.read_csv(r"D:\data-learn\python-testcase\tests\results\test_results.csv", parse_dates=["Timestamp"])
-tests["Status"] = tests["Status"].str.upper().fillna("PASSED")
+# ------------------------------------------------------
+# STEP 1: Load and preprocess your dataset
+# ------------------------------------------------------
+data = pd.read_csv("final_userstory_commit_test_report_poc.csv")
 
-# ===============================
-# Build timeline per UserStory
-# ===============================
-def build_timeline(userstory_df, tests_df):
-    # Since you have one story now, just sort tests by time
-    return tests_df.sort_values("Timestamp").reset_index(drop=True)
+# Encode categorical columns
+encoders = {}
+for col in ['file_changed', 'changed_function', 'dependent_function', 'test_case_id', 'last_status']:
+    le = LabelEncoder()
+    data[col] = le.fit_transform(data[col].astype(str))
+    encoders[col] = le
 
-timeline = build_timeline(userstory, tests)
-
-
-# ===============================
-# Define the Gymnasium environment
-# ===============================
-class PriorityEnv(gym.Env):
-    """
-    Gymnasium environment to learn to assign priorities (Low, Medium, High)
-    based on evolving test results.
-    """
-
-    metadata = {"render_modes": ["human"], "render_fps": 2}
-
-    def __init__(self, timeline, meta=None, fix_horizon=2):
-        super().__init__()
-        self.timeline = timeline
-        self.meta = meta or {}
-        self.ptr = 0
-        self.alpha = 0.7  # weight for failure_age_days
-        self.beta = 0.3   # weight for failure_rate
-        self.penalty = 0.02
-        self.fix_bonus = 1.0
-        self.fix_horizon = fix_horizon
-
-        # Observation space: [failure_rate, failure_age_days, total_tests, failed_tests]
-        self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(4,), dtype=np.float32)
-        # Action space: 0=Low, 1=Medium, 2=High
-        self.action_space = spaces.Discrete(3)
-        self.scaler = MinMaxScaler()
-
-    def _get_obs(self):
-        window = self.timeline.iloc[: self.ptr + 1]
-        total = len(window)
-        failed = (window["Status"] == "FAILED").sum()
-        failure_rate = failed / total
-        failure_age = 0.0
-        if failed > 0:
-            first_fail = window[window["Status"] == "FAILED"]["Timestamp"].min()
-            failure_age = (self.now - first_fail).total_seconds() / (3600 * 24)
-
-        vec = np.array([failure_rate, failure_age, total, failed], dtype=np.float32).reshape(1, -1)
-        # Normalize dynamically
-        self.scaler.fit(np.vstack([vec, np.array([[1, 1, 50, 50]])]))
-        obs = self.scaler.transform(vec)[0]
-        return obs.astype(np.float32)
-
-    def reset(self, *, seed=None, options=None):
-        super().reset(seed=seed)
-        self.ptr = 0
-        self.now = self.timeline.iloc[0]["Timestamp"]
-        obs = self._get_obs()
-        info = {}
-        return obs, info
-
-    def step(self, action):
-        assert self.action_space.contains(action)
-        window = self.timeline.iloc[: self.ptr + 1]
-        total = len(window)
-        failed = (window["Status"] == "FAILED").sum()
-        failure_rate = failed / total
-        failure_age = 0.0
-        if failed > 0:
-            first_fail = window[window["Status"] == "FAILED"]["Timestamp"].min()
-            failure_age = (self.now - first_fail).total_seconds() / (3600 * 24)
-
-        # Reward shaping
-        priority_value = action / 2.0
-        reward = priority_value * (self.alpha * failure_age + self.beta * failure_rate) - self.penalty * action
-
-        # Delayed fix bonus
-        if action == 2 and failed > 0:
-            future_end = min(self.ptr + self.fix_horizon, len(self.timeline) - 1)
-            future = self.timeline.iloc[self.ptr + 1 : future_end + 1]
-            past_failed = (window["Status"] == "FAILED").any()
-            future_pass = (future["Status"] == "PASSED").any()
-            if past_failed and future_pass:
-                reward += self.fix_bonus
-
-        # Advance pointer
-        self.ptr += 1
-        terminated = self.ptr >= len(self.timeline) - 1
-        truncated = False
-        if not terminated:
-            self.now = self.timeline.iloc[self.ptr]["Timestamp"]
-
-        obs = self._get_obs()
-        info = {"step": self.ptr, "failure_rate": failure_rate, "failure_age": failure_age}
-        return obs, float(reward), terminated, truncated, info
-
-    def render(self):
-        print(f"Step {self.ptr}/{len(self.timeline)}")
-
-    def close(self):
-        pass
-
-
-# ===============================
-# Train PPO
-# ===============================
-meta = {"num_commits": 1, "num_files": 1, "num_functions": 2, "num_authors": 1}
-env = PriorityEnv(timeline, meta)
-vec_env = DummyVecEnv([lambda: env])
-
-model = PPO(
-    "MlpPolicy",
-    vec_env,
-    verbose=1,
-    learning_rate=3e-4,
-    gamma=0.99,
-    tensorboard_log="./ppo_priority_gymnasium_logs",
+# Define state, action, and reward components
+state_cols = ['file_changed', 'changed_function', 'dependent_function']
+action_col = 'test_case_id'
+reward_col = data['last_status'].apply(
+    lambda x: 1 if x == encoders['last_status'].transform(['fail'])[0] else -0.1
 )
 
-model.learn(total_timesteps=25)
-model.save("ppo_priority_gymnasium_model")
+# ------------------------------------------------------
+# STEP 2: Define Custom Gymnasium Environment
+# ------------------------------------------------------
+class TestSelectionEnv(gym.Env):
+    metadata = {"render_modes": []}
 
-# ===============================
-# Evaluate model
-# ===============================
-obs, info = env.reset()
-done = False
-total_reward = 0
-while not done:
-    action, _ = model.predict(obs, deterministic=True)
-    obs, reward, terminated, truncated, info = env.step(int(action))
-    print(
-        f"Step={info['step']:<3} | Action={['Low','Med','High'][int(action)]} | "
-        f"FailRate={info['failure_rate']:.2f} | FailAge={info['failure_age']:.2f} | Reward={reward:.3f}"
-    )
-    total_reward += reward
-    done = terminated or truncated
+    def __init__(self, data, state_cols, action_col, reward_col):
+        super().__init__()
+        self.data = data.reset_index(drop=True)
+        self.state_cols = state_cols
+        self.action_col = action_col
+        self.reward_col = reward_col.values
 
-print("Total Episode Reward:", total_reward)
+        # Define action and observation spaces
+        self.action_space = spaces.Discrete(len(self.data[action_col].unique()))
+        self.observation_space = spaces.Box(
+            low=0.0,
+            high=1.0,
+            shape=(len(state_cols),),
+            dtype=np.float32,
+        )
+
+        self.current_index = 0
+
+    def reset(self, seed=None, options=None):
+        """Start a new episode"""
+        super().reset(seed=seed)
+        self.current_index = np.random.randint(0, len(self.data))
+        state = self.data.loc[self.current_index, self.state_cols].values / len(self.data)
+        info = {}
+        return state.astype(np.float32), info
+
+    def step(self, action):
+        """Perform one action"""
+        row = self.data.loc[self.current_index]
+        reward = self.reward_col[self.current_index]
+
+        # PPO uses two flags in Gymnasium:
+        terminated = True   # Episode ends naturally
+        truncated = False   # Not truncated by time limit
+        info = {}
+
+        # Move to a random next commit
+        self.current_index = np.random.randint(0, len(self.data))
+        next_state = self.data.loc[self.current_index, self.state_cols].values / len(self.data)
+
+        return next_state.astype(np.float32), float(reward), terminated, truncated, info
+
+# ------------------------------------------------------
+# STEP 3: Create environment and train PPO agent
+# ------------------------------------------------------
+env = TestSelectionEnv(data, state_cols, action_col, reward_col)
+
+# Initialize PPO model
+model = PPO("MlpPolicy", env, verbose=1, tensorboard_log="./ppo_logs")
+
+# Train for a few thousand timesteps (adjust as needed)
+print("\n🚀 Training PPO model... please wait...")
+model.learn(total_timesteps=10000)
+print("✅ Training complete!")
+
+# ------------------------------------------------------
+# STEP 4: Define helper function for test suggestions
+# ------------------------------------------------------
+def suggest_test(model, file_changed, changed_function, dependent_function):
+    """Predict best test case for a given commit"""
+    state = np.array([file_changed, changed_function, dependent_function]) / len(data)
+    action, _ = model.predict(state, deterministic=True)
+    test_case = encoders['test_case_id'].inverse_transform([action])[0]
+    return test_case
+
+# ------------------------------------------------------
+# STEP 5: Example usage
+# ------------------------------------------------------
+print("\n🎯 Example prediction:")
+example = data.iloc[0]
+suggested = suggest_test(
+    model,
+    example['file_changed'],
+    example['changed_function'],
+    example['dependent_function']
+)
+print(f"Suggested Test Case: {suggested}")
+
+# ------------------------------------------------------
+# STEP 6: Save model for reuse
+# ------------------------------------------------------
+model.save("ppo_test_selection_model")
+print("\n💾 PPO model saved as 'ppo_test_selection_model.zip'")

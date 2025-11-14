@@ -1,0 +1,8 @@
+Test_Case,Priority_Score,Reason
+TC-15,0.19762285,Model-based priority (probability score)
+TC-14,0.18549214,Model-based priority (probability score)
+TC-06,0.16829652,Model-based priority (probability score)
+missing,0.13700785,Model-based priority (probability score)
+TC-07,0.13210951,Model-based priority (probability score)
+TC-01,0.10452507,Model-based priority (probability score)
+TC-04,0.07494602,Model-based priority (probability score)

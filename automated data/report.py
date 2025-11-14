@@ -1,10 +1,17 @@
 # report.py  — Full version with DB insert fixed
 import os, json, math, csv
+import sys
+from pathlib import Path
+
+# Add project root to path so we can import model package
+project_root = str(Path(__file__).parent.parent)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 import pandas as pd
 from model.db_connection import get_connection
 
 import logging
-from pathlib import Path
 
 # load centralized config and logging
 try:
@@ -15,11 +22,17 @@ except Exception:
     _conf = {}
 
 # ---------- CONFIG ----------
-commits_path = _conf.get('commits_path') or r"D:\data-learn\python-testcase\backend\userstory_commit_report.csv"
-tests_path = _conf.get('tests_path') or r"D:\data-learn\python-testcase\tests\results\test_results.csv"
-app_deps_path = _conf.get('app_deps_path') or r"D:\data-learn\python-testcase\backend\app_dependencies.json"
-todo_path = _conf.get('todo_path') or r"D:\data-learn\python-testcase\Todo_UserStories_TestCases.xlsx"
-output_path = _conf.get('output_path') or r"D:\data-learn\python-testcase\final_userstory_commit_test_report_poc.csv"
+commits_path = _conf.get('commits_path')
+tests_path = _conf.get('tests_path')
+app_deps_path = _conf.get('app_deps_path')
+todo_path = _conf.get('todo_path')
+output_path = _conf.get('output_path')
+if not commits_path:
+    logger.error("commits_path is not configured. Please set commits_path in config_loader or _conf.")
+    sys.exit(1)
+if not output_path:
+    logger.error("output_path is not configured. Please set output_path in config_loader or _conf.")
+    sys.exit(1)
 output_full = output_path.replace(".csv", "_full.csv")
 
 logger = logging.getLogger(__name__)
@@ -29,13 +42,23 @@ logger = logging.getLogger(__name__)
 # ---------- HELPERS ----------
 def read_any(path):
     _, ext = os.path.splitext(path.lower())
+
+    # --- CSV FIX FOR BAD LINES ---
     if ext == ".csv":
-        return pd.read_csv(path, dtype=str)
+        # Use python engine and handle bad rows (warn or skip)
+        return pd.read_csv(
+            path,
+            dtype=str,
+            on_bad_lines="skip"   # or "skip" to silently ignore malformed lines
+        )
+
     elif ext in (".xls", ".xlsx"):
         return pd.read_excel(path, dtype=str)
+
     elif ext == ".json":
         with open(path, "r", encoding="utf8") as f:
             return json.load(f)
+
     else:
         raise ValueError("Unsupported file type: " + ext)
 
@@ -85,18 +108,45 @@ def map_todo(df):
 
 # ---------- 1) LOAD ----------
 commits_df = read_any(commits_path)
-tests_df   = read_any(tests_path)
+logger.info("Loaded %d commits from %s", len(commits_df), commits_path)
+
+# Load tests - optional, if file missing, skip test aggregation
+tests_df = None
+if os.path.exists(tests_path):
+    try:
+        tests_df = read_any(tests_path)
+        logger.info("Loaded %d test records from %s", len(tests_df), tests_path)
+    except Exception as e:
+        logger.warning("Could not load tests from %s: %s", tests_path, e)
+else:
+    logger.warning("Test file not found: %s", tests_path)
+
+# Load todo - optional, if file missing, use commits as-is
+todo_df = None
+if os.path.exists(todo_path):
+    try:
+        todo_df = read_any(todo_path)
+        logger.info("Loaded %d todo mappings from %s", len(todo_df), todo_path)
+    except Exception as e:
+        logger.warning("Could not load todo from %s: %s", todo_path, e)
+else:
+    logger.warning("Todo file not found: %s", todo_path)
+
 app_deps   = read_any(app_deps_path) if os.path.exists(app_deps_path) else {}
-todo_df    = read_any(todo_path)
+logger.info("Loaded app dependencies: %d keys", len(app_deps))
 
 # ---------- 2) NORMALIZE HEADERS ----------
 commits_df = map_commits(map_columns_lower_strip(commits_df))
-tests_df   = map_tests(map_columns_lower_strip(tests_df))
-todo_df    = map_todo(map_columns_lower_strip(todo_df))
+if tests_df is not None:
+    tests_df   = map_tests(map_columns_lower_strip(tests_df))
+if todo_df is not None:
+    todo_df    = map_todo(map_columns_lower_strip(todo_df))
 
 logger.info("Commit cols: %s", list(commits_df.columns))
-logger.info("Test cols: %s", list(tests_df.columns))
-logger.info("Todo cols: %s", list(todo_df.columns))
+if tests_df is not None:
+    logger.info("Test cols: %s", list(tests_df.columns))
+if todo_df is not None:
+    logger.info("Todo cols: %s", list(todo_df.columns))
 
 # ---------- 3) EXPLODE CHANGED FUNCTIONS ----------
 if 'changed_function' not in commits_df.columns:
@@ -109,43 +159,64 @@ commits_exploded = commits_exploded[
 ].reset_index(drop=True)
 
 # ---------- 4) PREPARE TEST RESULTS ----------
-tests_df['status_norm'] = tests_df['status'].astype(str).str.lower().str.strip()
-tests_df['status_norm'] = tests_df['status_norm'].replace(
-    {'passed':'pass','failed':'fail','ok':'pass','error':'fail'}
+agg_tests = None
+if tests_df is not None:
+    tests_df['status_norm'] = tests_df['status'].astype(str).str.lower().str.strip()
+    tests_df['status_norm'] = tests_df['status_norm'].replace(
+        {'passed':'pass','failed':'fail','ok':'pass','error':'fail'}
+    )
+
+    timestamp_col = next((c for c in tests_df.columns if any(k in c.lower() for k in ['time','date'])), None)
+    if timestamp_col:
+        tests_df[timestamp_col] = pd.to_datetime(tests_df[timestamp_col], errors='coerce')
+
+    agg_counts = (tests_df.groupby('test_case_id', dropna=False)
+                  .agg(total_no_of_Passed=('status_norm', lambda s: (s=='pass').sum()),
+                       total_no_of_Failed=('status_norm', lambda s: (s=='fail').sum()))
+                  .reset_index())
+
+    def choose_test_name(group):
+        vals = group['test_name'].dropna()
+        if vals.empty: return pd.NA
+        mode = vals.mode()
+        return mode.iloc[0] if not mode.empty else vals.iloc[-1]
+
+    # names = tests_df.groupby('test_case_id', dropna=False).apply(choose_test_name, include_groups=False).reset_index()
+    # names.columns = ['test_case_id','test_name']
+    # agg_tests = agg_counts.merge(names, on='test_case_id', how='left')
+
+    names = (
+    tests_df.groupby('test_case_id', dropna=False)
+    .apply(lambda g: choose_test_name(g), include_groups=False)
+    .reset_index(name='test_name')
 )
 
-timestamp_col = next((c for c in tests_df.columns if any(k in c.lower() for k in ['time','date'])), None)
-if timestamp_col:
-    tests_df[timestamp_col] = pd.to_datetime(tests_df[timestamp_col], errors='coerce')
+    agg_tests = agg_counts.merge(names, on='test_case_id', how='left')
 
-agg_counts = (tests_df.groupby('test_case_id', dropna=False)
-              .agg(total_no_of_Passed=('status_norm', lambda s: (s=='pass').sum()),
-                   total_no_of_Failed=('status_norm', lambda s: (s=='fail').sum()))
-              .reset_index())
-
-def choose_test_name(group):
-    vals = group['test_name'].dropna()
-    if vals.empty: return pd.NA
-    mode = vals.mode()
-    return mode.iloc[0] if not mode.empty else vals.iloc[-1]
-
-names = tests_df.groupby('test_case_id', dropna=False).apply(choose_test_name).reset_index()
-names.columns = ['test_case_id','test_name']
-agg_tests = agg_counts.merge(names, on='test_case_id', how='left')
-
-if timestamp_col:
-    last = (tests_df.sort_values(timestamp_col)
-            .groupby('test_case_id', dropna=False)
-            .last()
-            .reset_index())
-    last_small = last[['test_case_id','status_norm',timestamp_col]].rename(
-        columns={'status_norm':'last_status', timestamp_col:'last_execution_date'})
-    agg_tests = agg_tests.merge(last_small, on='test_case_id', how='left')
+    if timestamp_col:
+        last = (tests_df.sort_values(timestamp_col)
+                .groupby('test_case_id', dropna=False)
+                .last()
+                .reset_index())
+        last_small = last[['test_case_id','status_norm',timestamp_col]].rename(
+            columns={'status_norm':'last_status', timestamp_col:'last_execution_date'})
+        agg_tests = agg_tests.merge(last_small, on='test_case_id', how='left')
+    logger.info("Aggregated %d test cases", len(agg_tests))
+else:
+    logger.warning("Tests not available; skipping test aggregation")
 
 # ---------- 5) JOIN COMMITS + TODO + TESTS ----------
-mapped_todo = todo_df[['user_story_id','test_case_id']].dropna().drop_duplicates()
-joined = commits_exploded.merge(mapped_todo, on='user_story_id', how='left')
-final = joined.merge(agg_tests, on='test_case_id', how='left')
+final = commits_exploded.copy()
+
+if todo_df is not None and agg_tests is not None:
+    mapped_todo = todo_df[['user_story_id','test_case_id']].dropna().drop_duplicates()
+    joined = final.merge(mapped_todo, on='user_story_id', how='left')
+    final = joined.merge(agg_tests, on='test_case_id', how='left')
+    logger.info("After join with todo+tests: %d rows", len(final))
+elif agg_tests is not None:
+    logger.warning("Todo not available; cannot join with tests")
+else:
+    logger.warning("Tests not available; report will only show commits")
 
 # ---------- 6) DEPENDENCY LOOKUP ----------
 def lookup_deps_by_file(file_changed, func_name, app_deps_obj):
@@ -167,9 +238,10 @@ def lookup_deps_by_file(file_changed, func_name, app_deps_obj):
 
 final['dependent_functions_list'] = final.apply(
     lambda r: lookup_deps_by_file(r.get('file_changed',''), r.get('changed_function_list',''), app_deps),
-    axis=1
+    axis=1,
+    result_type='reduce'
 )
-final['dependent_function'] = final['dependent_functions_list'].apply(lambda L: ", ".join(L) if L else pd.NA)
+final['dependent_function'] = final['dependent_functions_list'].apply(lambda L: ", ".join(L) if isinstance(L, list) and L else pd.NA)
 
 # ---------- 7) FINALIZE ----------
 desired_cols = [
@@ -266,3 +338,4 @@ def insert_regression_matrix(df):
         conn.close()
 
 insert_regression_matrix(df_with_status)
+print(output_path)

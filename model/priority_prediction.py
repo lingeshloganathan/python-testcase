@@ -1,218 +1,3 @@
-# """
-# predict_priority_userstory.py
-
-# Given a specific UserStoryID (e.g., US-10):
-#  - find its commits from GitHub/local repo
-#  - extract changed functions/files
-#  - find matching tests
-#  - predict priorities using PPO model
-#  - remove duplicates and show final DataFrame
-# """
-
-# import os
-# import re
-# import subprocess
-# import pandas as pd
-# import numpy as np
-# import gymnasium as gym
-# from stable_baselines3 import PPO
-# from sklearn.preprocessing import MinMaxScaler
-
-# # ====================================================
-# # Configuration
-# # ====================================================
-# USER_STORY_ID = "US-08"  # <-- change this to your story ID
-# REPO_PATH = r"D:\data-learn\python-testcase"
-# MODEL_PATH = r"D:\data-learn\ppo_priority_gymnasium_model.zip"
-# TEST_RESULTS_PATH = r"D:\data-learn\python-testcase\tests\results\test_results.csv"
-# OUTPUT_PATH = r"D:\data-learn\python-testcase\backend\priority_userstory.csv"
-
-# # ====================================================
-# # 1️⃣ Get Commits for the given UserStoryID
-# # ====================================================
-# def get_commits_for_story(repo_path, story_id):
-#     """Find all commits mentioning the UserStoryID."""
-#     os.chdir(repo_path)
-#     commits = subprocess.check_output(["git", "log", "--all", "--grep", story_id, "--pretty=%H"]).decode().splitlines()
-#     if not commits:
-#         raise ValueError(f"❌ No commits found for {story_id}")
-#     print(f"🔍 Found {len(commits)} commits for {story_id}:")
-#     for c in commits:
-#         print("   ", c)
-#     return commits
-
-# def extract_changes(repo_path, commit_hash):
-#     """Extract changed files and functions for a given commit."""
-#     os.chdir(repo_path)
-#     changed_files = subprocess.check_output(
-#         ["git", "diff-tree", "--no-commit-id", "--name-only", "-r", commit_hash]
-#     ).decode().splitlines()
-
-#     diff_text = subprocess.check_output(["git", "show", commit_hash]).decode(errors="ignore")
-#     changed_functions = set(re.findall(r"def\s+(\w+)\s*\(", diff_text))
-
-#     return changed_files, changed_functions
-
-# commits = get_commits_for_story(REPO_PATH, USER_STORY_ID)
-
-# changed_files_total = set()
-# changed_functions_total = set()
-# for c in commits:
-#     f, funcs = extract_changes(REPO_PATH, c)
-#     changed_files_total.update(f)
-#     changed_functions_total.update(funcs)
-
-# print(f"\n📂 Changed Files for {USER_STORY_ID}: {', '.join(changed_files_total)}")
-# print(f"⚙️  Changed Functions: {', '.join(changed_functions_total)}\n")
-
-# # ====================================================
-# # 2️⃣ Load Test Results
-# # ====================================================
-# tests = pd.read_csv( TEST_RESULTS_PATH,
-#     usecols=["Test Case ID", "Test Name", "Status", "Timestamp"],  # no Message
-#     parse_dates=["Timestamp"],
-#     engine="python")
-# tests["Status"] = tests["Status"].str.upper().fillna("PASSED")
-
-# # ====================================================
-# # 3️⃣ Match Tests to Changed Code
-# # ====================================================
-# def compute_impact(row):
-#     test_name = str(row.get("Test Name", "")).lower()
-#     # message = str(row.get("Message", "")).lower()
-#     score = 0
-
-#     # if any(fn.lower() in test_name or fn.lower() in message for fn in changed_functions_total):
-#     #     score += 5
-#     if any(f.lower().split("/")[-1].replace(".py", "") in test_name for f in changed_files_total):
-#         score += 3
-#     if row["Status"] == "FAILED":
-#         score += 4
-#     # Additional factors to consider
-#     if row["Status"] == "FAILED" and "critical" in test_name:
-#         score += 2
-#     elif row["Status"] == "FAILED" and "major" in test_name:
-#         score += 1
-#     return score
-# def compute_impact(row):
-#     test_name = str(row.get("Test Name", "")).lower()
-#     # message = str(row.get("Message", "")).lower()
-#     score = 0
-
-#     # if any(fn.lower() in test_name or fn.lower() in message for fn in changed_functions_total):
-#     #     score += 5
-#     if any(f.lower().split("/")[-1].replace(".py", "") in test_name for f in changed_files_total):
-#         score += 3
-#     if row["Status"] == "FAILED":
-#         score += 4
-#     return score
-
-# tests["ImpactScore"] = tests.apply(compute_impact, axis=1)
-# scaler = MinMaxScaler()
-# tests["ImpactScoreScaled"] = scaler.fit_transform(tests[["ImpactScore"]])
-
-# # ====================================================
-# # 4️⃣ Define PPO Environment
-# # ====================================================
-# class PriorityEnv(gym.Env):
-#     def __init__(self, row):
-#         super().__init__()
-#         self.row = row
-#         self.observation_space = gym.spaces.Box(low=0, high=1, shape=(4,), dtype=np.float32)
-#         self.action_space = gym.spaces.Discrete(3)
-#         self.scaler = MinMaxScaler()
-
-#     def reset(self, *, seed=None, options=None):
-#         super().reset(seed=seed)
-#         fail = 1 if self.row["Status"] == "FAILED" else 0
-#         vec = np.array([
-#             self.row["ImpactScoreScaled"],
-#             fail,
-#             np.random.rand(),
-#             np.random.rand(),
-#         ], dtype=np.float32).reshape(1, -1)
-#         self.scaler.fit(np.vstack([vec, np.ones((1, 4))]))
-#         obs = self.scaler.transform(vec)[0]
-#         return obs, {}
-
-#     def step(self, action):
-#         reward = 0.0
-#         terminated, truncated = True, False
-#         return np.zeros(4, dtype=np.float32), reward, terminated, truncated, {}
-
-# # ====================================================
-# # 5️⃣ Predict Priority Using PPO Model
-# # ====================================================
-# print(" Loading PPO model...")
-# model = PPO.load(MODEL_PATH)
-# # print("🚀 Loading PPO model...")
-# # model = PPO.load(MODEL_PATH)
-
-# predictions = []
-# for _, row in tests.iterrows():
-#     env = PriorityEnv(row)
-#     obs, _ = env.reset()
-#     action, _ = model.predict(obs, deterministic=True)
-#     priority = {0: "Low", 1: "Medium", 2: "High"}[int(action)]
-#     predictions.append(priority)
-
-# tests["Predicted Priority"] = predictions
-
-# # ====================================================
-# # 6️⃣ Remove Duplicates (Keep Latest Unique Test ID)
-# # ====================================================
-# tests.sort_values("Timestamp", ascending=False, inplace=True)
-# tests_unique = tests.drop_duplicates(subset=["Test Case ID"], keep="first")
-
-# # Rank based on ImpactScore + Priority
-# priority_order = {"High": 3, "Medium": 2, "Low": 1}
-# tests_unique["PriorityValue"] = tests_unique["Predicted Priority"].map(priority_order)
-# tests_unique["FinalScore"] = tests_unique["ImpactScoreScaled"] * 0.6 + tests_unique["PriorityValue"] * 0.4
-
-# final_df = tests_unique.sort_values("FinalScore", ascending=False)
-
-# # ====================================================
-# # 7️⃣ Output Results
-# # ====================================================
-# # Add the UserStoryID column
-# final_df["UserStoryID"] = USER_STORY_ID
-
-# # Define the exact columns to output (no Message)
-# out_cols = [
-#     "UserStoryID",
-#     "Test Case ID", "Test Name", "Status",
-#     "Predicted Priority", "ImpactScore", "ImpactScoreScaled",
-#     "PriorityValue", "FinalScore", "Timestamp"
-# ]
-
-# print(f"\n===== 🧠 Final Priority Table for {USER_STORY_ID} =====")
-# print(final_df[out_cols])
-# # Save clean CSV
-# final_df[out_cols].to_csv(OUTPUT_PATH, index=False)
-# print(f"\n Final priorities saved to {OUTPUT_PATH}")
-# # Create a new table for the regression matrix values
-# regression_matrix_df = pd.read_csv(TEST_RESULTS_PATH)
-# print("\n===== Regression Matrix Table =====")
-# print(regression_matrix_df)
-
-# # Save clean CSV
-# final_df[out_cols].to_csv(OUTPUT_PATH, index=False)
-# print(f"\n✅ Final priorities saved to {OUTPUT_PATH}")
-
-
-# ============================================
-# 🎯 PPO Test Case Selection — Prediction Script (Updated for Latest Data)
-# ============================================
-
-# ============================================
-# 🎯 PPO Test Case Selection — Predict Last Commit Only
-# ============================================
-
-# ============================================
-# ⚙️ PPO Test Case Prioritization with Reasoning
-# ============================================
-
-# priority_prediction_ranked_safe.py
 import logging
 import pandas as pd
 import numpy as np
@@ -220,6 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 from stable_baselines3 import PPO
 import torch
 import warnings
+from datetime import datetime
 
 # load central config and logging
 try:
@@ -234,9 +20,6 @@ logger = logging.getLogger(__name__)
 CSV_PATH = _conf.get('output_path') or "final_userstory_commit_test_report_poc.csv"
 MODEL_PATH = _conf.get('ppo_model_path') or "ppo_test_selection_model"
 
-# -------------------------
-# Load CSV and clean safely
-# -------------------------
 data = pd.read_csv(CSV_PATH)
 
 # ensure relevant columns are strings so fillna('missing') won't warn
@@ -355,5 +138,6 @@ for rank, (tc, prob) in enumerate(ranking[:15], start=1):
 
 out_df = pd.DataFrame(ranking, columns=["Test_Case", "Priority_Score"])
 out_df["Reason"] = out_df["Test_Case"].apply(lambda x: get_reason(x, decoded_file_changed, decoded_changed_function))
-out_df.to_csv(_conf.get('priority_output_path') or "test_case_priorities_safe.csv", index=False)
-logger.info("\n💾 Saved '%s'", _conf.get('priority_output_path') or "test_case_priorities_safe.csv")
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+out_df.to_csv(_conf.get('priority_output_path') or f"test_case_priorities_safe_{timestamp}.csv", index=False)
+logger.info("\n💾 Saved '%s'", _conf.get('priority_output_path') or f"test_case_priorities_safe_{timestamp}.csv")

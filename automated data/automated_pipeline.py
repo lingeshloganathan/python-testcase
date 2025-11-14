@@ -2,29 +2,61 @@ import os
 import json
 import csv
 import logging
+import sys
 from tree_sitter import Language, Parser
 import tree_sitter_python as tspython
 
+# === FIX: Add project root FIRST so we can import config_loader ===
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 # load centralized config and logging
+config_loader = None
+_conf = {}
 try:
-    import config_loader as cfg
-    cfg.setup_logging()
-    _conf = cfg.load_config()
-except Exception:
-    _conf = {}
+    import config_loader
+    config_loader.setup_logging()
+    _conf = config_loader.load_config()
+    logging.info("✅ Config loaded via config_loader")
+except Exception as e:
+    logging.warning("⚠️ Config loading failed: %s; using fallback", e)
+    # Fallback: load config.json directly
+    try:
+        config_path = os.path.join(PROJECT_ROOT, 'config.json')
+        if os.path.exists(config_path):
+            with open(config_path, 'r') as f:
+                _conf = json.load(f)
+            logging.basicConfig(level=logging.INFO)
+            logging.info("✅ Config loaded from %s", config_path)
+    except Exception as e2:
+        logging.basicConfig(level=logging.INFO)
+        logging.warning("⚠️ Fallback config load also failed: %s", e2)
+        _conf = {}
 
 # === CONFIGURATION ===
-PROJECT_PATH = _conf.get('project_path') or r"D:\data-learn\python-testcase\backend\app.py"
+PROJECT_PATH = _conf.get('project_path') 
+app_deps = _conf.get('app_deps')
+print("Using app_deps:", app_deps)
+
+
 logger = logging.getLogger(__name__)
 
+# Validate app_deps
+if not app_deps:
+    logger.error("❌ app_deps not configured in config.json. Cannot proceed.")
+    exit(1)
+
+logger.info("🔍 Using app_deps: %s", app_deps)
+
 # === OUTPUT PATHS ===
-if os.path.isfile(PROJECT_PATH):
+if os.path.isfile(app_deps):
     base_name = os.path.splitext(PROJECT_PATH)[0]
     OUTPUT_JSON = base_name + "_dependencies.json"
     OUTPUT_CSV = base_name + "_dependencies.csv"
 else:
-    OUTPUT_JSON = os.path.join(PROJECT_PATH, "function_dependencies.json")
-    OUTPUT_CSV = os.path.join(PROJECT_PATH, "function_dependencies.csv")
+    OUTPUT_JSON = os.path.join(app_deps, "function_dependencies.json")
+    OUTPUT_CSV = os.path.join(app_deps, "function_dependencies.csv")
 
 
 PY_LANGUAGE = Language(tspython.language())
@@ -105,19 +137,19 @@ def scan_python_files(base_path, exclude_dirs=None):
 
 # === MAIN ===
 if __name__ == "__main__":
-    logger.info("🔍 Scanning path: %s", PROJECT_PATH)
+    logger.info("🔍 Scanning path: %s", app_deps)
 
     all_dependencies = {}
 
     # Case 1: Single file
-    if os.path.isfile(PROJECT_PATH):
+    if os.path.isfile(app_deps):
         logger.info("📄 Detected single file mode.")
-        py_files = [PROJECT_PATH]
+        py_files = [app_deps]
 
     # Case 2: Folder
-    elif os.path.isdir(PROJECT_PATH):
+    elif os.path.isdir(app_deps):
         logger.info("📁 Detected folder mode — scanning recursively...")
-        py_files = scan_python_files(PROJECT_PATH)
+        py_files = scan_python_files(app_deps)
         logger.info("✅ Found %d Python files.", len(py_files))
 
     else:

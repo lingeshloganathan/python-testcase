@@ -182,10 +182,20 @@ except Exception:
 
 logger = logging.getLogger(__name__)
 
-CSV_PATH = _conf.get('output_path') or "final_userstory_commit_test_report_poc.csv"
-MODEL_PATH = _conf.get('ppo_model_path') or "ppo_test_selection_model"
+CSV_PATH = _conf.get('output_path') or r"D:\data-learn\final_userstory_commit_test_report_poc.csv"
+MODEL_PATH = _conf.get('ppo_model_path') or r"D:\data-learn\models\ppo_test_selection_model"
+
+logger.info("CSV_PATH: %s", CSV_PATH)
+logger.info("MODEL_PATH: %s", MODEL_PATH)
+
+# Check if CSV exists
+if not CSV_PATH or not __import__('os').path.exists(CSV_PATH):
+    logger.error("Training CSV not found at: %s", CSV_PATH)
+    logger.error("Cannot train model without data. Please run report.py first to generate the training data.")
+    exit(1)
 
 data = pd.read_csv(CSV_PATH)
+logger.info("Loaded %d rows from %s", len(data), CSV_PATH)
 
 encoders = {}
 for col in ['file_changed', 'changed_function', 'dependent_function', 'test_case_id', 'last_status']:

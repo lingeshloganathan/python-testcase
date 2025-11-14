@@ -12,6 +12,13 @@ try:
 except Exception:
     _cfg = None
 
+import sys, os
+
+# Add project root to path: d:/data-learn/
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(PROJECT_ROOT)
+
+
 
 def _load_config_fallback():
     # Prefer config_loader if available, otherwise attempt dynamic import
@@ -26,11 +33,13 @@ def _load_config_fallback():
         return cfg_mod.load_config()
     except Exception:
         return {}
+    
+    
 
 def find_and_write_commits(user_story_id: str,
                            repo_owner: str = "lingeshloganathan",
                            repo_name: str = "python-testcase",
-                           output_file: str = r"D:\data-learn\python-testcase\backend\userstory_commit_report.csv",
+                           output_file: str = r"D:\data-learn\automated data\userstory_commit_report.csv",
                            last_only: bool = False):
     headers = {"Accept": "application/vnd.github.v3+json"}
     logging.info(f"Searching commits for {user_story_id} in {repo_owner}/{repo_name}")
@@ -136,7 +145,8 @@ def main(argv=None):
 
     repo_owner = args.repo_owner or cfg.get('repo_owner') or 'lingeshloganathan'
     repo_name = args.repo_name or cfg.get('repo_name') or 'python-testcase'
-    output_file = args.output_file or cfg.get('output_file') or r"D:\data-learn\python-testcase\backend\userstory_commit_report.csv"
+    output_file = args.output_file or cfg.get('output_file') 
+    print(output_file)
 
     find_and_write_commits(args.user_story_id, repo_owner, repo_name, output_file, args.last_only)
 

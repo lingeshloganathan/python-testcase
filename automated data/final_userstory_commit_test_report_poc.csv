@@ -1,9 +1,0 @@
-user_story_id,commit_sha,author,file_changed,changed_function,dependent_function,test_case_id,test_name,total_no_of_Passed,total_no_of_Failed,last_status,last_execution_date
-US-01,6826c789d5bcf1ce4564b3bf5996f24250b2129a,Nithishrish23,backend/app.py,get_tasks,"request.args.get, sorted, jsonify",TC-01,Add Task UI,23,3,fail,07-11-2025 14:14
-US-01,6826c789d5bcf1ce4564b3bf5996f24250b2129a,Nithishrish23,backend/app.py,add_task,"request.get_json, jsonify, str, uuid.uuid4, datetime.now().isoformat, datetime.now, tasks.append",TC-01,Add Task UI,23,3,fail,07-11-2025 14:14
-US-03,3545227f64947622fa22912dbd1563346809556f,lingesh-Codedtx,backend/app.py,complete_task,"next, jsonify",TC-04,Complete Task UI,18,10,fail,07-11-2025 14:14
-US-04,6bf6a1bc48080be9269fd73c19b5b1659092e910,Nithishrish23,backend/app.py,update_task,"next, jsonify, request.get_json",TC-06,Update Task,1,0,pass,07-11-2025 12:21
-US-04,6bf6a1bc48080be9269fd73c19b5b1659092e910,Nithishrish23,backend/app.py,update_task,"next, jsonify, request.get_json",TC-06,Update Task,1,0,pass,07-11-2025 12:21
-US-05,f285551b93807f49c60a53b289998cded4bf1556,lingesh-Codedtx,backend/app.py,delete_task,"next, jsonify",TC-07,Delete Task,1,0,pass,07-11-2025 12:21
-US-09,9bcf5e456a7fd4d923b8094c53a76bce4bc29049,lingesh-Codedtx,backend/app.py,get_task_count,"len, jsonify",TC-14,Task Counts,1,0,pass,07-11-2025 12:21
-US-09,9bcf5e456a7fd4d923b8094c53a76bce4bc29049,lingesh-Codedtx,backend/app.py,get_task_count,"len, jsonify",TC-15,Clear All Tasks UI,7,9,fail,07-11-2025 14:15

@@ -1,197 +1,57 @@
-# """
-# Modern Gymnasium version of the PPO agent for predicting user story priority
-# based on test result timelines.
-# """
-
-# import gymnasium as gym
-# from gymnasium import spaces
-# import numpy as np
-# import pandas as pd
-# from stable_baselines3 import PPO
-# from stable_baselines3.common.vec_env import DummyVecEnv
-# from sklearn.preprocessing import MinMaxScaler
-
-# # ===============================
-# # Load your data
-# # ===============================
-# userstory = pd.read_csv(r"D:\data-learn\python-testcase\backend\userstory_commit_report.csv")
-# tests = pd.read_csv(r"D:\data-learn\python-testcase\tests\results\test_results.csv", parse_dates=["Timestamp"])
-# tests["Status"] = tests["Status"].str.upper().fillna("PASSED")
-
-# # ===============================
-# # Build timeline per UserStory
-# # ===============================
-# def build_timeline(userstory_df, tests_df):
-#     # Since you have one story now, just sort tests by time
-#     return tests_df.sort_values("Timestamp").reset_index(drop=True)
-
-# timeline = build_timeline(userstory, tests)
-
-
-# # ===============================
-# # Define the Gymnasium environment
-# # ===============================
-# class PriorityEnv(gym.Env):
-#     """
-#     Gymnasium environment to learn to assign priorities (Low, Medium, High)
-#     based on evolving test results.
-#     """
-
-#     metadata = {"render_modes": ["human"], "render_fps": 2}
-
-#     def __init__(self, timeline, meta=None, fix_horizon=2):
-#         super().__init__()
-#         self.timeline = timeline
-#         self.meta = meta or {}
-#         self.ptr = 0
-#         self.alpha = 0.7  # weight for failure_age_days
-#         self.beta = 0.3   # weight for failure_rate
-#         self.penalty = 0.02
-#         self.fix_bonus = 1.0
-#         self.fix_horizon = fix_horizon
-
-#         # Observation space: [failure_rate, failure_age_days, total_tests, failed_tests]
-#         self.observation_space = spaces.Box(low=0.0, high=1.0, shape=(4,), dtype=np.float32)
-#         # Action space: 0=Low, 1=Medium, 2=High
-#         self.action_space = spaces.Discrete(3)
-#         self.scaler = MinMaxScaler()
-
-#     def _get_obs(self):
-#         window = self.timeline.iloc[: self.ptr + 1]
-#         total = len(window)
-#         failed = (window["Status"] == "FAILED").sum()
-#         failure_rate = failed / total
-#         failure_age = 0.0
-#         if failed > 0:
-#             first_fail = window[window["Status"] == "FAILED"]["Timestamp"].min()
-#             failure_age = (self.now - first_fail).total_seconds() / (3600 * 24)
-
-#         vec = np.array([failure_rate, failure_age, total, failed], dtype=np.float32).reshape(1, -1)
-#         # Normalize dynamically
-#         self.scaler.fit(np.vstack([vec, np.array([[1, 1, 50, 50]])]))
-#         obs = self.scaler.transform(vec)[0]
-#         return obs.astype(np.float32)
-
-#     def reset(self, *, seed=None, options=None):
-#         super().reset(seed=seed)
-#         self.ptr = 0
-#         self.now = self.timeline.iloc[0]["Timestamp"]
-#         obs = self._get_obs()
-#         info = {}
-#         return obs, info
-
-#     def step(self, action):
-#         assert self.action_space.contains(action)
-#         window = self.timeline.iloc[: self.ptr + 1]
-#         total = len(window)
-#         failed = (window["Status"] == "FAILED").sum()
-#         failure_rate = failed / total
-#         failure_age = 0.0
-#         if failed > 0:
-#             first_fail = window[window["Status"] == "FAILED"]["Timestamp"].min()
-#             failure_age = (self.now - first_fail).total_seconds() / (3600 * 24)
-
-#         # Reward shaping
-#         priority_value = action / 2.0
-#         reward = priority_value * (self.alpha * failure_age + self.beta * failure_rate) - self.penalty * action
-
-#         # Delayed fix bonus
-#         if action == 2 and failed > 0:
-#             future_end = min(self.ptr + self.fix_horizon, len(self.timeline) - 1)
-#             future = self.timeline.iloc[self.ptr + 1 : future_end + 1]
-#             past_failed = (window["Status"] == "FAILED").any()
-#             future_pass = (future["Status"] == "PASSED").any()
-#             if past_failed and future_pass:
-#                 reward += self.fix_bonus
-
-#         # Advance pointer
-#         self.ptr += 1
-#         terminated = self.ptr >= len(self.timeline) - 1
-#         truncated = False
-#         if not terminated:
-#             self.now = self.timeline.iloc[self.ptr]["Timestamp"]
-
-#         obs = self._get_obs()
-#         info = {"step": self.ptr, "failure_rate": failure_rate, "failure_age": failure_age}
-#         return obs, float(reward), terminated, truncated, info
-
-#     def render(self):
-#         print(f"Step {self.ptr}/{len(self.timeline)}")
-
-#     def close(self):
-#         pass
-
-
-# # ===============================
-# # Train PPO
-# # ===============================
-# meta = {"num_commits": 1, "num_files": 1, "num_functions": 2, "num_authors": 1}
-# env = PriorityEnv(timeline, meta)
-# vec_env = DummyVecEnv([lambda: env])
-
-# model = PPO(
-#     "MlpPolicy",
-#     vec_env,
-#     verbose=1,
-#     learning_rate=3e-4,
-#     gamma=0.99,
-#     tensorboard_log="./ppo_priority_gymnasium_logs",
-# )
-
-# model.learn(total_timesteps=25)
-# model.save("ppo_priority_gymnasium_model")
-
-# # ===============================
-# # Evaluate model
-# # ===============================
-# obs, info = env.reset()
-# done = False
-# total_reward = 0
-# while not done:
-#     action, _ = model.predict(obs, deterministic=True)
-#     obs, reward, terminated, truncated, info = env.step(int(action))
-#     print(
-#         f"Step={info['step']:<3} | Action={['Low','Med','High'][int(action)]} | "
-#         f"FailRate={info['failure_rate']:.2f} | FailAge={info['failure_age']:.2f} | Reward={reward:.3f}"
-#     )
-#     total_reward += reward
-#     done = terminated or truncated
-
-# print("Total Episode Reward:", total_reward)
-
-
-# ============================================
-# 🚀 RL Test Case Prioritization using PPO (Gymnasium version)
-# ============================================
-
 import logging
+import os
+import json
+import sys
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 import gymnasium as gym
 from gymnasium import spaces
 from stable_baselines3 import PPO
+from pathlib import Path
+
+# Add project root to path so config_loader can be found
+project_root = str(Path(__file__).parent.parent)
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
 # load config and logging
+_conf = {}
 try:
     import config_loader as cfg
     cfg.setup_logging()
     _conf = cfg.load_config()
-except Exception:
-    _conf = {}
+    logging.info("✅ Config loaded via config_loader")
+except Exception as e:
+    logging.warning("⚠️ config_loader import failed: %s; trying direct load", e)
+    # Fallback: load config.json directly
+    try:
+        config_path = os.path.join(project_root, 'config.json')
+        if os.path.exists(config_path):
+            with open(config_path, 'r') as f:
+                _conf = json.load(f)
+            logging.basicConfig(level=logging.INFO)
+            logging.info("✅ Config loaded from %s", config_path)
+    except Exception as e2:
+        logging.basicConfig(level=logging.INFO)
+        logging.warning("⚠️ Direct config load failed: %s", e2)
 
 logger = logging.getLogger(__name__)
 
-CSV_PATH = _conf.get('output_path') or r"D:\data-learn\final_userstory_commit_test_report_poc.csv"
-MODEL_PATH = _conf.get('ppo_model_path') or r"D:\data-learn\models\ppo_test_selection_model"
+# Fallback paths if config is empty
+CSV_PATH = _conf.get('output_path')
+MODEL_PATH = _conf.get('ppo_model_path')
 
 logger.info("CSV_PATH: %s", CSV_PATH)
 logger.info("MODEL_PATH: %s", MODEL_PATH)
 
 # Check if CSV exists
-if not CSV_PATH or not __import__('os').path.exists(CSV_PATH):
-    logger.error("Training CSV not found at: %s", CSV_PATH)
-    logger.error("Cannot train model without data. Please run report.py first to generate the training data.")
+if not os.path.exists(CSV_PATH):
+    logger.error("❌ Training CSV not found at: %s", CSV_PATH)
+    logger.error("❌ Cannot train model without data. Please run report.py first to generate the training data.")
+    logger.info("ℹ️ Expected paths:")
+    logger.info("  - Main report: %s", CSV_PATH)
+    logger.info("  - Full report: %s", CSV_PATH.replace(".csv", "_full.csv"))
     exit(1)
 
 data = pd.read_csv(CSV_PATH)

@@ -33,7 +33,7 @@ if not commits_path:
 if not output_path:
     logger.error("output_path is not configured. Please set output_path in config_loader or _conf.")
     sys.exit(1)
-output_full = output_path.replace(".csv", "_full.csv")
+output_status = output_path.replace(".csv", "_status.csv")
 
 logger = logging.getLogger(__name__)
 
@@ -264,11 +264,11 @@ final_df['last_status'] = final_df['last_status'].astype(str).str.lower().replac
 df_with_status = final_df[final_df['last_status'].notna()].copy()
 df_full = final_df.copy()
 
-df_with_status.to_csv(output_path, index=False, encoding='utf-8', quoting=csv.QUOTE_MINIMAL)
-df_full.to_csv(output_full, index=False, encoding='utf-8', quoting=csv.QUOTE_MINIMAL)
+df_with_status.to_csv(output_status, index=False, encoding='utf-8', quoting=csv.QUOTE_MINIMAL)
+df_full.to_csv(output_path, index=False, encoding='utf-8', quoting=csv.QUOTE_MINIMAL)
 
 logger.info("✅ Saved main report: %s  (%d rows)", output_path, len(df_with_status))
-logger.info("✅ Saved full report: %s  (%d rows)\n", output_full, len(df_full))
+logger.info("✅ Saved full report: %s  (%d rows)\n", output_status, len(df_full))
 
 def _to_native_int(v):
     if v is None: return None

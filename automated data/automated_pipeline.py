@@ -12,6 +12,7 @@ if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
 # load centralized config and logging
+print(PROJECT_ROOT)
 config_loader = None
 _conf = {}
 try:
@@ -35,8 +36,8 @@ except Exception as e:
         _conf = {}
 
 # === CONFIGURATION ===
-PROJECT_PATH = _conf.get('project_path') 
-app_deps = _conf.get('app_deps')
+PROJECT_PATH = _conf.get('app_deps') 
+app_deps = _conf.get('project_path')
 print("Using app_deps:", app_deps)
 
 
@@ -51,12 +52,16 @@ logger.info("🔍 Using app_deps: %s", app_deps)
 
 # === OUTPUT PATHS ===
 if os.path.isfile(app_deps):
-    base_name = os.path.splitext(PROJECT_PATH)[0]
-    OUTPUT_JSON = base_name + "_dependencies.json"
-    OUTPUT_CSV = base_name + "_dependencies.csv"
+    base_name = os.path.basename(app_deps)
+    base_name = os.path.splitext(base_name)[0]
+    print("base_name:",base_name)
+    OUTPUT_JSON = os.path.join(PROJECT_PATH, base_name + "_dependencies.json")
+    OUTPUT_CSV = os.path.join(PROJECT_PATH, base_name + "_dependencies.csv")
+    print(OUTPUT_JSON)
 else:
-    OUTPUT_JSON = os.path.join(app_deps, "function_dependencies.json")
-    OUTPUT_CSV = os.path.join(app_deps, "function_dependencies.csv")
+    OUTPUT_JSON = os.path.join(PROJECT_PATH, "function_dependencies.json")
+    OUTPUT_CSV = os.path.join(PROJECT_PATH, "function_dependencies.csv")
+    print(OUTPUT_JSON)
 
 
 PY_LANGUAGE = Language(tspython.language())

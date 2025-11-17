@@ -62,7 +62,11 @@ MODEL_TRAINING_PATH = config.get('model_training_path')
 priority_prediction_path = config.get('priority_prediction_path') 
 GIT_DIFF_PATH = config.get('git_diff_path')
 DEPLOY_SCRIPT = config.get('priority_prediction_path')
+report_path = config.get('report_path')
+pipeline_script = config.get('pipeline_script')
 EXCEL_SCRIPT = config.get('excel_file')
+EXCEL_SCRIPT = os.path.normpath(EXCEL_SCRIPT)
+
 
 if not VENV_PYTHON:
     VENV_PYTHON = 'python'
@@ -148,6 +152,10 @@ def webhook():
         # Optionally run model training after processing the git diff
         try:
             logger.info("Running deploy/train script inside venv...")
+            subprocess.run([VENV_PYTHON, pipeline_script], check=True)
+            subprocess.run([VENV_PYTHON, report_path], check=True)
+            subprocess.run([VENV_PYTHON, priority_prediction_path], check=True)
+            
             # subprocess.run([VENV_PYTHON, MODEL_TRAINING_PATH], check=True)
             # subprocess.run([VENV_PYTHON, priority_prediction_path], check=True)
 
@@ -171,12 +179,18 @@ def webhook():
 
 
 class ExcelWatchHandler(FileSystemEventHandler):
-    def on_modified(self, event):
-        if event.src_path.endswith(".xlsx"):
+   def on_any_event(self, event):
+        if event.is_directory:
+            return
+        changed_file = os.path.normpath(event.src_path)
+        if changed_file == EXCEL_SCRIPT:
             print("\n=== Excel File Updated ===")
-            print("Running excel processing script...")
-
-            subprocess.run([VENV_PYTHON, EXCEL_SCRIPT], check=True)
+            print("Running pipeline, report and training...")
+            subprocess.run([VENV_PYTHON, pipeline_script], check=True)
+            subprocess.run([VENV_PYTHON, report_path], check=True)
+            subprocess.run([VENV_PYTHON, MODEL_TRAINING_PATH], check=True)
+            # subprocess.run([VENV_PYTHON, EXCEL_SCRIPT], check=True)
+            print("=== Excel Processing Complete ===\n")
 
 
 def start_excel_watchdog():

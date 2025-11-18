@@ -52,9 +52,7 @@ logger.info("🔍 Using app_deps: %s", app_deps)
 
 # === OUTPUT PATHS ===
 if os.path.isfile(app_deps):
-    base_name = os.path.basename(app_deps)
-    base_name = os.path.splitext(base_name)[0]
-    print("base_name:",base_name)
+    base_name = "app"
     OUTPUT_JSON = os.path.join(PROJECT_PATH, base_name + "_dependencies.json")
     OUTPUT_CSV = os.path.join(PROJECT_PATH, base_name + "_dependencies.csv")
     print(OUTPUT_JSON)

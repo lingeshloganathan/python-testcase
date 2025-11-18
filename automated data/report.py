@@ -79,11 +79,18 @@ def map_commits(df):
     cols = {c.lower().replace(" ", ""): c for c in df.columns}
     colmap = {}
     for key, orig in cols.items():
-        if key in ('commitsha','commit_sha','commit'): colmap[orig] = 'commit_sha'
-        if key in ('userstoryid','user_story_id','userstory','user_story'): colmap[orig] = 'user_story_id'
-        if 'file' in key and 'changed' in key: colmap[orig] = 'file_changed'
-        if 'changedfunction' in key or 'changedfunctions' in key or 'changed_function' in key: colmap[orig] = 'changed_function'
-        if key == 'author': colmap[orig] = 'author'
+        if key in ('commitsha','commitid','commit','sha'):
+            colmap[orig] = 'commit_sha'
+        if key in ('userstoryid','user_story_id','userstory','storyid'):
+            colmap[orig] = 'user_story_id'
+        if 'file' in key and 'change' in key:
+            colmap[orig] = 'file_changed'
+        if 'function' in key:  # 👈 MATCHES ANY COLUMN WITH 'function'
+            colmap[orig] = 'changed_function'
+        if key in ('author','committer','developer'):
+            colmap[orig] = 'author'
+        if key in ('language','lang','filetype','source'):
+            colmap[orig] = 'language'
     return df.rename(columns=colmap)
 
 def map_tests(df):
@@ -150,13 +157,13 @@ if todo_df is not None:
 
 # ---------- 3) EXPLODE CHANGED FUNCTIONS ----------
 if 'changed_function' not in commits_df.columns:
-    raise KeyError("Missing 'changed_function' column in commits CSV")
+    logger.warning("⚠ No 'changed_function' column found — using empty values.")
+    commits_df['changed_function'] = None
 commits_df['changed_function_list'] = commits_df['changed_function'].apply(split_funcs_cell)
 commits_exploded = commits_df.explode('changed_function_list').copy()
-commits_exploded = commits_exploded[
-    commits_exploded['changed_function_list'].notna() &
-    (commits_exploded['changed_function_list'] != '')
-].reset_index(drop=True)
+# Keep commits even when no functions were extracted. Normalize empty lists/strings to NA
+commits_exploded['changed_function_list'] = commits_exploded['changed_function_list'].replace({None: pd.NA, '': pd.NA})
+commits_exploded = commits_exploded.reset_index(drop=True)
 
 # ---------- 4) PREPARE TEST RESULTS ----------
 agg_tests = None
@@ -220,21 +227,49 @@ else:
 
 # ---------- 6) DEPENDENCY LOOKUP ----------
 def lookup_deps_by_file(file_changed, func_name, app_deps_obj):
-    if not func_name: return []
-    if file_changed in app_deps_obj and isinstance(app_deps_obj[file_changed], dict):
-        fm = app_deps_obj[file_changed]
-        if func_name in fm: return fm[func_name]
-        if func_name.lower() in fm: return fm[func_name.lower()]
+    # Normalize missing / pandas.NA values safely
+    if pd.isna(func_name):
+        return []
+
+    # Accept either a single function name or a list of function names
+    if isinstance(func_name, list):
+        funcs = [f for f in func_name if (not pd.isna(f)) and str(f).strip()]
+    else:
+        s = str(func_name).strip()
+        if s == "" or s.lower() == "nan":
+            return []
+        funcs = [s]
+
+    results = []
     basename = os.path.basename(str(file_changed))
-    for fk, fm in app_deps_obj.items():
-        if os.path.basename(fk) == basename and isinstance(fm, dict):
-            if func_name in fm: return fm[func_name]
-            if func_name.lower() in fm: return fm[func_name.lower()]
-    if func_name in app_deps_obj and isinstance(app_deps_obj[func_name], list):
-        return app_deps_obj[func_name]
-    if func_name.lower() in app_deps_obj and isinstance(app_deps_obj[func_name.lower()], list):
-        return app_deps_obj[func_name.lower()]
-    return []
+    for f in funcs:
+        if not f:
+            continue
+
+        # Check file-specific mapping
+        if file_changed in app_deps_obj and isinstance(app_deps_obj[file_changed], dict):
+            fm = app_deps_obj[file_changed]
+            if f in fm and isinstance(fm[f], list):
+                results.extend(fm[f])
+            elif f.lower() in fm and isinstance(fm[f.lower()], list):
+                results.extend(fm[f.lower()])
+
+        # Check by basename match
+        for fk, fm in app_deps_obj.items():
+            if os.path.basename(fk) == basename and isinstance(fm, dict):
+                if f in fm and isinstance(fm[f], list):
+                    results.extend(fm[f])
+                elif f.lower() in fm and isinstance(fm[f.lower()], list):
+                    results.extend(fm[f.lower()])
+
+        # Check top-level list mapping for function name
+        if f in app_deps_obj and isinstance(app_deps_obj[f], list):
+            results.extend(app_deps_obj[f])
+        elif f.lower() in app_deps_obj and isinstance(app_deps_obj[f.lower()], list):
+            results.extend(app_deps_obj[f.lower()])
+
+    # Deduplicate while preserving order
+    return list(dict.fromkeys(results))
 
 final['dependent_functions_list'] = final.apply(
     lambda r: lookup_deps_by_file(r.get('file_changed',''), r.get('changed_function_list',''), app_deps),
@@ -246,7 +281,7 @@ final['dependent_function'] = final['dependent_functions_list'].apply(lambda L: 
 # ---------- 7) FINALIZE ----------
 desired_cols = [
  'user_story_id','commit_sha','author','file_changed','changed_function',
- 'dependent_function','test_case_id','test_name','total_no_of_Passed',
+ 'dependent_function','language','test_case_id','test_name','total_no_of_Passed',
  'total_no_of_Failed','last_status','last_execution_date'
 ]
 for c in desired_cols:
@@ -260,14 +295,23 @@ final_df['last_status'] = final_df['last_status'].astype(str).str.lower().replac
     {'nan': pd.NA, 'none': pd.NA, '': pd.NA, 'passed':'pass','failed':'fail','ok':'pass','error':'fail'}
 )
 
+# Replace missing test mappings/names/status with user-friendly placeholders
+final_df['test_case_id'] = final_df['test_case_id'].astype(object)
+final_df['test_name'] = final_df['test_name'].astype(object)
+final_df['last_status'] = final_df['last_status'].astype(object)
+
+final_df['test_case_id'] = final_df['test_case_id'].where(pd.notnull(final_df['test_case_id']), 'No Test Mapped')
+final_df['test_name'] = final_df['test_name'].where(pd.notnull(final_df['test_name']), 'No Test Name')
+final_df['last_status'] = final_df['last_status'].where(pd.notnull(final_df['last_status']), 'No Execution')
+
 # ---------- 8) SAVE ----------
-df_with_status = final_df[final_df['last_status'].notna()].copy()
+# df_with_status = final_df[final_df['last_status'].notna()].copy()
 df_full = final_df.copy()
 
-df_with_status.to_csv(output_status, index=False, encoding='utf-8', quoting=csv.QUOTE_MINIMAL)
+# df_with_status.to_csv(output_status, index=False, encoding='utf-8', quoting=csv.QUOTE_MINIMAL)
 df_full.to_csv(output_path, index=False, encoding='utf-8', quoting=csv.QUOTE_MINIMAL)
 
-logger.info("✅ Saved main report: %s  (%d rows)", output_path, len(df_with_status))
+# logger.info("✅ Saved main report: %s  (%d rows)", output_path, len(df_with_status))
 logger.info("✅ Saved full report: %s  (%d rows)\n", output_status, len(df_full))
 
 def _to_native_int(v):
@@ -337,5 +381,5 @@ def insert_regression_matrix(df):
         if cur: cur.close()
         conn.close()
 
-insert_regression_matrix(df_with_status)
+# insert_regression_matrix(df_with_status)
 print(output_path)

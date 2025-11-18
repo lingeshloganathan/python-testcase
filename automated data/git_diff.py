@@ -67,7 +67,7 @@ def find_and_write_commits(user_story_id: str,
 
     logging.info(f"📦 Total commits fetched: {len(all_commits)}")
 
-    fieldnames = ["UserStoryID", "CommitSHA", "Author", "Message", "FileChanged", "ChangedFunctions"]
+    fieldnames = ["UserStoryID", "CommitSHA", "Author", "Message", "FileChanged", "ChangedFunctions", "Language"]
     file_exists = os.path.exists(output_file)
 
     with open(output_file, mode="a", newline="", encoding="utf-8") as csvfile:
@@ -93,8 +93,25 @@ def find_and_write_commits(user_story_id: str,
                 for file in files:
                     filename = file["filename"]
                     patch = file.get("patch", "")
+                    # detect language from file extension (basic)
+                    _, ext = os.path.splitext(filename.lower())
+                    ext_map = {
+                        '.py': 'python', '.js': 'javascript', '.ts': 'typescript',
+                        '.java': 'java', '.cs': 'csharp', '.go': 'go', '.php': 'php',
+                        '.cpp': 'cpp', '.c': 'c', '.h': 'c', '.jsx': 'javascript', '.tsx': 'typescript'
+                    }
+                    language = ext_map.get(ext, 'unknown')
 
-                    added_functions = re.findall(r"^\+def\s+([a-zA-Z_][a-zA-Z0-9_]*)", patch, flags=re.MULTILINE)
+                    # only attempt to extract added function names for Python for now
+                    added_functions = []
+                    if language == 'python' and patch:
+                        added_functions = re.findall(r"^\+def\s+([a-zA-Z_][a-zA-Z0-9_]*)", patch, flags=re.MULTILINE)
+
+                    # basic heuristic for JS/TS: function declarations
+                    if language in ('javascript', 'typescript') and patch:
+                        js_funcs = re.findall(r"^\+function\s+([a-zA-Z_][a-zA-Z0-9_]*)", patch, flags=re.MULTILINE)
+                        added_functions.extend(js_funcs)
+
                     joined_functions = ", ".join(added_functions) if added_functions else ""
 
                     writer.writerow({
@@ -103,7 +120,8 @@ def find_and_write_commits(user_story_id: str,
                         "Author": author,
                         "Message": clean_msg,
                         "FileChanged": filename,
-                        "ChangedFunctions": joined_functions
+                        "ChangedFunctions": joined_functions,
+                        "Language": language
                     })
 
                 # if only the most recent match is desired, stop after first match

@@ -55,19 +55,44 @@ if not os.path.exists(CSV_PATH):
     exit(1)
 
 data = pd.read_csv(CSV_PATH)
-logger.info("Loaded %d rows from %s", len(data), CSV_PATH)
+logger.info("Loaded %d rows from %s (including ALL rows, even with empty last_status)", len(data), CSV_PATH)
 
+# Fill missing values
+data['total_no_of_Passed'] = pd.to_numeric(data['total_no_of_Passed'], errors='coerce').fillna(0)
+data['total_no_of_Failed'] = pd.to_numeric(data['total_no_of_Failed'], errors='coerce').fillna(0)
+data['last_status'] = data['last_status'].fillna('unknown')
+# ensure language column exists (added by git_diff)
+if 'language' not in data.columns:
+    data['language'] = 'unknown'
+else:
+    data['language'] = data['language'].fillna('unknown')
+
+# Create encoders for categorical columns
 encoders = {}
-for col in ['file_changed', 'changed_function', 'dependent_function', 'test_case_id', 'last_status']:
+for col in ['file_changed', 'changed_function', 'dependent_function', 'test_case_id', 'user_story_id', 'last_status', 'language']:
     le = LabelEncoder()
     data[col] = le.fit_transform(data[col].astype(str))
     encoders[col] = le
 
-state_cols = ['file_changed', 'changed_function', 'dependent_function']
+state_cols = ['user_story_id', 'file_changed', 'changed_function', 'dependent_function', 'language']
 action_col = 'test_case_id'
-reward_col = data['last_status'].apply(
-    lambda x: 1 if len(encoders.get('last_status', []).classes_) and x == encoders['last_status'].transform(['fail'])[0] else -0.1
-)
+
+# Reward: prioritize tests with failures (high failure rate gets high reward)
+def compute_reward(row):
+    passed = row['total_no_of_Passed'] if not pd.isna(row['total_no_of_Passed']) else 0
+    failed = row['total_no_of_Failed'] if not pd.isna(row['total_no_of_Failed']) else 0
+    
+    # Higher reward for failures and tests with high failure rate
+    if failed > 0:
+        failure_rate = failed / (passed + failed) if (passed + failed) > 0 else 0
+        return 1.0 + (failure_rate * 0.5)  # 1.0 to 1.5 based on failure rate
+    elif passed > 0:
+        return 0.2  # Low reward for passing tests
+    else:
+        return 0.1  # Very low reward for untested cases
+
+reward_col = data.apply(compute_reward, axis=1)
+logger.info("Reward distribution: min=%.2f, max=%.2f, mean=%.2f", reward_col.min(), reward_col.max(), reward_col.mean())
 
 class TestSelectionEnv(gym.Env):
     metadata = {"render_modes": []}
@@ -119,22 +144,27 @@ logger.info("\n🚀 Training PPO model... please wait...")
 model.learn(total_timesteps=int(_conf.get('ppo_train_steps', 10000)))
 logger.info("✅ Training complete!")
 
-def suggest_test(model, file_changed, changed_function, dependent_function):
-    """Predict best test case for a given commit"""
-    state = np.array([file_changed, changed_function, dependent_function]) / len(data)
+model.save(MODEL_PATH)
+logger.info("\n✅ PPO model saved to %s", MODEL_PATH)
+
+# ===============================
+# Save encoders for later use in priority_prediction
+# ===============================
+import pickle
+encoder_path = MODEL_PATH + "_encoders.pkl"
+with open(encoder_path, 'wb') as f:
+    pickle.dump(encoders, f)
+logger.info("✅ Encoders saved to %s", encoder_path)
+
+# ===============================
+# Sample predictions on training data
+# ===============================
+logger.info("\n🎯 Sample predictions on training data:")
+for idx in range(min(5, len(data))):
+    row = data.iloc[idx]
+    state = row[state_cols].values.astype(np.float32) / len(data)
     action, _ = model.predict(state, deterministic=True)
-    test_case = encoders['test_case_id'].inverse_transform([action])[0]
-    return test_case
-
-logger.info("\n🎯 Example prediction:")
-example = data.iloc[0]
-suggested = suggest_test(
-    model,
-    example['file_changed'],
-    example['changed_function'],
-    example['dependent_function']
-)
-logger.info("Suggested Test Case: %s", suggested)
-
-model.save("ppo_test_selection_model")
-logger.info("\n💾 PPO model saved as '%s'", MODEL_PATH)
+    test_id = encoders['test_case_id'].inverse_transform([int(action)])[0]
+    reward = reward_col.iloc[idx]
+    file_name = encoders['file_changed'].inverse_transform([int(row['file_changed'])])[0]
+    logger.info("  Sample %d: File=%s | Predicted Test=%s | Reward=%.2f", idx, file_name, test_id, reward)

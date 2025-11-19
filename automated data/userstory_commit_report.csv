@@ -95,15 +95,7 @@ US-11,34ad74c43f6981d625fa9ce7bf10a418456f7db9,NithishKumar,US-11,python-testcas
 US-11,d5966715fb58f1630a7a56619ce34dc583dec62c,NithishKumar,US-11,python-testcase/backend/app.py,
 US-11,6a7d4dff8f303eab9a27d179f035c9e62d9c177b,Lingesh,US-11,python-testcase/backend/app.py,
 US-12,300f42f05b304d64b9704877426399298084f9b8,Lingesh,US-12 new,python-testcase/backend/app.py,
-US-12,a8a97a29458a78df9a44c39a68bad333672294c5,Lingesh,US-12,python-testcase/backend/app.py,
-US-12,5fff1fbcd03f102dec167aeed7c9baa3e94efee6,Lingesh,US-12\n\nUpdated comment in clear_all_tasks function.,python-testcase/backend/app.py,,python
-US-12,68cb09e0f8d3a8deaf4288daece4731a7305e281,Lingesh,US-12,python-testcase/backend/app.py,,python
-US-12,12e99c61f570fabb3c7deb124b8d5a41c1580a87,Lingesh,US-12,python-testcase/backend/app.py,,python
-US-12,ce5f3ba5ad55c743b2b58720072a053702cf22e7,Lingesh,US-12,python-testcase/backend/app.py,,python
-US-12,52035a38e36ceb43c9794eec1f9a3d0d490d1f09,Lingesh,US-12,python-testcase/backend/app.py,,python
-US-12,751916cc37231adfc0bb9a8c54ca170bb94ba548,Lingesh,US-12,python-testcase/backend/app.py,,python
-US-12,f6a3bd1b9485515411057539fa00efaf29ebecd1,Lingesh,US-12,python-testcase/backend/app.py,,python
-US-12,80a090b39537205de400adca67eb2ba30a8c0fa6,Lingesh,US-12,python-testcase/backend/app.py,,python
-US-12,3ee8fa3cafc12836034d3c7bce8bf3fa550c72bb,Lingesh,US-12,python-testcase/backend/app.py,,python
-US-12,942d7c86fe2d5708be4e070f61b263679ff869fa,Lingesh,US-12,python-testcase/backend/app.py,,python
-US-12,19993a9d42976c51ee0317fd92c5db6a19ef9748,Lingesh,US-12 new,python-testcase/backend/app.py,,python
+US-01,6826c789d5bcf1ce4564b3bf5996f24250b2129a,Nithishrish23,"US-01: Add new task functionality\n\nFrontend:\n- Add task input form with submit button\n- Display task list\n- Integrate with backend API\n\nBackend:\n- Implement POST /api/tasks endpoint\n- Add in-memory task storage\n- Return task with ID, name, status, created_at",backend/app.py,"get_tasks, add_task",python
+US-01,6826c789d5bcf1ce4564b3bf5996f24250b2129a,Nithishrish23,"US-01: Add new task functionality\n\nFrontend:\n- Add task input form with submit button\n- Display task list\n- Integrate with backend API\n\nBackend:\n- Implement POST /api/tasks endpoint\n- Add in-memory task storage\n- Return task with ID, name, status, created_at",package-lock.json,,unknown
+US-01,6826c789d5bcf1ce4564b3bf5996f24250b2129a,Nithishrish23,"US-01: Add new task functionality\n\nFrontend:\n- Add task input form with submit button\n- Display task list\n- Integrate with backend API\n\nBackend:\n- Implement POST /api/tasks endpoint\n- Add in-memory task storage\n- Return task with ID, name, status, created_at",package.json,,unknown
+US-01,6826c789d5bcf1ce4564b3bf5996f24250b2129a,Nithishrish23,"US-01: Add new task functionality\n\nFrontend:\n- Add task input form with submit button\n- Display task list\n- Integrate with backend API\n\nBackend:\n- Implement POST /api/tasks endpoint\n- Add in-memory task storage\n- Return task with ID, name, status, created_at",src/App.jsx,async ,javascript

@@ -65,7 +65,7 @@ priority_prediction_path = config.get('priority_prediction_path')
 GIT_DIFF_PATH = config.get('git_diff_path')
 pipeline_script = config.get('pipeline_script')
 report_path = config.get('report_path')
-EXCEL_SCRIPT = os.path.normpath(config.get('excel_file'))
+EXCEL_SCRIPT = os.path.normpath(config.get('todo_path'))
 
 logger.info("Webhook configuration:")
 logger.info("  VENV_PYTHON: %s", VENV_PYTHON)

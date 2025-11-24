@@ -56,8 +56,8 @@ if os.path.isfile(app_deps):
     OUTPUT_CSV = os.path.join(PROJECT_PATH, base_name + "_dependencies.csv")
     print(OUTPUT_JSON)
 else:
-    OUTPUT_JSON = os.path.join(PROJECT_PATH, "function_dependencies.json")
-    OUTPUT_CSV = os.path.join(PROJECT_PATH, "function_dependencies.csv")
+    OUTPUT_JSON = os.path.join(PROJECT_PATH, "app_dependencies.json")
+    OUTPUT_CSV = os.path.join(PROJECT_PATH, "app_dependencies.csv")
     print(OUTPUT_JSON)
 
 # === LANGUAGE DETECTION ===

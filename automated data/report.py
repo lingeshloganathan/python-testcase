@@ -22,16 +22,16 @@ except Exception:
     _conf = {}
 
 # ---------- CONFIG ----------
-commits_path = _conf.get('commits_path')
+output_file = _conf.get('output_file')
 tests_path = _conf.get('tests_path')
 app_deps_path = _conf.get('app_deps_path')
 todo_path = _conf.get('todo_path')
 output_path = _conf.get('output_path')
-if not commits_path:
-    logger.error("commits_path is not configured. Please set commits_path in config_loader or _conf.")
+if not output_file:
+    logging.error("output_file is not configured. Please set output_file in config_loader or _conf.")
     sys.exit(1)
 if not output_path:
-    logger.error("output_path is not configured. Please set output_path in config_loader or _conf.")
+    logging.error("output_path is not configured. Please set output_path in config_loader or _conf.")
     sys.exit(1)
 output_status = output_path.replace(".csv", "_status.csv")
 
@@ -114,8 +114,8 @@ def map_todo(df):
     return df.rename(columns=colmap)
 
 # ---------- 1) LOAD ----------
-commits_df = read_any(commits_path)
-logger.info("Loaded %d commits from %s", len(commits_df), commits_path)
+commits_df = read_any(output_file)
+logger.info("Loaded %d commits from %s", len(commits_df), output_file)
 
 # Load tests - optional, if file missing, skip test aggregation
 tests_df = None

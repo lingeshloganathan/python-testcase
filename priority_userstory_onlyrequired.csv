@@ -1,0 +1,13 @@
+Rank,Test_Case_ID,Priority_Score,Original_User_Story_ID,Input_User_Story_ID,Reason,File_Changed,Changed_Function,Is_Direct_Map
+1,TC-24,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+1,TC-24,1.0,US-10,US-10,The purpose of the mapping is to make sure that the user is able to access the app.py file.,python-testcase/backend/app.py,,True
+2,TC-25,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+2,TC-25,1.0,US-10,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,True
+3,TC-20,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+3,TC-20,1.0,US-10,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,True
+4,TC-18,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+4,TC-18,1.0,US-10,US-10,The purpose of the mapping is to make sure that the user is able to access the app.py file.,python-testcase/backend/app.py,,True
+5,TC-17,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+5,TC-17,1.0,US-10,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,True
+6,TC-21,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+6,TC-21,1.0,US-10,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,True

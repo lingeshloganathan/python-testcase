@@ -7203,3 +7203,845 @@ subprocess.CalledProcessError: Command '['D:\\data-learn\\python-testcase\\backe
 2025-11-20 17:00:17,952 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2025 17:00:17] "[33mGET /best_selling HTTP/1.1[0m" 404 -
 2025-11-20 17:00:17,968 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2025 17:00:17] "[33mGET /top_selling HTTP/1.1[0m" 404 -
 2025-11-20 17:00:18,209 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2025 17:00:18] "[33mGET /active_products HTTP/1.1[0m" 404 -
+2025-12-03 16:06:06,607 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 16:06:07,210 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 16:06:07,211 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 16:06:07,227 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 16:06:07,227 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 16:06:10,218 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 16:06:10,219 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 16:06:10,219 INFO __main__ -    User Story ID      : US-12
+2025-12-03 16:06:10,219 INFO __main__ -    File Changed       : unknown
+2025-12-03 16:06:10,219 INFO __main__ -    Changed Function   : unknown
+2025-12-03 16:06:10,219 INFO __main__ -    Dependent Function : unknown
+2025-12-03 16:06:10,220 INFO __main__ -    Encoded State      : [0.3793, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 16:06:10,257 INFO __main__ - 📂 Loading training data to find original user stories for each test case...
+2025-12-03 16:06:10,274 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 16:06:10,275 INFO __main__ - 
+📌 Test cases directly mapped to US-12 in Excel: ['TC-100']
+2025-12-03 16:06:10,275 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 16:06:10,275 INFO __main__ - ================================================================================
+2025-12-03 16:06:10,275 INFO __main__ - 01. TC-100       | Score: 1.0000 | Original US: US-12 | Reason: Directly mapped in Excel
+2025-12-03 16:06:10,275 INFO __main__ - 02. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 03. TC-09        | Score: 0.4800 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 04. TC-22        | Score: 0.4649 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 05. TC-23        | Score: 0.4289 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 06. TC-24        | Score: 0.3823 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 07. TC-01        | Score: 0.3819 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 08. TC-02        | Score: 0.3692 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 09. TC-13        | Score: 0.3663 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 10. TC-25        | Score: 0.3640 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 11. TC-11        | Score: 0.3347 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 12. TC-29        | Score: 0.3234 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 13. TC-07        | Score: 0.3190 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 14. TC-16        | Score: 0.3169 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,276 INFO __main__ - 15. TC-20        | Score: 0.3097 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 16. TC-27        | Score: 0.3092 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 17. TC-14        | Score: 0.3062 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 18. TC-03        | Score: 0.3031 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 19. TC-10        | Score: 0.3017 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 20. TC-28        | Score: 0.2938 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 21. TC-18        | Score: 0.2907 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 22. TC-08        | Score: 0.2851 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 23. TC-17        | Score: 0.2836 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 24. TC-26        | Score: 0.2661 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 25. TC-21        | Score: 0.2513 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 26. TC-12        | Score: 0.2446 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 27. TC-04        | Score: 0.2216 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 28. TC-05        | Score: 0.2199 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - 29. TC-15        | Score: 0.2001 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:06:10,277 INFO __main__ - ================================================================================
+2025-12-03 16:22:17,222 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 16:22:17,612 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 16:22:17,612 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 16:22:17,613 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 16:22:17,613 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 16:22:22,703 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 16:22:22,708 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 16:22:22,708 INFO __main__ -    User Story ID      : US-12
+2025-12-03 16:22:22,709 INFO __main__ -    File Changed       : unknown
+2025-12-03 16:22:22,709 INFO __main__ -    Changed Function   : unknown
+2025-12-03 16:22:22,709 INFO __main__ -    Dependent Function : unknown
+2025-12-03 16:22:22,711 INFO __main__ -    Encoded State      : [0.3793, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 16:22:22,718 INFO __main__ - 📂 Loading training data to find original user stories for each test case...
+2025-12-03 16:22:22,748 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 16:22:22,749 INFO __main__ - 
+📌 Test cases directly mapped to US-12 in Excel: ['TC-100']
+2025-12-03 16:22:22,750 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 16:22:22,750 INFO __main__ - ================================================================================
+2025-12-03 16:22:22,750 INFO __main__ - 01. TC-100       | Score: 1.0000 | Original US: US-12 | Reason: Directly mapped in Excel
+2025-12-03 16:22:22,750 INFO __main__ - 02. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,750 INFO __main__ - 03. TC-09        | Score: 0.4800 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,750 INFO __main__ - 04. TC-22        | Score: 0.4649 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,751 INFO __main__ - 05. TC-23        | Score: 0.4289 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,751 INFO __main__ - 06. TC-24        | Score: 0.3823 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,751 INFO __main__ - 07. TC-01        | Score: 0.3819 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,751 INFO __main__ - 08. TC-02        | Score: 0.3692 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,751 INFO __main__ - 09. TC-13        | Score: 0.3663 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,751 INFO __main__ - 10. TC-25        | Score: 0.3640 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,751 INFO __main__ - 11. TC-11        | Score: 0.3347 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,751 INFO __main__ - 12. TC-29        | Score: 0.3234 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,752 INFO __main__ - 13. TC-07        | Score: 0.3190 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,752 INFO __main__ - 14. TC-16        | Score: 0.3169 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,752 INFO __main__ - 15. TC-20        | Score: 0.3097 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,752 INFO __main__ - 16. TC-27        | Score: 0.3092 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,752 INFO __main__ - 17. TC-14        | Score: 0.3062 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,752 INFO __main__ - 18. TC-03        | Score: 0.3031 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,752 INFO __main__ - 19. TC-10        | Score: 0.3017 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,753 INFO __main__ - 20. TC-28        | Score: 0.2938 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,753 INFO __main__ - 21. TC-18        | Score: 0.2907 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,753 INFO __main__ - 22. TC-08        | Score: 0.2851 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,753 INFO __main__ - 23. TC-17        | Score: 0.2836 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,753 INFO __main__ - 24. TC-26        | Score: 0.2661 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,753 INFO __main__ - 25. TC-21        | Score: 0.2513 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,753 INFO __main__ - 26. TC-12        | Score: 0.2446 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,754 INFO __main__ - 27. TC-04        | Score: 0.2216 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,754 INFO __main__ - 28. TC-05        | Score: 0.2199 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,754 INFO __main__ - 29. TC-15        | Score: 0.2001 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:22:22,754 INFO __main__ - ================================================================================
+2025-12-03 16:22:22,776 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 16:22:22,776 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-12:
+2025-12-03 16:22:22,777 INFO __main__ -    1. TC-100 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 16:22:22,778 INFO __main__ -    2. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 16:22:22,778 INFO __main__ -    3. TC-09 (score: 0.4800) - Unknown metadata — fallback prediction
+2025-12-03 16:22:22,778 INFO __main__ -    4. TC-22 (score: 0.4649) - Unknown metadata — fallback prediction
+2025-12-03 16:22:22,779 INFO __main__ -    5. TC-23 (score: 0.4289) - Unknown metadata — fallback prediction
+2025-12-03 16:24:25,290 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 16:24:25,865 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 16:24:25,865 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 16:24:25,866 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 16:24:25,866 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 16:24:28,397 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 16:24:28,398 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 16:24:28,398 INFO __main__ -    User Story ID      : US-12
+2025-12-03 16:24:28,399 INFO __main__ -    File Changed       : unknown
+2025-12-03 16:24:28,399 INFO __main__ -    Changed Function   : unknown
+2025-12-03 16:24:28,399 INFO __main__ -    Dependent Function : unknown
+2025-12-03 16:24:28,400 INFO __main__ -    Encoded State      : [0.3793, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 16:24:28,403 INFO __main__ - 📂 Loading training data to find original user stories for each test case...
+2025-12-03 16:24:28,418 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 16:24:28,419 INFO __main__ - 
+📌 Test cases directly mapped to US-12 in Excel: ['TC-100']
+2025-12-03 16:24:28,419 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 16:24:28,419 INFO __main__ - ================================================================================
+2025-12-03 16:24:28,419 INFO __main__ - 01. TC-100       | Score: 1.0000 | Original US: US-12 | Reason: Directly mapped in Excel
+2025-12-03 16:24:28,419 INFO __main__ - 02. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,419 INFO __main__ - 03. TC-09        | Score: 0.4800 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,419 INFO __main__ - 04. TC-22        | Score: 0.4649 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,419 INFO __main__ - 05. TC-23        | Score: 0.4289 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,419 INFO __main__ - 06. TC-24        | Score: 0.3823 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,419 INFO __main__ - 07. TC-01        | Score: 0.3819 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,419 INFO __main__ - 08. TC-02        | Score: 0.3692 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 09. TC-13        | Score: 0.3663 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 10. TC-25        | Score: 0.3640 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 11. TC-11        | Score: 0.3347 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 12. TC-29        | Score: 0.3234 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 13. TC-07        | Score: 0.3190 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 14. TC-16        | Score: 0.3169 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 15. TC-20        | Score: 0.3097 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 16. TC-27        | Score: 0.3092 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 17. TC-14        | Score: 0.3062 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 18. TC-03        | Score: 0.3031 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 19. TC-10        | Score: 0.3017 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,420 INFO __main__ - 20. TC-28        | Score: 0.2938 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - 21. TC-18        | Score: 0.2907 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - 22. TC-08        | Score: 0.2851 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - 23. TC-17        | Score: 0.2836 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - 24. TC-26        | Score: 0.2661 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - 25. TC-21        | Score: 0.2513 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - 26. TC-12        | Score: 0.2446 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - 27. TC-04        | Score: 0.2216 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - 28. TC-05        | Score: 0.2199 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - 29. TC-15        | Score: 0.2001 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:24:28,421 INFO __main__ - ================================================================================
+2025-12-03 16:24:28,431 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 16:24:28,431 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-12:
+2025-12-03 16:24:28,432 INFO __main__ -    1. TC-100 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 16:24:28,432 INFO __main__ -    2. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 16:24:28,432 INFO __main__ -    3. TC-09 (score: 0.4800) - Unknown metadata — fallback prediction
+2025-12-03 16:24:28,433 INFO __main__ -    4. TC-22 (score: 0.4649) - Unknown metadata — fallback prediction
+2025-12-03 16:24:28,433 INFO __main__ -    5. TC-23 (score: 0.4289) - Unknown metadata — fallback prediction
+2025-12-03 16:24:28,440 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 16:25:30,575 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 16:25:30,974 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 16:25:30,975 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 16:25:30,975 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 16:25:30,975 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 16:25:33,228 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 16:25:33,231 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 16:25:33,231 INFO __main__ -    User Story ID      : US-12
+2025-12-03 16:25:33,231 INFO __main__ -    File Changed       : unknown
+2025-12-03 16:25:33,231 INFO __main__ -    Changed Function   : unknown
+2025-12-03 16:25:33,231 INFO __main__ -    Dependent Function : unknown
+2025-12-03 16:25:33,233 INFO __main__ -    Encoded State      : [0.3793, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 16:25:33,236 INFO __main__ - 📂 Loading training data to find original user stories for each test case...
+2025-12-03 16:25:33,250 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 16:25:33,250 INFO __main__ - 
+📌 Test cases directly mapped to US-12 in Excel: ['TC-100']
+2025-12-03 16:25:33,250 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 16:25:33,250 INFO __main__ - ================================================================================
+2025-12-03 16:25:33,251 INFO __main__ - 01. TC-100       | Score: 1.0000 | Original US: US-12 | Reason: Directly mapped in Excel
+2025-12-03 16:25:33,251 INFO __main__ - 02. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 03. TC-09        | Score: 0.4800 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 04. TC-22        | Score: 0.4649 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 05. TC-23        | Score: 0.4289 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 06. TC-24        | Score: 0.3823 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 07. TC-01        | Score: 0.3819 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 08. TC-02        | Score: 0.3692 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 09. TC-13        | Score: 0.3663 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 10. TC-25        | Score: 0.3640 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 11. TC-11        | Score: 0.3347 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 12. TC-29        | Score: 0.3234 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,251 INFO __main__ - 13. TC-07        | Score: 0.3190 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 14. TC-16        | Score: 0.3169 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 15. TC-20        | Score: 0.3097 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 16. TC-27        | Score: 0.3092 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 17. TC-14        | Score: 0.3062 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 18. TC-03        | Score: 0.3031 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 19. TC-10        | Score: 0.3017 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 20. TC-28        | Score: 0.2938 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 21. TC-18        | Score: 0.2907 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 22. TC-08        | Score: 0.2851 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 23. TC-17        | Score: 0.2836 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 24. TC-26        | Score: 0.2661 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 25. TC-21        | Score: 0.2513 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 26. TC-12        | Score: 0.2446 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 27. TC-04        | Score: 0.2216 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 28. TC-05        | Score: 0.2199 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,252 INFO __main__ - 29. TC-15        | Score: 0.2001 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:25:33,253 INFO __main__ - ================================================================================
+2025-12-03 16:25:33,260 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 16:25:33,260 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-12:
+2025-12-03 16:25:33,261 INFO __main__ -    1. TC-100 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 16:25:33,261 INFO __main__ -    2. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 16:25:33,261 INFO __main__ -    3. TC-09 (score: 0.4800) - Unknown metadata — fallback prediction
+2025-12-03 16:25:33,261 INFO __main__ -    4. TC-22 (score: 0.4649) - Unknown metadata — fallback prediction
+2025-12-03 16:25:33,262 INFO __main__ -    5. TC-23 (score: 0.4289) - Unknown metadata — fallback prediction
+2025-12-03 16:25:33,265 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 16:26:08,622 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 16:26:09,382 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 16:26:09,382 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 16:26:09,383 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 16:26:09,383 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 16:26:11,975 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 16:26:11,977 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 16:26:11,978 INFO __main__ -    User Story ID      : US-05
+2025-12-03 16:26:11,978 INFO __main__ -    File Changed       : unknown
+2025-12-03 16:26:11,979 INFO __main__ -    Changed Function   : unknown
+2025-12-03 16:26:11,979 INFO __main__ -    Dependent Function : unknown
+2025-12-03 16:26:11,980 INFO __main__ -    Encoded State      : [0.1379, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 16:26:11,984 INFO __main__ - 📂 Loading training data to find original user stories for each test case...
+2025-12-03 16:26:12,002 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 16:26:12,003 INFO __main__ - 
+📌 Test cases directly mapped to US-05 in Excel: ['TC-07', 'TC-22']
+2025-12-03 16:26:12,004 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 16:26:12,004 INFO __main__ - ================================================================================
+2025-12-03 16:26:12,004 INFO __main__ - 01. TC-22        | Score: 1.0000 | Original US: US-05 | Reason: Directly mapped in Excel
+2025-12-03 16:26:12,004 INFO __main__ - 02. TC-07        | Score: 1.0000 | Original US: US-05 | Reason: Directly mapped in Excel
+2025-12-03 16:26:12,004 INFO __main__ - 03. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,004 INFO __main__ - 04. TC-09        | Score: 0.4868 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,004 INFO __main__ - 05. TC-23        | Score: 0.4257 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,005 INFO __main__ - 06. TC-100       | Score: 0.3911 | Original US: US-12 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,005 INFO __main__ - 07. TC-24        | Score: 0.3794 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,005 INFO __main__ - 08. TC-01        | Score: 0.3774 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,005 INFO __main__ - 09. TC-13        | Score: 0.3676 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,005 INFO __main__ - 10. TC-02        | Score: 0.3600 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,005 INFO __main__ - 11. TC-25        | Score: 0.3587 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,005 INFO __main__ - 12. TC-11        | Score: 0.3340 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,005 INFO __main__ - 13. TC-29        | Score: 0.3286 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,005 INFO __main__ - 14. TC-20        | Score: 0.3097 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,006 INFO __main__ - 15. TC-16        | Score: 0.3074 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,006 INFO __main__ - 16. TC-27        | Score: 0.3018 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,006 INFO __main__ - 17. TC-10        | Score: 0.2982 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,006 INFO __main__ - 18. TC-03        | Score: 0.2981 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,006 INFO __main__ - 19. TC-14        | Score: 0.2966 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,006 INFO __main__ - 20. TC-28        | Score: 0.2915 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,006 INFO __main__ - 21. TC-18        | Score: 0.2896 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,006 INFO __main__ - 22. TC-08        | Score: 0.2822 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,007 INFO __main__ - 23. TC-17        | Score: 0.2815 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,007 INFO __main__ - 24. TC-26        | Score: 0.2670 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,007 INFO __main__ - 25. TC-21        | Score: 0.2466 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,007 INFO __main__ - 26. TC-12        | Score: 0.2403 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,007 INFO __main__ - 27. TC-04        | Score: 0.2222 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,007 INFO __main__ - 28. TC-05        | Score: 0.2211 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,007 INFO __main__ - 29. TC-15        | Score: 0.1998 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:26:12,007 INFO __main__ - ================================================================================
+2025-12-03 16:26:12,021 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 16:26:12,021 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-05:
+2025-12-03 16:26:12,022 INFO __main__ -    1. TC-22 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 16:26:12,022 INFO __main__ -    2. TC-07 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 16:26:12,022 INFO __main__ -    3. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 16:26:12,022 INFO __main__ -    4. TC-09 (score: 0.4868) - Unknown metadata — fallback prediction
+2025-12-03 16:26:12,023 INFO __main__ -    5. TC-23 (score: 0.4257) - Unknown metadata — fallback prediction
+2025-12-03 16:26:12,025 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 16:27:29,479 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 16:27:30,953 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 16:27:30,954 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 16:27:30,954 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 16:27:30,955 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 16:27:32,970 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 16:27:32,973 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 16:27:32,973 INFO __main__ -    User Story ID      : US-01
+2025-12-03 16:27:32,973 INFO __main__ -    File Changed       : unknown
+2025-12-03 16:27:32,973 INFO __main__ -    Changed Function   : unknown
+2025-12-03 16:27:32,973 INFO __main__ -    Dependent Function : unknown
+2025-12-03 16:27:32,974 INFO __main__ -    Encoded State      : [0.0000, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 16:27:32,977 INFO __main__ - 📂 Loading training data to find original user stories for each test case...
+2025-12-03 16:27:32,988 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 16:27:32,988 INFO __main__ - 
+📌 Test cases directly mapped to US-01 in Excel: ['TC-01', 'TC-02']
+2025-12-03 16:27:32,989 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 16:27:32,989 INFO __main__ - ================================================================================
+2025-12-03 16:27:32,989 INFO __main__ - 01. TC-01        | Score: 1.0000 | Original US: US-01 | Reason: Directly mapped in Excel
+2025-12-03 16:27:32,989 INFO __main__ - 02. TC-02        | Score: 1.0000 | Original US: US-01 | Reason: Directly mapped in Excel
+2025-12-03 16:27:32,989 INFO __main__ - 03. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 04. TC-09        | Score: 0.4909 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 05. TC-22        | Score: 0.4482 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 06. TC-23        | Score: 0.4241 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 07. TC-100       | Score: 0.3852 | Original US: US-12 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 08. TC-24        | Score: 0.3783 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 09. TC-13        | Score: 0.3691 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 10. TC-25        | Score: 0.3564 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 11. TC-11        | Score: 0.3343 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 12. TC-29        | Score: 0.3325 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 13. TC-07        | Score: 0.3129 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,989 INFO __main__ - 14. TC-20        | Score: 0.3106 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 15. TC-16        | Score: 0.3028 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 16. TC-27        | Score: 0.2984 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 17. TC-10        | Score: 0.2970 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 18. TC-03        | Score: 0.2961 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 19. TC-14        | Score: 0.2921 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 20. TC-28        | Score: 0.2911 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 21. TC-18        | Score: 0.2898 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 22. TC-08        | Score: 0.2815 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 23. TC-17        | Score: 0.2813 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 24. TC-26        | Score: 0.2684 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 25. TC-21        | Score: 0.2449 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 26. TC-12        | Score: 0.2388 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 27. TC-04        | Score: 0.2237 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 28. TC-05        | Score: 0.2229 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - 29. TC-15        | Score: 0.2006 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 16:27:32,990 INFO __main__ - ================================================================================
+2025-12-03 16:27:32,997 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 16:27:32,997 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-01:
+2025-12-03 16:27:32,997 INFO __main__ -    1. TC-01 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 16:27:32,997 INFO __main__ -    2. TC-02 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 16:27:32,997 INFO __main__ -    3. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 16:27:32,998 INFO __main__ -    4. TC-09 (score: 0.4909) - Unknown metadata — fallback prediction
+2025-12-03 16:27:32,998 INFO __main__ -    5. TC-22 (score: 0.4482) - Unknown metadata — fallback prediction
+2025-12-03 16:27:33,000 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 18:04:42,184 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 18:04:42,873 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 18:04:42,874 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 18:04:42,875 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 18:04:42,875 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 18:04:49,209 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 18:04:49,481 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 18:04:49,482 INFO __main__ -    User Story ID      : US-05
+2025-12-03 18:04:49,482 INFO __main__ -    File Changed       : unknown
+2025-12-03 18:04:49,483 INFO __main__ -    Changed Function   : unknown
+2025-12-03 18:04:49,486 INFO __main__ -    Dependent Function : unknown
+2025-12-03 18:04:49,488 INFO __main__ -    Encoded State      : [0.1379, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 18:04:49,503 INFO __main__ - 📂 Loading training data to find original user stories and historical failures...
+2025-12-03 18:04:49,554 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 18:04:49,554 INFO __main__ - ✅ Found 0 test cases with historical failures for this change
+2025-12-03 18:04:49,556 INFO __main__ - 
+📌 Test cases directly mapped to US-05 in Excel: ['TC-07', 'TC-22']
+2025-12-03 18:04:49,556 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 18:04:49,557 INFO __main__ - ================================================================================
+2025-12-03 18:04:49,557 INFO __main__ - 01. TC-22        | Score: 1.0000 | Original US: US-05 | Reason: Directly mapped in Excel
+2025-12-03 18:04:49,557 INFO __main__ - 02. TC-07        | Score: 1.0000 | Original US: US-05 | Reason: Directly mapped in Excel
+2025-12-03 18:04:49,557 INFO __main__ - 03. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,558 INFO __main__ - 04. TC-09        | Score: 0.4868 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,558 INFO __main__ - 05. TC-23        | Score: 0.4257 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,558 INFO __main__ - 06. TC-100       | Score: 0.3911 | Original US: US-12 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,558 INFO __main__ - 07. TC-24        | Score: 0.3794 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,558 INFO __main__ - 08. TC-01        | Score: 0.3774 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,559 INFO __main__ - 09. TC-13        | Score: 0.3676 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,559 INFO __main__ - 10. TC-02        | Score: 0.3600 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,559 INFO __main__ - 11. TC-25        | Score: 0.3587 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,559 INFO __main__ - 12. TC-11        | Score: 0.3340 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,559 INFO __main__ - 13. TC-29        | Score: 0.3286 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,560 INFO __main__ - 14. TC-20        | Score: 0.3097 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,560 INFO __main__ - 15. TC-16        | Score: 0.3074 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,560 INFO __main__ - 16. TC-27        | Score: 0.3018 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,560 INFO __main__ - 17. TC-10        | Score: 0.2982 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,560 INFO __main__ - 18. TC-03        | Score: 0.2981 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,560 INFO __main__ - 19. TC-14        | Score: 0.2966 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,561 INFO __main__ - 20. TC-28        | Score: 0.2915 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,561 INFO __main__ - 21. TC-18        | Score: 0.2896 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,561 INFO __main__ - 22. TC-08        | Score: 0.2822 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,561 INFO __main__ - 23. TC-17        | Score: 0.2815 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,561 INFO __main__ - 24. TC-26        | Score: 0.2670 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,562 INFO __main__ - 25. TC-21        | Score: 0.2466 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,562 INFO __main__ - 26. TC-12        | Score: 0.2403 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,562 INFO __main__ - 27. TC-04        | Score: 0.2222 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,562 INFO __main__ - 28. TC-05        | Score: 0.2211 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,563 INFO __main__ - 29. TC-15        | Score: 0.1998 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:04:49,563 INFO __main__ - ================================================================================
+2025-12-03 18:04:49,585 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 18:04:49,586 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-05:
+2025-12-03 18:04:49,589 INFO __main__ -    1. TC-22 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:04:49,589 INFO __main__ -    2. TC-07 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:04:49,590 INFO __main__ -    3. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 18:04:49,590 INFO __main__ -    4. TC-09 (score: 0.4868) - Unknown metadata — fallback prediction
+2025-12-03 18:04:49,591 INFO __main__ -    5. TC-23 (score: 0.4257) - Unknown metadata — fallback prediction
+2025-12-03 18:04:49,599 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 18:12:11,940 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 18:12:12,742 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 18:12:12,743 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 18:12:12,744 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 18:12:12,744 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 18:12:17,012 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 18:12:17,543 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 18:12:17,543 INFO __main__ -    User Story ID      : US-01
+2025-12-03 18:12:17,543 INFO __main__ -    File Changed       : unknown
+2025-12-03 18:12:17,544 INFO __main__ -    Changed Function   : unknown
+2025-12-03 18:12:17,544 INFO __main__ -    Dependent Function : unknown
+2025-12-03 18:12:17,546 INFO __main__ -    Encoded State      : [0.0000, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 18:12:17,553 INFO __main__ - 📂 Loading training data to find original user stories and historical failures...
+2025-12-03 18:12:17,599 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 18:12:17,600 INFO __main__ - ✅ Found 0 test cases with historical failures for this change
+2025-12-03 18:12:17,601 INFO __main__ - 
+📌 Test cases directly mapped to US-01 in Excel: ['TC-01', 'TC-02']
+2025-12-03 18:12:17,601 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 18:12:17,601 INFO __main__ - ================================================================================
+2025-12-03 18:12:17,601 INFO __main__ - 01. TC-01        | Score: 1.0000 | Original US: US-01 | Reason: Directly mapped in Excel
+2025-12-03 18:12:17,601 INFO __main__ - 02. TC-02        | Score: 1.0000 | Original US: US-01 | Reason: Directly mapped in Excel
+2025-12-03 18:12:17,602 INFO __main__ - 03. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,602 INFO __main__ - 04. TC-09        | Score: 0.4909 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,602 INFO __main__ - 05. TC-22        | Score: 0.4482 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,602 INFO __main__ - 06. TC-23        | Score: 0.4241 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,602 INFO __main__ - 07. TC-100       | Score: 0.3852 | Original US: US-12 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,602 INFO __main__ - 08. TC-24        | Score: 0.3783 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,603 INFO __main__ - 09. TC-13        | Score: 0.3691 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,603 INFO __main__ - 10. TC-25        | Score: 0.3564 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,603 INFO __main__ - 11. TC-11        | Score: 0.3343 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,603 INFO __main__ - 12. TC-29        | Score: 0.3325 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,603 INFO __main__ - 13. TC-07        | Score: 0.3129 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,603 INFO __main__ - 14. TC-20        | Score: 0.3106 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,604 INFO __main__ - 15. TC-16        | Score: 0.3028 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,604 INFO __main__ - 16. TC-27        | Score: 0.2984 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,604 INFO __main__ - 17. TC-10        | Score: 0.2970 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,604 INFO __main__ - 18. TC-03        | Score: 0.2961 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,604 INFO __main__ - 19. TC-14        | Score: 0.2921 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,604 INFO __main__ - 20. TC-28        | Score: 0.2911 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,605 INFO __main__ - 21. TC-18        | Score: 0.2898 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,605 INFO __main__ - 22. TC-08        | Score: 0.2815 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,605 INFO __main__ - 23. TC-17        | Score: 0.2813 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,605 INFO __main__ - 24. TC-26        | Score: 0.2684 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,606 INFO __main__ - 25. TC-21        | Score: 0.2449 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,606 INFO __main__ - 26. TC-12        | Score: 0.2388 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,606 INFO __main__ - 27. TC-04        | Score: 0.2237 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,606 INFO __main__ - 28. TC-05        | Score: 0.2229 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,606 INFO __main__ - 29. TC-15        | Score: 0.2006 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:12:17,607 INFO __main__ - ================================================================================
+2025-12-03 18:12:17,622 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 18:12:17,623 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-01:
+2025-12-03 18:12:17,624 INFO __main__ -    1. TC-01 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:12:17,624 INFO __main__ -    2. TC-02 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:12:17,624 INFO __main__ -    3. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 18:12:17,625 INFO __main__ -    4. TC-09 (score: 0.4909) - Unknown metadata — fallback prediction
+2025-12-03 18:12:17,625 INFO __main__ -    5. TC-22 (score: 0.4482) - Unknown metadata — fallback prediction
+2025-12-03 18:12:17,631 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 18:13:59,210 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 18:13:59,840 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 18:13:59,841 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 18:13:59,842 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 18:13:59,842 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 18:14:03,576 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 18:14:03,580 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 18:14:03,580 INFO __main__ -    User Story ID      : US-10
+2025-12-03 18:14:03,581 INFO __main__ -    File Changed       : unknown
+2025-12-03 18:14:03,581 INFO __main__ -    Changed Function   : unknown
+2025-12-03 18:14:03,581 INFO __main__ -    Dependent Function : unknown
+2025-12-03 18:14:03,583 INFO __main__ -    Encoded State      : [0.3103, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 18:14:03,589 INFO __main__ - 📂 Loading training data to find original user stories and historical failures...
+2025-12-03 18:14:03,613 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 18:14:03,614 INFO __main__ - ✅ Found 0 test cases with historical failures for this change
+2025-12-03 18:14:03,616 INFO __main__ - 
+📌 Test cases directly mapped to US-10 in Excel: ['TC-17', 'TC-18', 'TC-20', 'TC-21', 'TC-24', 'TC-25']
+2025-12-03 18:14:03,616 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 18:14:03,616 INFO __main__ - ================================================================================
+2025-12-03 18:14:03,616 INFO __main__ - 01. TC-24        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:14:03,617 INFO __main__ - 02. TC-25        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:14:03,617 INFO __main__ - 03. TC-20        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:14:03,617 INFO __main__ - 04. TC-18        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:14:03,618 INFO __main__ - 05. TC-17        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:14:03,618 INFO __main__ - 06. TC-21        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:14:03,618 INFO __main__ - 07. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,618 INFO __main__ - 08. TC-09        | Score: 0.4818 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,619 INFO __main__ - 09. TC-22        | Score: 0.4617 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,619 INFO __main__ - 10. TC-23        | Score: 0.4279 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,620 INFO __main__ - 11. TC-100       | Score: 0.3990 | Original US: US-12 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,620 INFO __main__ - 12. TC-01        | Score: 0.3805 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,620 INFO __main__ - 13. TC-13        | Score: 0.3665 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,621 INFO __main__ - 14. TC-02        | Score: 0.3664 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,621 INFO __main__ - 15. TC-11        | Score: 0.3343 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,621 INFO __main__ - 16. TC-29        | Score: 0.3247 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,621 INFO __main__ - 17. TC-07        | Score: 0.3176 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,621 INFO __main__ - 18. TC-16        | Score: 0.3140 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,621 INFO __main__ - 19. TC-27        | Score: 0.3069 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,622 INFO __main__ - 20. TC-14        | Score: 0.3033 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,622 INFO __main__ - 21. TC-03        | Score: 0.3015 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,622 INFO __main__ - 22. TC-10        | Score: 0.3005 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,622 INFO __main__ - 23. TC-28        | Score: 0.2929 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,623 INFO __main__ - 24. TC-08        | Score: 0.2841 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,623 INFO __main__ - 25. TC-26        | Score: 0.2661 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,623 INFO __main__ - 26. TC-12        | Score: 0.2431 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,623 INFO __main__ - 27. TC-04        | Score: 0.2215 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,623 INFO __main__ - 28. TC-05        | Score: 0.2200 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,623 INFO __main__ - 29. TC-15        | Score: 0.1998 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:14:03,623 INFO __main__ - ================================================================================
+2025-12-03 18:14:03,657 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 18:14:03,657 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-10:
+2025-12-03 18:14:03,658 INFO __main__ -    1. TC-24 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:14:03,659 INFO __main__ -    2. TC-25 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:14:03,659 INFO __main__ -    3. TC-20 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:14:03,660 INFO __main__ -    4. TC-18 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:14:03,660 INFO __main__ -    5. TC-17 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:14:03,667 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 18:16:03,800 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 18:16:04,415 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 18:16:04,416 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 18:16:04,416 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 18:16:04,417 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 18:16:08,209 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 18:16:08,211 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 18:16:08,212 INFO __main__ -    User Story ID      : US-12
+2025-12-03 18:16:08,212 INFO __main__ -    File Changed       : unknown
+2025-12-03 18:16:08,212 INFO __main__ -    Changed Function   : test_complete_task
+2025-12-03 18:16:08,212 INFO __main__ -    Dependent Function : unknown
+2025-12-03 18:16:08,213 INFO __main__ -    Encoded State      : [0.3793, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 18:16:08,218 INFO __main__ - 📂 Loading training data to find original user stories and historical failures...
+2025-12-03 18:16:08,247 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 18:16:08,248 INFO __main__ - ✅ Found 0 test cases with historical failures for this change
+2025-12-03 18:16:08,249 INFO __main__ - 
+📌 Test cases directly mapped to US-12 in Excel: ['TC-100']
+2025-12-03 18:16:08,249 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 18:16:08,249 INFO __main__ - ================================================================================
+2025-12-03 18:16:08,249 INFO __main__ - 01. TC-100       | Score: 1.0000 | Original US: US-12 | Reason: Directly mapped in Excel
+2025-12-03 18:16:08,250 INFO __main__ - 02. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,250 INFO __main__ - 03. TC-09        | Score: 0.4800 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,250 INFO __main__ - 04. TC-22        | Score: 0.4649 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,250 INFO __main__ - 05. TC-23        | Score: 0.4289 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,250 INFO __main__ - 06. TC-24        | Score: 0.3823 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,250 INFO __main__ - 07. TC-01        | Score: 0.3819 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,250 INFO __main__ - 08. TC-02        | Score: 0.3692 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,250 INFO __main__ - 09. TC-13        | Score: 0.3663 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,250 INFO __main__ - 10. TC-25        | Score: 0.3640 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,250 INFO __main__ - 11. TC-11        | Score: 0.3347 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 12. TC-29        | Score: 0.3234 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 13. TC-07        | Score: 0.3190 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 14. TC-16        | Score: 0.3169 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 15. TC-20        | Score: 0.3097 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 16. TC-27        | Score: 0.3092 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 17. TC-14        | Score: 0.3062 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 18. TC-03        | Score: 0.3031 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 19. TC-10        | Score: 0.3017 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 20. TC-28        | Score: 0.2938 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 21. TC-18        | Score: 0.2907 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 22. TC-08        | Score: 0.2851 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 23. TC-17        | Score: 0.2836 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 24. TC-26        | Score: 0.2661 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,251 INFO __main__ - 25. TC-21        | Score: 0.2513 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,252 INFO __main__ - 26. TC-12        | Score: 0.2446 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,252 INFO __main__ - 27. TC-04        | Score: 0.2216 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,252 INFO __main__ - 28. TC-05        | Score: 0.2199 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,252 INFO __main__ - 29. TC-15        | Score: 0.2001 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:16:08,252 INFO __main__ - ================================================================================
+2025-12-03 18:16:08,266 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 18:16:08,266 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-12:
+2025-12-03 18:16:08,267 INFO __main__ -    1. TC-100 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:16:08,267 INFO __main__ -    2. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 18:16:08,268 INFO __main__ -    3. TC-09 (score: 0.4800) - Unknown metadata — fallback prediction
+2025-12-03 18:16:08,268 INFO __main__ -    4. TC-22 (score: 0.4649) - Unknown metadata — fallback prediction
+2025-12-03 18:16:08,268 INFO __main__ -    5. TC-23 (score: 0.4289) - Unknown metadata — fallback prediction
+2025-12-03 18:16:08,273 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 18:17:38,669 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 18:17:39,324 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 18:17:39,324 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 18:17:39,325 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 18:17:39,325 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 18:17:43,834 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 18:17:43,835 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 18:17:43,835 INFO __main__ -    User Story ID      : US-03
+2025-12-03 18:17:43,836 INFO __main__ -    File Changed       : unknown
+2025-12-03 18:17:43,836 INFO __main__ -    Changed Function   : complete_task
+2025-12-03 18:17:43,836 INFO __main__ -    Dependent Function : unknown
+2025-12-03 18:17:43,837 INFO __main__ -    Encoded State      : [0.0690, 0.0000, 0.1034, 0.0000, 0.0000]
+2025-12-03 18:17:43,842 INFO __main__ - 📂 Loading training data to find original user stories and historical failures...
+2025-12-03 18:17:43,875 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 18:17:43,875 INFO __main__ - ✅ Found 1 test cases with historical failures for this change
+2025-12-03 18:17:43,876 INFO __main__ - 
+📌 Test cases directly mapped to US-03 in Excel: ['TC-04', 'TC-05']
+2025-12-03 18:17:43,877 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 18:17:43,877 INFO __main__ - ================================================================================
+2025-12-03 18:17:43,877 INFO __main__ - 01. TC-04        | Score: 1.0000 | Original US: US-03 | Reason: Directly mapped in Excel
+2025-12-03 18:17:43,877 INFO __main__ - 02. TC-05        | Score: 1.0000 | Original US: US-03 | Reason: Directly mapped in Excel
+2025-12-03 18:17:43,877 INFO __main__ - 03. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,878 INFO __main__ - 04. TC-09        | Score: 0.4896 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,878 INFO __main__ - 05. TC-22        | Score: 0.4447 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,878 INFO __main__ - 06. TC-23        | Score: 0.4148 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,878 INFO __main__ - 07. TC-100       | Score: 0.3743 | Original US: US-12 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,878 INFO __main__ - 08. TC-24        | Score: 0.3634 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,878 INFO __main__ - 09. TC-01        | Score: 0.3615 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,879 INFO __main__ - 10. TC-13        | Score: 0.3507 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,879 INFO __main__ - 11. TC-02        | Score: 0.3377 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,880 INFO __main__ - 12. TC-25        | Score: 0.3371 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,880 INFO __main__ - 13. TC-11        | Score: 0.3119 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,880 INFO __main__ - 14. TC-29        | Score: 0.3097 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,880 INFO __main__ - 15. TC-07        | Score: 0.2921 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,881 INFO __main__ - 16. TC-20        | Score: 0.2858 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,881 INFO __main__ - 17. TC-16        | Score: 0.2810 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,881 INFO __main__ - 18. TC-27        | Score: 0.2761 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,881 INFO __main__ - 19. TC-10        | Score: 0.2722 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,881 INFO __main__ - 20. TC-03        | Score: 0.2716 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,882 INFO __main__ - 21. TC-14        | Score: 0.2691 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,882 INFO __main__ - 22. TC-28        | Score: 0.2646 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,882 INFO __main__ - 23. TC-18        | Score: 0.2634 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,882 INFO __main__ - 24. TC-08        | Score: 0.2548 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,882 INFO __main__ - 25. TC-17        | Score: 0.2540 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,882 INFO __main__ - 26. TC-26        | Score: 0.2427 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,883 INFO __main__ - 27. TC-21        | Score: 0.2176 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,883 INFO __main__ - 28. TC-12        | Score: 0.2113 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,883 INFO __main__ - 29. TC-15        | Score: 0.1720 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:17:43,883 INFO __main__ - ================================================================================
+2025-12-03 18:17:43,899 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 18:17:43,899 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-03:
+2025-12-03 18:17:43,901 INFO __main__ -    1. TC-04 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:17:43,902 INFO __main__ -    2. TC-05 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:17:43,902 INFO __main__ -    3. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 18:17:43,902 INFO __main__ -    4. TC-09 (score: 0.4896) - Unknown metadata — fallback prediction
+2025-12-03 18:17:43,903 INFO __main__ -    5. TC-22 (score: 0.4447) - Unknown metadata — fallback prediction
+2025-12-03 18:17:43,908 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 18:18:04,394 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 18:18:04,990 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 18:18:04,990 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 18:18:04,991 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 18:18:04,991 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 18:18:08,448 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 18:18:08,451 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 18:18:08,451 INFO __main__ -    User Story ID      : US-10
+2025-12-03 18:18:08,451 INFO __main__ -    File Changed       : unknown
+2025-12-03 18:18:08,452 INFO __main__ -    Changed Function   : unknown
+2025-12-03 18:18:08,452 INFO __main__ -    Dependent Function : unknown
+2025-12-03 18:18:08,453 INFO __main__ -    Encoded State      : [0.3103, 0.0000, 0.0000, 0.0000, 0.0000]
+2025-12-03 18:18:08,458 INFO __main__ - 📂 Loading training data to find original user stories and historical failures...
+2025-12-03 18:18:08,480 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 18:18:08,480 INFO __main__ - ✅ Found 0 test cases with historical failures for this change
+2025-12-03 18:18:08,481 INFO __main__ - 
+📌 Test cases directly mapped to US-10 in Excel: ['TC-17', 'TC-18', 'TC-20', 'TC-21', 'TC-24', 'TC-25']
+2025-12-03 18:18:08,481 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 18:18:08,481 INFO __main__ - ================================================================================
+2025-12-03 18:18:08,481 INFO __main__ - 01. TC-24        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:18:08,482 INFO __main__ - 02. TC-25        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:18:08,482 INFO __main__ - 03. TC-20        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:18:08,482 INFO __main__ - 04. TC-18        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:18:08,482 INFO __main__ - 05. TC-17        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:18:08,482 INFO __main__ - 06. TC-21        | Score: 1.0000 | Original US: US-10 | Reason: Directly mapped in Excel
+2025-12-03 18:18:08,482 INFO __main__ - 07. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,482 INFO __main__ - 08. TC-09        | Score: 0.4818 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,482 INFO __main__ - 09. TC-22        | Score: 0.4617 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,483 INFO __main__ - 10. TC-23        | Score: 0.4279 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,483 INFO __main__ - 11. TC-100       | Score: 0.3990 | Original US: US-12 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,483 INFO __main__ - 12. TC-01        | Score: 0.3805 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,483 INFO __main__ - 13. TC-13        | Score: 0.3665 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,484 INFO __main__ - 14. TC-02        | Score: 0.3664 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,484 INFO __main__ - 15. TC-11        | Score: 0.3343 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,484 INFO __main__ - 16. TC-29        | Score: 0.3247 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,484 INFO __main__ - 17. TC-07        | Score: 0.3176 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,484 INFO __main__ - 18. TC-16        | Score: 0.3140 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,484 INFO __main__ - 19. TC-27        | Score: 0.3069 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,484 INFO __main__ - 20. TC-14        | Score: 0.3033 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,484 INFO __main__ - 21. TC-03        | Score: 0.3015 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,485 INFO __main__ - 22. TC-10        | Score: 0.3005 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,485 INFO __main__ - 23. TC-28        | Score: 0.2929 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,485 INFO __main__ - 24. TC-08        | Score: 0.2841 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,485 INFO __main__ - 25. TC-26        | Score: 0.2661 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,485 INFO __main__ - 26. TC-12        | Score: 0.2431 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,485 INFO __main__ - 27. TC-04        | Score: 0.2215 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,485 INFO __main__ - 28. TC-05        | Score: 0.2200 | Original US: US-03 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,485 INFO __main__ - 29. TC-15        | Score: 0.1998 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:18:08,485 INFO __main__ - ================================================================================
+2025-12-03 18:18:08,497 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_userstory.csv
+2025-12-03 18:18:08,498 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-10:
+2025-12-03 18:18:08,499 INFO __main__ -    1. TC-24 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:18:08,499 INFO __main__ -    2. TC-25 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:18:08,500 INFO __main__ -    3. TC-20 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:18:08,500 INFO __main__ -    4. TC-18 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:18:08,500 INFO __main__ -    5. TC-17 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:18:08,505 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-03 18:49:40,275 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 18:49:40,659 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 18:49:40,660 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 18:49:40,660 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 18:49:40,660 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 18:49:44,428 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 18:49:44,431 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 18:49:44,431 INFO __main__ -    User Story ID      : US-03
+2025-12-03 18:49:44,431 INFO __main__ -    File Changed       : unknown
+2025-12-03 18:49:44,431 INFO __main__ -    Changed Function   : complete_task
+2025-12-03 18:49:44,431 INFO __main__ -    Dependent Function : unknown
+2025-12-03 18:49:44,433 INFO __main__ -    Encoded State      : [0.0690, 0.0000, 0.1034, 0.0000, 0.0000]
+2025-12-03 18:49:44,438 INFO __main__ - 📂 Loading training data to find original user stories and historical failures...
+2025-12-03 18:49:44,465 INFO __main__ - ✅ Mapped 29 test cases to their original user stories
+2025-12-03 18:49:44,465 INFO __main__ - ✅ Found 1 test cases with historical failures for this change
+2025-12-03 18:49:44,466 INFO __main__ - 
+📌 Test cases directly mapped to US-03 in Excel: ['TC-04', 'TC-05']
+2025-12-03 18:49:44,466 INFO __main__ - 
+🧩 RANKED TEST CASES (by priority):
+2025-12-03 18:49:44,466 INFO __main__ - ================================================================================
+2025-12-03 18:49:44,466 INFO __main__ - 01. TC-04        | Score: 1.0000 | Original US: US-03 | Reason: Directly mapped in Excel
+2025-12-03 18:49:44,467 INFO __main__ - 02. TC-05        | Score: 1.0000 | Original US: US-03 | Reason: Directly mapped in Excel
+2025-12-03 18:49:44,467 INFO __main__ - 03. TC-06        | Score: 0.5000 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,467 INFO __main__ - 04. TC-09        | Score: 0.4896 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,467 INFO __main__ - 05. TC-22        | Score: 0.4447 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,467 INFO __main__ - 06. TC-23        | Score: 0.4148 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,467 INFO __main__ - 07. TC-100       | Score: 0.3743 | Original US: US-12 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,467 INFO __main__ - 08. TC-24        | Score: 0.3634 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,468 INFO __main__ - 09. TC-01        | Score: 0.3615 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,468 INFO __main__ - 10. TC-13        | Score: 0.3507 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,468 INFO __main__ - 11. TC-02        | Score: 0.3377 | Original US: US-01 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,468 INFO __main__ - 12. TC-25        | Score: 0.3371 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,468 INFO __main__ - 13. TC-11        | Score: 0.3119 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,468 INFO __main__ - 14. TC-29        | Score: 0.3097 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,468 INFO __main__ - 15. TC-07        | Score: 0.2921 | Original US: US-05 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,468 INFO __main__ - 16. TC-20        | Score: 0.2858 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,469 INFO __main__ - 17. TC-16        | Score: 0.2810 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,469 INFO __main__ - 18. TC-27        | Score: 0.2761 | Original US: US-11 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,469 INFO __main__ - 19. TC-10        | Score: 0.2722 | Original US: US-07 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,469 INFO __main__ - 20. TC-03        | Score: 0.2716 | Original US: US-02 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,469 INFO __main__ - 21. TC-14        | Score: 0.2691 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,469 INFO __main__ - 22. TC-28        | Score: 0.2646 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,469 INFO __main__ - 23. TC-18        | Score: 0.2634 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,469 INFO __main__ - 24. TC-08        | Score: 0.2548 | Original US: US-06 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,470 INFO __main__ - 25. TC-17        | Score: 0.2540 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,470 INFO __main__ - 26. TC-26        | Score: 0.2427 | Original US: US-04 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,470 INFO __main__ - 27. TC-21        | Score: 0.2176 | Original US: US-10 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,470 INFO __main__ - 28. TC-12        | Score: 0.2113 | Original US: US-08 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,470 INFO __main__ - 29. TC-15        | Score: 0.1720 | Original US: US-09 | Reason: Unknown metadata — fallback prediction
+2025-12-03 18:49:44,470 INFO __main__ - ================================================================================
+2025-12-03 18:49:44,483 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_US03_check.csv
+2025-12-03 18:49:44,483 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-03:
+2025-12-03 18:49:44,483 INFO __main__ -    1. TC-04 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:49:44,484 INFO __main__ -    2. TC-05 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 18:49:44,484 INFO __main__ -    3. TC-06 (score: 0.5000) - Unknown metadata — fallback prediction
+2025-12-03 18:49:44,484 INFO __main__ -    4. TC-09 (score: 0.4896) - Unknown metadata — fallback prediction
+2025-12-03 18:49:44,485 INFO __main__ -    5. TC-22 (score: 0.4447) - Unknown metadata — fallback prediction
+2025-12-03 18:49:44,489 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_US03_check_onlyrequired.csv
+2025-12-03 19:25:07,122 INFO __main__ - 📂 Loading todo mapping from D:\data-learn\data\Todo_UserStories_TestCases.xlsx...
+2025-12-03 19:25:07,723 INFO __main__ - ✅ Loaded todo mapping: 12 user stories mapped
+2025-12-03 19:25:07,724 INFO __main__ - 📂 Loading encoders from D:\data-learn\models\ppo_test_selection_model_encoders.pkl...
+2025-12-03 19:25:07,724 INFO __main__ - ✅ Encoders loaded successfully!
+2025-12-03 19:25:07,724 INFO __main__ - 📂 Loading trained PPO model from D:\data-learn\models\ppo_test_selection_model...
+2025-12-03 19:25:10,276 INFO __main__ - ✅ Model loaded successfully!
+2025-12-03 19:25:10,277 INFO __main__ - 
+🔍 Predicting test cases for:
+2025-12-03 19:25:10,277 INFO __main__ -    User Story ID      : US-03
+2025-12-03 19:25:10,278 INFO __main__ -    File Changed       : unknown
+2025-12-03 19:25:10,278 INFO __main__ -    Changed Function   : complete_task
+2025-12-03 19:25:10,278 INFO __main__ -    Dependent Function : unknown
+2025-12-03 19:25:10,279 INFO __main__ -    Encoded State      : [0.0690, 0.0000, 0.1034, 0.0000, 0.0000]
+2025-12-03 19:25:10,282 INFO __main__ - 📂 Loading training data for file+function mapping...
+2025-12-03 19:25:10,296 INFO __main__ - ✅ Mapped 30 test cases to their historical files/functions
+2025-12-03 19:25:10,297 INFO __main__ - 
+📌 Test cases directly mapped to US-03 in Excel: ['TC-04', 'TC-05']
+2025-12-03 19:25:10,302 INFO __main__ - 
+💾 Ranked test cases saved to: d:\data-learn\priority_expanded_check.csv
+2025-12-03 19:25:10,302 INFO __main__ - ✅ Prediction complete! Top 5 test cases to run for US-03:
+2025-12-03 19:25:10,303 INFO __main__ -    1. TC-04 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 19:25:10,303 INFO __main__ -    1. TC-04 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 19:25:10,303 INFO __main__ -    2. TC-05 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 19:25:10,303 INFO __main__ -    2. TC-05 (score: 1.0000) - Directly mapped in Excel
+2025-12-03 19:25:10,303 INFO __main__ -    3. TC-06 (score: 0.5000) - Model-based priority (high failure risk)
+2025-12-03 19:25:10,307 INFO __main__ - 💾 Filtered (required only) test cases saved to: d:\data-learn\priority_expanded_check_onlyrequired.csv
+2025-12-03 22:11:30,257 INFO __main__ - Loaded Excel US->TC mapping
+2025-12-03 22:11:30,257 INFO __main__ - Encoders loaded
+2025-12-03 22:11:30,290 INFO __main__ - 
+[PREDICT] Predicting test cases for:
+2025-12-03 22:11:30,291 INFO __main__ -    User Story ID      : US-03
+2025-12-03 22:11:30,291 INFO __main__ -    File Changed       : unknown
+2025-12-03 22:11:30,291 INFO __main__ -    Changed Function   : complete_task
+2025-12-03 22:14:55,069 INFO __main__ - [SAVE] Saved full NLP-enhanced results to: d:\data-learn\priority_nlp_test.csv
+2025-12-03 22:14:55,076 INFO __main__ - [SAVE] Filtered (required only) test cases saved to: d:\data-learn\priority_nlp_test_onlyrequired.csv
+2025-12-03 22:37:10,854 INFO __main__ - Loaded Excel US->TC mapping
+2025-12-03 22:37:10,854 INFO __main__ - Encoders loaded
+2025-12-03 22:37:10,885 INFO __main__ - 
+[PREDICT] Predicting test cases for:
+2025-12-03 22:37:10,885 INFO __main__ -    User Story ID      : US-01
+2025-12-03 22:37:10,885 INFO __main__ -    File Changed       : unknown
+2025-12-03 22:37:10,885 INFO __main__ -    Changed Function   : unknown
+2025-12-03 22:41:35,031 INFO __main__ - [SAVE] Saved full NLP-enhanced results to: check_expanded.csv
+2025-12-03 22:41:35,038 INFO __main__ - [SAVE] Filtered (required only) test cases saved to: check_expanded_onlyrequired.csv
+2025-12-04 11:34:04,106 INFO __main__ - Loaded Excel US->TC mapping
+2025-12-04 11:34:04,124 INFO __main__ - Encoders loaded
+2025-12-04 11:34:04,263 INFO __main__ - 
+[PREDICT] Predicting test cases for:
+2025-12-04 11:34:04,264 INFO __main__ -    User Story ID      : US-10
+2025-12-04 11:34:04,264 INFO __main__ -    File Changed       : unknown
+2025-12-04 11:34:04,264 INFO __main__ -    Changed Function   : unknown
+2025-12-04 11:34:09,528 INFO __main__ - Loaded Excel US->TC mapping
+2025-12-04 11:34:09,528 INFO __main__ - Encoders loaded
+2025-12-04 11:34:09,564 INFO __main__ - 
+[PREDICT] Predicting test cases for:
+2025-12-04 11:34:09,564 INFO __main__ -    User Story ID      : US-05
+2025-12-04 11:34:09,565 INFO __main__ -    File Changed       : unknown
+2025-12-04 11:34:09,565 INFO __main__ -    Changed Function   : unknown
+2025-12-04 11:35:57,444 INFO __main__ - [SAVE] Saved full NLP-enhanced results to: D:\data-learn\priority_userstory.csv
+2025-12-04 11:35:57,449 INFO __main__ - [SAVE] Filtered (required only) test cases saved to: D:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-04 11:47:03,652 INFO __main__ - Loaded Excel US->TC mapping
+2025-12-04 11:47:03,653 INFO __main__ - Encoders loaded
+2025-12-04 11:47:03,668 INFO __main__ - 
+[PREDICT] Predicting test cases for:
+2025-12-04 11:47:03,668 INFO __main__ -    User Story ID      : US-07
+2025-12-04 11:47:03,668 INFO __main__ -    File Changed       : unknown
+2025-12-04 11:47:03,668 INFO __main__ -    Changed Function   : unknown
+2025-12-04 11:48:42,052 INFO __main__ - [SAVE] Saved full NLP-enhanced results to: d:\data-learn\priority_userstory.csv
+2025-12-04 11:48:42,057 INFO __main__ - [SAVE] Filtered (required only) test cases saved to: d:\data-learn\priority_userstory_onlyrequired.csv
+2025-12-04 14:18:52,431 INFO __main__ - Loaded Excel US->TC mapping
+2025-12-04 14:18:52,431 INFO __main__ - Encoders loaded
+2025-12-04 14:18:52,447 INFO __main__ - 
+[PREDICT] Predicting test cases for:
+2025-12-04 14:18:52,447 INFO __main__ -    User Story ID      : US-10
+2025-12-04 14:18:52,448 INFO __main__ -    File Changed       : unknown
+2025-12-04 14:18:52,448 INFO __main__ -    Changed Function   : unknown
+2025-12-04 14:21:31,935 INFO __main__ - [SAVE] Saved full NLP-enhanced results to: D:\data-learn\priority_userstory.csv
+2025-12-04 14:21:31,940 INFO __main__ - [SAVE] Filtered (required only) test cases saved to: D:\data-learn\priority_userstory_onlyrequired.csv

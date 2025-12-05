@@ -1,30 +1,72 @@
-Rank,Test_Case_ID,Priority_Score,Original_User_Story_ID,Input_User_Story_ID,Reason,File_Changed,Changed_Function
-1,TC-100,1.0,US-12,US-12,Directly mapped in Excel,python-testcase/backend/app.py,nan
-2,TC-13,0.5,US-08,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-3,TC-20,0.3617999851703644,US-10,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-4,TC-15,0.30195000767707825,US-09,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-5,TC-23,0.21250000596046448,US-07,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-6,TC-08,0.19329999387264252,US-06,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-7,TC-12,0.1882999986410141,US-08,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-8,TC-05,0.17964999377727509,US-03,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-9,TC-03,0.1667499989271164,US-02,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-10,TC-09,0.1464499980211258,US-07,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-11,TC-14,0.13944999873638153,US-09,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-12,TC-28,0.13830000162124634,US-06,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-13,TC-24,0.1351500004529953,US-10,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-14,TC-25,0.1311500072479248,US-10,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-15,TC-29,0.12964999675750732,US-08,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-16,TC-21,0.11389999836683273,US-10,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-17,TC-16,0.11330000311136246,US-09,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-18,TC-22,0.10745000094175339,US-05,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-19,TC-01,0.10369999706745148,US-01,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-20,TC-02,0.09825000166893005,US-01,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-21,TC-06,0.09719999879598618,US-04,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-22,TC-07,0.08604999631643295,US-05,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-23,TC-26,0.07845000177621841,US-04,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-24,TC-11,0.06669999659061432,US-08,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-25,TC-10,0.06584999710321426,US-07,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-26,TC-04,0.04989999905228615,US-03,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-27,TC-17,0.04500000178813934,US-10,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-28,TC-27,0.042899999767541885,US-11,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
-29,TC-18,0.03044999949634075,US-10,US-12,Model-based priority (high failure risk),python-testcase/backend/app.py,nan
+Rank,Test_Case_ID,Priority_Score,Original_User_Story_ID,Input_User_Story_ID,Reason,File_Changed,Changed_Function,Is_Direct_Map
+1,TC-24,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+1,TC-24,1.0,US-10,US-10,The purpose of the mapping is to make sure that the user is able to access the app.py file.,python-testcase/backend/app.py,,True
+2,TC-25,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+2,TC-25,1.0,US-10,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,True
+3,TC-20,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+3,TC-20,1.0,US-10,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,True
+4,TC-18,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+4,TC-18,1.0,US-10,US-10,The purpose of the mapping is to make sure that the user is able to access the app.py file.,python-testcase/backend/app.py,,True
+5,TC-17,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+5,TC-17,1.0,US-10,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,True
+6,TC-21,1.0,US-10,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,True
+6,TC-21,1.0,US-10,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,True
+7,TC-06,0.5,US-04,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,update_task,False
+7,TC-06,0.5,US-04,US-10,The purpose of the test case is to test the user story.,src/App.jsx,,False
+8,TC-09,0.4818499982357025,US-07,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+9,TC-22,0.4616999924182892,US-05,US-10,The purpose of the mapping is to make sure that the user is aware of the changes that have been made to the task list.,backend/app.py,delete_task,False
+9,TC-22,0.4616999924182892,US-05,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+10,TC-23,0.4278999865055084,US-07,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+11,TC-100,0.39899998903274536,US-12,US-10,The purpose of the test case is to test the user story.,backend/app.py,,False
+11,TC-100,0.39899998903274536,US-12,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,False
+12,TC-01,0.3804999887943268,US-01,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,get_tasks,False
+12,TC-01,0.3804999887943268,US-01,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,add_task,False
+12,TC-01,0.3804999887943268,US-01,US-10,The purpose of the test case is to test the user story.,package-lock.json,,False
+12,TC-01,0.3804999887943268,US-01,US-10,The purpose of the test case is to test the user story.,package.json,,False
+12,TC-01,0.3804999887943268,US-01,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+13,TC-13,0.36649999022483826,US-08,US-10,The purpose of the user story is to explain how the app.py function list is changed.,backend/app.py,,False
+13,TC-13,0.36649999022483826,US-08,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+14,TC-02,0.36640000343322754,US-01,US-10,The purpose of the test case is to test the user story.,backend/app.py,get_tasks,False
+14,TC-02,0.36640000343322754,US-01,US-10,The purpose of the mapping is to make sure that the user is aware of the changes that have been made to the user's task list.,backend/app.py,add_task,False
+14,TC-02,0.36640000343322754,US-01,US-10,The purpose of the test case is to test the user story.,package-lock.json,,False
+14,TC-02,0.36640000343322754,US-01,US-10,The purpose of the test case is to test the user story.,package.json,,False
+14,TC-02,0.36640000343322754,US-01,US-10,The purpose of the test case is to test the user story.,src/App.jsx,,False
+15,TC-11,0.3343000113964081,US-08,US-10,The purpose of the user story is to explain how the app.py function list is changed.,backend/app.py,,False
+15,TC-11,0.3343000113964081,US-08,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+16,TC-29,0.3246999979019165,US-08,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,,False
+16,TC-29,0.3246999979019165,US-08,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+17,TC-07,0.31755000352859497,US-05,US-10,The purpose of the mapping is to make sure that the user is aware of the changes that have been made to the task list.,backend/app.py,delete_task,False
+17,TC-07,0.31755000352859497,US-05,US-10,The purpose of the test case is to test the user story.,src/App.jsx,,False
+18,TC-16,0.3139500021934509,US-09,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,get_task_count,False
+18,TC-16,0.3139500021934509,US-09,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,analysis/requirements.txt,,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the mapping is to make sure that the user is aware of the changes that have been made to the user's computer.,analysis/test_priority_model.py,main,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the test case is to test the user story.,backend/model_train,build_timeline,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,backend/ppo_priority_gymnasium_logs/PPO_1/events.out.tfevents.1762518348.DESKTOP-AP99P85.17628.0,,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,backend/ppo_priority_gymnasium_model.zip,,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the test case is to test the user story.,backend/priority_prediction,get_commits_for_story,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the test case is to test the user story.,backend/priority_prediction,extract_changes,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the test case is to test the user story.,backend/priority_prediction,compute_impact,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the test case is to test the user story.,backend/priority_userstory.csv,,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,priority_predictions.csv,,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the test case is to test the user story.,python-testcase/backend/app.py,,False
+19,TC-27,0.3068999946117401,US-11,US-10,The purpose of the mapping is to make sure that the user is aware of the changes that have been made.,python-testcase/backend/app.py,testcase,False
+20,TC-14,0.3032500147819519,US-09,US-10,The purpose of the mapping is to make sure that the user is aware of the changes that have been made to the task list.,backend/app.py,get_task_count,False
+20,TC-14,0.3032500147819519,US-09,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+21,TC-03,0.30149999260902405,US-02,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,,False
+22,TC-10,0.3005000054836273,US-07,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+23,TC-28,0.2928999960422516,US-06,US-10,The purpose of the mapping is to make sure that the user is aware of the changes that have been made to the user's file system.,backend/app.py,clear_completed,False
+23,TC-28,0.2928999960422516,US-06,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+24,TC-08,0.2840999960899353,US-06,US-10,The purpose of the mapping is to make sure that the user is aware of the changes that have been made to the user's file system.,backend/app.py,clear_completed,False
+24,TC-08,0.2840999960899353,US-06,US-10,The purpose of the test case is to test the user story.,src/App.jsx,,False
+25,TC-26,0.2660999894142151,US-04,US-10,The purpose of the user story is to explain how the task update logic in app.py is implemented.,backend/app.py,update_task,False
+25,TC-26,0.2660999894142151,US-04,US-10,The purpose of the user story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+26,TC-12,0.243149995803833,US-08,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,,False
+26,TC-12,0.243149995803833,US-08,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+27,TC-04,0.2214999943971634,US-03,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,complete_task,False
+27,TC-04,0.2214999943971634,US-03,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
+28,TC-05,0.2199999988079071,US-03,US-10,The purpose of the mapping is to make sure that the user is aware of the changes that have been made to the task list.,backend/app.py,complete_task,False
+28,TC-05,0.2199999988079071,US-03,US-10,The purpose of the test case is to test the user story.,src/App.jsx,,False
+29,TC-15,0.19975000619888306,US-09,US-10,The purpose of the user story is to explain how the task update logic in app.py implements the acceptance criteria.,backend/app.py,get_task_count,False
+29,TC-15,0.19975000619888306,US-09,US-10,The purpose of the story is to explain how the task update logic in app.py directly implements the acceptance criteria.,src/App.jsx,,False
